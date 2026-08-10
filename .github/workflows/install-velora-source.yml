@@ -1559,7 +1559,7 @@ jobs:
           BAAAAAAEAAAAAFBLBQYAAAAAPwA/AN0XAAC7PQEAAAA=
           VELORA_ARCHIVE
           base64 --decode /tmp/velora-source.zip > /tmp/velora-theme.zip
-          unzip -q /tmp/velora-theme.zip -d .
+          unzip -oq /tmp/velora-theme.zip -d .
           rm -f -- .github/workflows/install-velora-source.yml
           node scripts/validate-theme.mjs
           git config user.name "github-actions[bot]"
