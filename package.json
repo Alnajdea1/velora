@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "salla theme preview --with-editor",
     "preview": "salla theme preview --with-editor",
-    "check": "node validate-theme.mjs",
+    "check": "node scripts/validate-theme.mjs",
     "publish": "salla theme publish"
   },
   "dependencies": {
