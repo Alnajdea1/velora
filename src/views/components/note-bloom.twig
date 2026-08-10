@@ -19,9 +19,10 @@
       {% for layer in ['top','heart','base'] %}
         <div data-bloom-panel="{{ layer }}" {{ layer == 'heart' ? '' : 'hidden' }} style="position:relative;z-index:2;max-width:340px">
           <div style="font-family:var(--display);font-size:26px">{{ trans('bloom.' ~ layer) }}</div>
-          <p style="margin-top:10px;font-size:13.5px;line-height:1.85;color:rgba(241,236,255,.75)">{{ component[layer ~ '_text'] }}</p>
+          <p style="margin-top:10px;font-size:13.5px;line-height:1.85;color:rgba(241,236,255,.75)">{{ component[layer ~ '_text'] ?: trans('bloom.' ~ layer ~ '_text') }}</p>
           <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:16px">
-            {% for note in component[layer ~ '_notes']|split(',') %}
+            {% set layer_notes = component[layer ~ '_notes'] ?: trans('bloom.' ~ layer ~ '_notes') %}
+            {% for note in layer_notes|split(',') %}
               <span class="v-pill" style="padding:8px 14px;background:rgba(252,251,255,.14);font-size:12px;font-weight:700">{{ note|trim }}</span>
             {% endfor %}
           </div>

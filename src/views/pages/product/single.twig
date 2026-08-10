@@ -89,7 +89,47 @@
     </div>
   </section>
 
-  {% if store.settings.rating.show_on_product %}<salla-comments item-id="{{ product.id }}" type="product"></salla-comments>{% endif %}
+  {% set bloom_component = {
+    'top_notes': product.metadata.fragrance_top_notes,
+    'top_text': product.metadata.fragrance_top_description,
+    'heart_notes': product.metadata.fragrance_heart_notes,
+    'heart_text': product.metadata.fragrance_heart_description,
+    'base_notes': product.metadata.fragrance_base_notes,
+    'base_text': product.metadata.fragrance_base_description
+  } %}
+  {% include 'components.note-bloom' with { component: bloom_component } %}
+
+  <section class="v-section v-ingredients">
+    <div class="v-wrap v-ingredients__grid">
+      <div>
+        <span class="v-kicker">{{ trans('product.ingredients_kicker') }}</span>
+        <h2>{{ trans('product.ingredients_title') }}</h2>
+        <div class="v-ingredients__list">
+          {% if product.metadata.ingredients %}
+            {% for ingredient in product.metadata.ingredients %}
+              <article><span class="v-petal" aria-hidden="true"></span><div><h3>{{ ingredient.name }}</h3><p>{{ ingredient.description }}</p></div></article>
+            {% endfor %}
+          {% else %}
+            {% set default_ingredients = [
+              {'name':trans('product.ingredient_lavender'),'body':trans('product.ingredient_lavender_body')},
+              {'name':trans('product.ingredient_violet'),'body':trans('product.ingredient_violet_body')},
+              {'name':trans('product.ingredient_musk'),'body':trans('product.ingredient_musk_body')}
+            ] %}
+            {% for ingredient in default_ingredients %}
+              <article><span class="v-petal" aria-hidden="true"></span><div><h3>{{ ingredient.name }}</h3><p>{{ ingredient.body }}</p></div></article>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+      <div class="v-sensory-grid" aria-label="{{ trans('product.sensory') }}">
+        <span>{{ trans('product.sensory_soft') }}</span><span>{{ trans('product.sensory_clean') }}</span><span>{{ trans('product.sensory_warm') }}</span><span>{{ trans('product.sensory_long') }}</span>
+      </div>
+    </div>
+  </section>
+
+  {% if store.settings.rating.show_on_product %}
+    <section class="v-section v-reviews"><div class="v-wrap"><div class="v-section-heading"><h2>{{ trans('product.reviews_title') }}</h2>{% if product.rating %}<span class="v-pill v-reviews__score"><b>{{ product.rating.stars }}</b> {{ trans('product.reviews', { n: product.rating.count }) }}</span>{% endif %}</div><salla-comments item-id="{{ product.id }}" type="product"></salla-comments></div></section>
+  {% endif %}
   <section class="v-section v-related"><div class="v-wrap"><salla-products-slider source="related" source-value="{{ product.id }}" block-title="{{ trans('product.related') }}" display-all-url></salla-products-slider></div></section>
 
   {% if theme.settings.get('sticky_add_to_cart', true) %}

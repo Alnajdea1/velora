@@ -118,7 +118,7 @@
         if (!window.salla?.cart) return;
         add.disabled = true;
         try {
-          for (const id of chosen.keys()) await salla.cart.addItem({ id, quantity:1 });
+          for (const id of chosen.keys()) await salla.cart.quickAdd(id);
           showToast(add.textContent.trim());
         } finally { add.disabled = false; }
       });
@@ -145,9 +145,23 @@
       window.location.assign(url.toString());
     });
 
-    if (window.salla?.event) {
-      salla.event.on('cart::item.added', () => showToast(document.documentElement.lang === 'ar' ? 'أُضيف إلى السلة' : 'Added to bag'));
-    }
+    $('salla-product-options')?.addEventListener('changed', (event) => {
+      const detail = event.detail?.detail || event.detail || {};
+      const image = detail.image?.url || detail.image;
+      const activeImage = $('[data-gallery-slide]:not([hidden]) img, .v-gallery__main > img');
+      if (image && activeImage) activeImage.src = image;
+      const addButton = $('salla-add-product-button[product-id]');
+      const unavailable = detail.is_available === false || detail.is_out_of_stock === true || detail.out_of_stock === true;
+      if (addButton) addButton.toggleAttribute('disabled', unavailable);
+    });
+
+    $('[data-page-index]')?.addEventListener('change', (event) => {
+      if (event.target.value) window.location.assign(event.target.value);
+    });
+
+    const addedMessage = document.documentElement.lang === 'ar' ? 'أُضيف إلى السلة' : 'Added to bag';
+    if (window.salla?.cart?.event?.onItemAdded) salla.cart.event.onItemAdded(() => showToast(addedMessage));
+    else if (window.salla?.event) salla.event.on('cart::item.added', () => showToast(addedMessage));
   };
 
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();

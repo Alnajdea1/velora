@@ -20,9 +20,33 @@
   },
   "hero": {
     "kicker": "New harvest collection",
+    "line_1": "Lavender",
+    "line_2": "always in",
+    "line_3": "motion",
+    "body": "Fragrance and care inspired by lavender fields at twilight: pale petals, slender stems, and quiet green leaves breathing with the light.",
     "cta": "Explore the collection",
     "cta_secondary": "Find your scent family",
-    "editor_pick": "Editor's pick"
+    "editor_pick": "Editor's pick",
+    "product_name": "Violet Veil 50ml",
+    "art_alt": "A translucent perfume bottle layered with lavender forms",
+    "note_top": "Bright bergamot",
+    "note_heart": "Hand-picked lavender",
+    "note_base": "Velvet musk",
+    "stat_1_value": "48",
+    "stat_1_label": "scent formulas",
+    "stat_2_value": "96%",
+    "stat_2_label": "repurchase",
+    "stat_3_value": "24h",
+    "stat_3_label": "fast delivery"
+  },
+  "showcase": {
+    "title": "Sculpted pieces from this season's harvest",
+    "subtitle": "Three formulas selected after 200 distillation trials."
+  },
+  "categories": {
+    "kicker": "Stems & leaves",
+    "title": "Move between categories like a hand moving through stems",
+    "count": "{n} products"
   },
   "aura": {
     "kicker": "Fragrance aura",
@@ -36,6 +60,14 @@
       "fresh": "Fresh",
       "musky": "Musky",
       "citrus": "Citrus"
+    },
+    "descriptions": {
+      "floral": "Petals cut at dawn, light dew, and a quiet feminine warmth.",
+      "woody": "Dry stems, white wood, and warm earth after twilight.",
+      "oriental": "Resins, soft spice, and warmth that draws closer over time.",
+      "fresh": "Green leaves, cool air, and translucent water.",
+      "musky": "A clean velvet trail that rests softly on skin.",
+      "citrus": "Bright peel and delicate bitterness opening the senses."
     }
   },
   "bloom": {
@@ -43,16 +75,31 @@
     "title": "Three layers blooming on skin",
     "top": "Top notes",
     "heart": "Heart notes",
-    "base": "Base notes"
+    "base": "Base notes",
+    "top_text": "The first ten minutes: cool citrus and broken green leaf.",
+    "heart_text": "After half an hour: lavender opens with violet and jasmine.",
+    "base_text": "Until the day ends: musk and white wood close to skin.",
+    "top_notes": "Bergamot, Green leaf, Lemon",
+    "heart_notes": "Lavender, Violet, Jasmine",
+    "base_notes": "Musk, White wood, Amber"
   },
   "routine": {
     "kicker": "Lavender path",
     "title": "A flowing routine, not rows of cards",
-    "cta": "Build your routine"
+    "cta": "Build your routine",
+    "step_1": "Gentle cleanse",
+    "step_1_body": "A light lavender-water foam removes traces without dryness.",
+    "step_2": "Balance",
+    "step_2_body": "Sage-leaf toner calms and restores the natural pH.",
+    "step_3": "Repair",
+    "step_3_body": "A concentrated oil warmed between the palms and pressed into skin.",
+    "step_4": "Seal",
+    "step_4_body": "Night cream locks in moisture and leaves a light scented trail."
   },
   "mood": {
     "kicker": "Shop by mood",
     "title": "What do you want to feel?",
+    "subtitle": "Choose a feeling instead of a category and we'll surface the formulas that carry it.",
     "moods": {
       "calm": "Calm",
       "warm": "Warm",
@@ -65,10 +112,20 @@
   "gift": {
     "kicker": "Gift composer",
     "title": "Compose a box that opens twice",
+    "body": "Choose a box shape, then up to three pieces. We add a handwritten card and a coral ribbon.",
     "step_shape": "1 — Box shape",
     "step_items": "2 — Pieces (up to 3)",
     "total": "Box total",
     "cta": "Add the box"
+  },
+  "story": {
+    "kicker": "From field to bottle",
+    "title": "The dawn harvest in lavender fields",
+    "body": "We pick petals before sunrise when the oil is most concentrated, then distil them the same day at low heat to preserve the quiet green layers.",
+    "tag_1": "Hand-picked",
+    "tag_2": "Cold distilled",
+    "tag_3": "No harsh alcohol",
+    "cta": "Read the full story"
   },
   "product": {
     "details": "Product details",
@@ -88,7 +145,23 @@
     "delivery": "24h delivery",
     "authentic": "100% authentic",
     "returns": "14-day returns",
-    "sample": "Free sample"
+    "sample": "Free sample",
+    "low_stock": "Only {n} left",
+    "variants": "Available variants",
+    "ingredients_kicker": "Inside the formula",
+    "ingredients_title": "Ingredients felt before they are read",
+    "ingredient_lavender": "Dawn lavender",
+    "ingredient_lavender_body": "Hand-picked before sunrise when its oil reaches peak concentration.",
+    "ingredient_violet": "Violet petals",
+    "ingredient_violet_body": "A translucent floral layer bringing a cool softness to the heart.",
+    "ingredient_musk": "Velvet musk",
+    "ingredient_musk_body": "A skin-close base that extends the trail without heaviness.",
+    "sensory": "Sensory qualities",
+    "sensory_soft": "Soft",
+    "sensory_clean": "Clean",
+    "sensory_warm": "Warm",
+    "sensory_long": "Long-lasting",
+    "reviews_title": "How the scent reached them"
   },
   "collection": {
     "title": "All fragrance & care",
@@ -203,5 +276,11 @@
     "returns": "Returns",
     "track": "Track order",
     "faq": "FAQ"
+  },
+  "reviewer": {
+    "label": "Screen review panel",
+    "pages": "Screens",
+    "brands": "Brands",
+    "loyalty": "Loyalty"
   }
 }

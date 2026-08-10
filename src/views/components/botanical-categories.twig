@@ -1,0 +1,21 @@
+{# Approved prototype section: botanical category stems. #}
+<section class="v-section v-botanical" data-component="botanical-categories">
+  <div class="v-wrap">
+    <div class="v-botanical__kicker"><span>{{ component.kicker ?: trans('categories.kicker') }}</span><i></i></div>
+    <h2>{{ component.title ?: trans('categories.title') }}</h2>
+    <div class="v-botanical__grid">
+      {% for category in component.categories|slice(0, 4) %}
+        {% set picked = category.category ?: category %}
+        <a href="{{ picked.url }}" class="v-botanical__card v-botanical__card--{{ loop.index }}" style="--v-category-color:{{ category.color ?: ['#C9B8FF','#BACBB5','#EBD8FF','#FFCBD2'][loop.index0] }}">
+          {% if category.image %}<img src="{{ category.image }}" alt="" loading="lazy">{% endif %}
+          <i aria-hidden="true"></i><b aria-hidden="true"></b>
+          <span><strong>{{ category.title ?: picked.name }}</strong><small>{{ category.count_label ?: trans('categories.count', { n: picked.products_count }) }}</small></span>
+        </a>
+      {% else %}
+        {% for category in categories|slice(0, 4) %}
+          <a href="{{ category.url }}" class="v-botanical__card v-botanical__card--{{ loop.index }}" style="--v-category-color:{{ ['#C9B8FF','#BACBB5','#EBD8FF','#FFCBD2'][loop.index0] }}"><i aria-hidden="true"></i><b aria-hidden="true"></b><span><strong>{{ category.name }}</strong><small>{{ trans('categories.count', { n: category.products_count }) }}</small></span></a>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</section>

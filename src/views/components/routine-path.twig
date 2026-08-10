@@ -5,9 +5,16 @@
       <span style="font-family:var(--latin);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--iris)">{{ trans('routine.kicker') }}</span>
       <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('routine.title')) }}</h2>
     </div>
+    {% set default_steps = [
+      {'title':trans('routine.step_1'),'body':trans('routine.step_1_body')},
+      {'title':trans('routine.step_2'),'body':trans('routine.step_2_body')},
+      {'title':trans('routine.step_3'),'body':trans('routine.step_3_body')},
+      {'title':trans('routine.step_4'),'body':trans('routine.step_4_body')}
+    ] %}
+    {% set steps = component.steps|length ? component.steps : default_steps %}
     <ol class="v-path" style="margin-top:54px;padding:0;list-style:none">
       <span aria-hidden="true" class="v-path__arc"></span>
-      {% for step in component.steps %}
+      {% for step in steps %}
         <li class="v-path__step" data-step="{{ loop.index0 }}"
             style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
           <button type="button" class="v-path__node" aria-current="{{ loop.first ? 'true' : 'false' }}"

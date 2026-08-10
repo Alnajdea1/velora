@@ -1,0 +1,13 @@
+<aside class="v-reviewer" aria-label="{{ trans('reviewer.label') }}">
+  <select class="v-field" data-page-index aria-label="{{ trans('reviewer.pages') }}">
+    <option value="">{{ trans('reviewer.pages') }}</option>
+    <option value="{{ link('home') }}">{{ trans('common.home') }}</option>
+    <option value="{{ link('products') }}">{{ trans('collection.title') }}</option>
+    <option value="{{ link('cart') }}">{{ trans('cart.title') }}</option>
+    <option value="{{ link('wishlist') }}">{{ trans('wishlist.title') }}</option>
+    <option value="{{ link('blog') }}">{{ trans('blog.title') }}</option>
+    <option value="{{ link('brands') }}">{{ trans('reviewer.brands') }}</option>
+    <option value="{{ link('loyalty') }}">{{ trans('reviewer.loyalty') }}</option>
+  </select>
+  <span>{{ store.language.code|upper }}</span>
+</aside>

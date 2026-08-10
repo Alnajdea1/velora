@@ -9,12 +9,20 @@
   <link rel="stylesheet" href="{{ 'styles/app.css'|asset }}">
   <style>
     :root{
+      --porcelain:{{ theme.settings.get('porcelain', '#FCFBFF') }};
+      --mist:{{ theme.settings.get('mist', '#F1ECFF') }};
+      --lilac:{{ theme.settings.get('lilac', '#C9B8FF') }};
       --iris:{{ theme.settings.get('accent', '#7657E8') }};
       --aubergine:{{ theme.settings.get('dark', '#261838') }};
+      --sage:{{ theme.settings.get('sage', '#BACBB5') }};
+      --leaf:{{ theme.settings.get('leaf', '#71836C') }};
       --coral:{{ theme.settings.get('micro_accent', '#FF7C8B') }};
+      --r-card:{{ theme.settings.get('card_radius', 28) }}px;
+      --r-editorial:{{ theme.settings.get('editorial_radius', 44) }}px;
     }
   </style>
   {% block styles %}{% endblock %}
+  {% hook 'head' %}
   {% hook 'head:end' %}
 </head>
 <body class="v-body">
@@ -24,12 +32,15 @@
 
   <main id="main">{% block content %}{% endblock %}</main>
 
+  {% if theme.settings.get('newsletter_enabled', true) %}{% include 'components.closing' with { component: {} } %}{% endif %}
   {% include 'components.footer' %}
   {% include 'components.search-overlay' %}
   {% include 'components.mobile-nav' %}
+  {% if theme.settings.get('reviewer_panel', false) %}{% include 'components.reviewer-panel' %}{% endif %}
 
   <script src="{{ 'js/app.js'|asset }}" defer></script>
   {% block scripts %}{% endblock %}
+  {% hook 'body' %}
   {% hook 'body:end' %}
 </body>
 </html>

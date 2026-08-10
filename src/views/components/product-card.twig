@@ -1,12 +1,17 @@
 {# @param product #}
-<article class="v-product" data-product-id="{{ product.id }}">
+<article class="v-product" data-product-id="{{ product.id }}" data-product-state="{{ product.is_available ? (product.is_on_sale ? 'sale' : 'regular') : 'sold-out' }}">
   <div class="v-product__media">
-    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+    {% if product.image.url %}
+      <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" width="640" height="800">
+    {% else %}
+      <span class="v-bottle v-bottle--card" aria-hidden="true"><i></i><b></b><em></em></span>
+    {% endif %}
     {% if product.images[1] %}<img src="{{ product.images[1].url }}" alt="" loading="lazy" aria-hidden="true">{% endif %}
 
     <div style="position:absolute;top:12px;inset-inline-start:12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
       {% if product.promotion_title %}<span class="v-badge">{{ product.promotion_title }}</span>{% endif %}
       {% if not product.is_available %}<span class="v-badge v-badge--soldout">{{ trans('product.sold_out') }}</span>{% endif %}
+      {% if product.can_show_remained_quantity and product.quantity <= 5 and product.is_available %}<span class="v-badge v-badge--low">{{ trans('product.low_stock', { n: product.quantity }) }}</span>{% endif %}
     </div>
 
     <salla-button shape="icon" fill="none" class="v-pill" onclick="salla.wishlist.toggle({{ product.id }})"
@@ -21,8 +26,8 @@
 
   <div style="display:flex;flex-direction:column;gap:7px;padding-inline:4px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
-      <span style="font-family:var(--latin);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--leaf)">{{ product.category.name }}</span>
-      <span style="font-size:11px;font-weight:700;color:var(--iris);white-space:nowrap">★ {{ product.rating.stars|localize_number }}</span>
+      <span style="font-family:var(--latin);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--leaf)">{{ product.brand.name ?: product.category.name }}</span>
+      {% if product.rating.stars %}<span style="font-size:11px;font-weight:700;color:var(--iris);white-space:nowrap">★ {{ product.rating.stars|localize_number }}</span>{% endif %}
     </div>
     <h3 style="font-size:19px"><a href="{{ product.url }}" style="color:var(--aubergine)">{{ product.name }}</a></h3>
     <p style="margin:0;font-size:12.5px;line-height:1.6;color:var(--leaf)">{{ product.subtitle }}</p>
@@ -34,6 +39,15 @@
         {% if product.discount_percentage %}<span class="v-badge v-badge--off">−{{ product.discount_percentage }}</span>{% endif %}
       {% endif %}
     </div>
+
+    {% if product.options|length %}
+      <div class="v-product__swatches" aria-label="{{ trans('product.variants') }}">
+        {% for option in product.options|slice(0, 5) %}
+          <span title="{{ option.name ?: option.value }}" style="--swatch:{{ option.color ?: '#C9B8FF' }}">{{ option.display_value ?: '' }}</span>
+        {% endfor %}
+        {% if product.options|length > 5 %}<small>+{{ product.options|length - 5 }}</small>{% endif %}
+      </div>
+    {% endif %}
 
     {% if product.metadata.fragrance_notes %}
       <div style="margin-top:4px;border-top:1px solid var(--mist);padding-top:9px">

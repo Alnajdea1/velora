@@ -6,11 +6,17 @@
         <span style="font-family:var(--latin);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--leaf)">{{ trans('mood.kicker') }}</span>
         <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('mood.title')) }}</h2>
       </div>
-      <p style="margin:0;max-width:300px;font-size:13.5px;line-height:1.8;color:var(--leaf)">{{ component.subtitle }}</p>
+      <p style="margin:0;max-width:300px;font-size:13.5px;line-height:1.8;color:var(--leaf)">{{ component.subtitle ?: trans('mood.subtitle') }}</p>
     </div>
 
     <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:34px" role="tablist">
-      {% for mood in component.moods %}
+      {% set default_moods = [
+        {'name':trans('mood.moods.calm'),'color':'#BACBB5'}, {'name':trans('mood.moods.warm'),'color':'#FFCBD2'},
+        {'name':trans('mood.moods.fresh'),'color':'#C9B8FF'}, {'name':trans('mood.moods.bold'),'color':'#7657E8'},
+        {'name':trans('mood.moods.dreamy'),'color':'#EBD8FF'}, {'name':trans('mood.moods.evening'),'color':'#261838'}
+      ] %}
+      {% set moods = component.moods|length ? component.moods : default_moods %}
+      {% for mood in moods %}
         <button type="button" role="tab" class="v-chip v-pill" data-mood="{{ loop.index0 }}"
                 aria-pressed="{{ loop.first ? 'true' : 'false' }}" style="padding:12px 20px">
           <span class="v-chip__dot" style="background:{{ mood.color }}"></span>{{ mood.name }}
@@ -18,7 +24,7 @@
       {% endfor %}
     </div>
 
-    {% for mood in component.moods %}
+    {% for mood in moods %}
       <div class="v-grid v-grid--4" data-mood-panel="{{ loop.index0 }}" {{ loop.first ? '' : 'hidden' }} style="margin-top:34px">
         {% for product in mood.products|slice(0, 4) %}
           {% include 'components.product-card' with { product: product } %}

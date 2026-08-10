@@ -1,32 +1,54 @@
-{# velora.hero #}
-<section class="v-section" style="position:relative;overflow:hidden">
-  <span aria-hidden="true" style="position:absolute;top:-160px;inset-inline-end:-120px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--mist),rgba(201,184,255,.55) 45%,transparent 72%)"></span>
-  <div class="v-wrap" style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:56px;align-items:center">
-    <div style="animation:v-rise .9s ease both">
-      <span class="v-pill" style="display:inline-flex;align-items:center;gap:9px;padding:7px 15px;background:var(--porcelain);box-shadow:0 10px 30px -22px rgba(38,24,56,.6);font-size:12px;color:var(--leaf);font-weight:700">
-        <span style="width:7px;height:7px;border-radius:999px;background:var(--coral)"></span>{{ component.kicker|default(trans('hero.kicker')) }}
+{# Velora — Lavender in Motion hero. The CSS bottle is the approved prototype artwork fallback. #}
+<section class="v-hero" data-component="lavender-hero">
+  <span class="v-hero__wash v-hero__wash--iris" aria-hidden="true"></span>
+  <span class="v-hero__wash v-hero__wash--sage" aria-hidden="true"></span>
+
+  <div class="v-wrap v-hero__grid">
+    <div class="v-hero__copy">
+      <span class="v-pill v-hero__kicker">
+        <i aria-hidden="true"></i>{{ component.kicker ?: trans('hero.kicker') }}
       </span>
-      <h1 style="margin-top:22px;font-size:clamp(46px,6.2vw,86px);line-height:1.42">
-        {{ component.line_1 }}<br>
-        <span style="color:var(--iris)">{{ component.line_2 }}</span><br>
-        {{ component.line_3 }}
+      <h1 class="v-hero__title">
+        {{ component.line_1 ?: trans('hero.line_1') }}<br>
+        <span>{{ component.line_2 ?: trans('hero.line_2') }}</span><br>
+        <em>{{ component.line_3 ?: trans('hero.line_3') }}</em>
       </h1>
-      <p style="margin-top:24px;max-width:430px;font-size:15.5px;line-height:1.85;color:var(--leaf)">{{ component.body }}</p>
-      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:34px">
-        <a href="{{ component.primary_url|default(link('products')) }}" class="v-btn v-btn--primary v-pill">{{ component.primary_label|default(trans('hero.cta')) }}</a>
-        <a href="{{ component.secondary_url|default('#aura') }}" style="padding-bottom:4px;border-bottom:1.5px solid var(--lilac);color:var(--aubergine);font-size:14px;font-weight:700">{{ component.secondary_label|default(trans('hero.cta_secondary')) }}</a>
+      <p class="v-hero__body">{{ component.body ?: trans('hero.body') }}</p>
+      <div class="v-hero__actions">
+        <a href="{{ component.primary_url ?: link('products') }}" class="v-btn v-btn--primary v-pill">
+          {{ component.primary_label ?: trans('hero.cta') }} <span class="v-flip" aria-hidden="true">←</span>
+        </a>
+        <a href="{{ component.secondary_url ?: '#aura' }}" class="v-hero__secondary">{{ component.secondary_label ?: trans('hero.cta_secondary') }}</a>
       </div>
+      <dl class="v-hero__stats">
+        <div><dt>{{ component.stat_1_value ?: trans('hero.stat_1_value') }}</dt><dd>{{ component.stat_1_label ?: trans('hero.stat_1_label') }}</dd></div>
+        <div><dt>{{ component.stat_2_value ?: trans('hero.stat_2_value') }}</dt><dd>{{ component.stat_2_label ?: trans('hero.stat_2_label') }}</dd></div>
+        <div><dt>{{ component.stat_3_value ?: trans('hero.stat_3_value') }}</dt><dd>{{ component.stat_3_label ?: trans('hero.stat_3_label') }}</dd></div>
+      </dl>
     </div>
 
-    <div style="position:relative;min-height:clamp(430px,52vw,580px)">
-      <div class="v-arch" style="position:absolute;inset-inline-start:0;top:0;width:80%;height:100%;background:linear-gradient(170deg,var(--mist),var(--lilac) 48%,var(--iris))">
-        {% if component.image %}<img src="{{ component.image }}" alt="" style="width:100%;height:100%;object-fit:cover">{% endif %}
-      </div>
-      <span aria-hidden="true" class="v-petal" style="position:absolute;inset-inline-end:0;top:12%;width:148px;height:148px;background:linear-gradient(140deg,var(--sage),var(--leaf));animation:v-drift 13s ease-in-out infinite"></span>
-      {% for note in component.notes %}
-        <div class="v-pill" style="position:absolute;{{ loop.index0 == 0 ? 'top:6%;inset-inline-end:-2%' : (loop.index0 == 1 ? 'top:44%;inset-inline-start:-6%' : 'bottom:22%;inset-inline-end:-4%') }};padding:9px 15px;background:rgba(252,251,255,.94);backdrop-filter:blur(8px);box-shadow:0 16px 34px -22px rgba(38,24,56,.6);font-size:12px;font-weight:700;white-space:nowrap;animation:v-drift {{ 9 + loop.index0 * 2 }}s ease-in-out infinite">
-          <span style="font-family:var(--latin);font-size:10px;letter-spacing:.14em;color:var(--iris)">{{ note.tag }}</span> {{ note.label }}
+    <div class="v-hero__art" aria-label="{{ component.image_alt ?: trans('hero.art_alt') }}">
+      <div class="v-hero__arch">
+        <span class="v-hero__glow" aria-hidden="true"></span>
+        {% if component.image %}
+          <img src="{{ component.image }}" alt="{{ component.image_alt ?: trans('hero.art_alt') }}" fetchpriority="high">
+        {% else %}
+          <span class="v-bottle v-bottle--hero" aria-hidden="true"><i></i><b></b><em></em></span>
+        {% endif %}
+        <div class="v-hero__pick">
+          <span><small>{{ trans('hero.editor_pick') }}</small><strong>{{ component.product_name ?: trans('hero.product_name') }}</strong></span>
+          <a href="{{ component.product_url ?: link('products') }}" class="v-btn v-btn--dark v-pill">{{ trans('common.discover') }}</a>
         </div>
+      </div>
+      <span class="v-hero__leaf v-petal" aria-hidden="true"></span>
+      {% set default_notes = [
+        {'tag':'TOP','label':trans('hero.note_top')},
+        {'tag':'HEART','label':trans('hero.note_heart')},
+        {'tag':'BASE','label':trans('hero.note_base')}
+      ] %}
+      {% set hero_notes = component.notes|length ? component.notes : default_notes %}
+      {% for note in hero_notes|slice(0, 3) %}
+        <span class="v-pill v-hero__note v-hero__note--{{ loop.index }}"><b>{{ note.tag }}</b> {{ note.label }}</span>
       {% endfor %}
     </div>
   </div>

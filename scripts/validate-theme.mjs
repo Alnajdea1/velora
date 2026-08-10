@@ -3,7 +3,9 @@ import path from 'node:path';
 
 const root = process.cwd();
 const requiredPages = [
+  'src/views/layouts/master.twig',
   'src/views/pages/index.twig',
+  'src/views/pages/404.twig',
   'src/views/pages/product/index.twig',
   'src/views/pages/product/single.twig',
   'src/views/pages/cart.twig',
@@ -96,6 +98,24 @@ if (manifest) {
     componentNames.add(component.name);
     const componentFile = `src/views/components/${String(component.path).replaceAll('.', '/')}.twig`;
     if (!fs.existsSync(path.join(root, componentFile))) errors.push(`Component template missing: ${componentFile}`);
+  }
+}
+
+const homeTemplate = path.join(root, 'src/views/pages/index.twig');
+if (fs.existsSync(homeTemplate)) {
+  const source = fs.readFileSync(homeTemplate, 'utf8');
+  if (!/{%\s*component\s+home\s*%}/.test(source)) {
+    errors.push('Homepage must render merchant-ordered Velora components with {% component home %}');
+  }
+}
+
+const forbiddenThemeFeatures = new Set([
+  'fixed-products', 'products-slider', 'featured-products', 'latest-products',
+  'fixed-banner', 'photos-slider', 'square-photos', 'store-features'
+]);
+for (const feature of manifest?.features || []) {
+  if (forbiddenThemeFeatures.has(feature)) {
+    errors.push(`Remove predefined homepage feature that can revive the previous store design: ${feature}`);
   }
 }
 

@@ -1,255 +1,821 @@
 {
-  "version": "1.1.0",
-  "name": {
-    "ar": "خزامى — لافندر بحركة",
-    "en": "Lavender in Motion"
-  },
-  "repository": "https://github.com/Alnajdea1/velora",
-  "support_url": "https://github.com/Alnajdea1/velora/issues",
-  "author_email": "elyas.alnajdi@outlook.com",
-  "features": [
-    "fonts",
-    "color",
-    "breadcrumb",
-    "filters",
-    "mega-menu",
-    "component-products-slider",
-    "component-featured-products",
-    "component-store-features"
-  ],
-  "settings": [
-    {
-      "id": "accent",
-      "type": "string",
-      "format": "color",
-      "label": "لون القزحية الأساسي",
-      "value": "#7657E8",
-      "required": true
-    },
-    {
-      "id": "dark",
-      "type": "string",
-      "format": "color",
-      "label": "لون الباذنجان الداكن",
-      "value": "#261838",
-      "required": true
-    },
-    {
-      "id": "micro_accent",
-      "type": "string",
-      "format": "color",
-      "label": "لون اللمسة الصغيرة",
-      "value": "#FF7C8B",
-      "required": true
-    },
-    {
-      "id": "reduce_motion",
-      "type": "boolean",
-      "format": "switch",
-      "label": "تقليل الحركة",
-      "selected": false
-    },
-    {
-      "id": "header_is_sticky",
-      "type": "boolean",
-      "format": "switch",
-      "label": "تثبيت القائمة العلوية",
-      "selected": true
-    },
-    {
-      "id": "product_show_breadcrumbs",
-      "type": "boolean",
-      "format": "switch",
-      "label": "إظهار مسار التنقل في صفحة المنتج",
-      "selected": true
-    },
-    {
-      "id": "sticky_add_to_cart",
-      "type": "boolean",
-      "format": "switch",
-      "label": "تثبيت زر الشراء على الجوال",
-      "selected": true
-    }
-  ],
-  "components": [
-    {
-      "name": "lavender-hero",
-      "title": {"ar": "الغلاف الرئيسي — لافندر بحركة", "en": "Lavender in Motion Hero"},
-      "icon": "sicon-image-carousel",
-      "path": "hero",
-      "fields": [
-        {"id": "kicker", "type": "string", "label": "النص العلوي", "multilanguage": true},
-        {"id": "line_1", "type": "string", "label": "العنوان — السطر الأول", "multilanguage": true, "required": true},
-        {"id": "line_2", "type": "string", "label": "العنوان — السطر الثاني", "multilanguage": true, "required": true},
-        {"id": "line_3", "type": "string", "label": "العنوان — السطر الثالث", "multilanguage": true},
-        {"id": "body", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true},
-        {"id": "primary_label", "type": "string", "label": "نص الزر الأساسي", "multilanguage": true},
-        {"id": "primary_url", "type": "string", "format": "url", "label": "رابط الزر الأساسي"},
-        {"id": "secondary_label", "type": "string", "label": "نص الرابط الثانوي", "multilanguage": true},
-        {"id": "secondary_url", "type": "string", "format": "url", "label": "الرابط الثانوي"},
-        {"id": "image", "type": "string", "format": "image", "label": "صورة المنتج الرئيسية", "required": true},
-        {
-          "id": "notes",
-          "type": "collection",
-          "format": "collection",
-          "label": "ملصقات النوتات العطرية",
-          "maxLength": 4,
-          "fields": [
-            {"id": "tag", "type": "string", "label": "الرمز", "multilanguage": true},
-            {"id": "label", "type": "string", "label": "النوتة", "multilanguage": true}
-          ]
-        }
-      ]
-    },
-    {
-      "name": "fragrance-aura-explorer",
-      "title": {"ar": "مستكشف هالة العطر", "en": "Fragrance Aura Explorer"},
-      "icon": "sicon-magic-wand",
-      "path": "aura-explorer",
-      "fields": [
-        {"id": "title", "type": "string", "label": "العنوان", "multilanguage": true},
-        {"id": "subtitle", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true},
-        {
-          "id": "families",
-          "type": "collection",
-          "format": "collection",
-          "label": "العائلات العطرية",
-          "required": true,
-          "minLength": 2,
-          "maxLength": 6,
-          "fields": [
-            {"id": "name", "type": "string", "label": "الاسم", "multilanguage": true, "required": true},
-            {"id": "description", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true},
-            {"id": "color_from", "type": "string", "format": "color", "label": "لون البداية"},
-            {"id": "color_to", "type": "string", "format": "color", "label": "لون النهاية"},
-            {"id": "category", "type": "items", "format": "dropdown-list", "source": "Categories", "label": "التصنيف", "required": true}
-          ]
-        },
-        {"id": "products_shown", "type": "number", "label": "عدد المنتجات", "value": 2},
-        {"id": "light_theme", "type": "boolean", "format": "switch", "label": "خلفية فاتحة", "selected": false}
-      ]
-    },
-    {
-      "name": "fragrance-note-bloom",
-      "title": {"ar": "تفتّح النوتات العطرية", "en": "Fragrance Note Bloom"},
-      "icon": "sicon-flower",
-      "path": "note-bloom",
-      "fields": [
-        {"id": "top_notes", "type": "string", "label": "نوتات المقدمة", "multilanguage": true},
-        {"id": "top_text", "type": "string", "format": "textarea", "label": "وصف المقدمة", "multilanguage": true},
-        {"id": "heart_notes", "type": "string", "label": "نوتات القلب", "multilanguage": true},
-        {"id": "heart_text", "type": "string", "format": "textarea", "label": "وصف القلب", "multilanguage": true},
-        {"id": "base_notes", "type": "string", "label": "نوتات القاعدة", "multilanguage": true},
-        {"id": "base_text", "type": "string", "format": "textarea", "label": "وصف القاعدة", "multilanguage": true}
-      ]
-    },
-    {
-      "name": "lavender-routine-path",
-      "title": {"ar": "مسار روتين الخزامى", "en": "Lavender Routine Path"},
-      "icon": "sicon-route",
-      "path": "routine-path",
-      "fields": [
-        {"id": "title", "type": "string", "label": "العنوان", "multilanguage": true},
-        {
-          "id": "steps",
-          "type": "collection",
-          "format": "collection",
-          "label": "خطوات الروتين",
-          "minLength": 2,
-          "maxLength": 5,
-          "fields": [
-            {"id": "title", "type": "string", "label": "عنوان الخطوة", "multilanguage": true},
-            {"id": "body", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true},
-            {"id": "product", "type": "items", "format": "dropdown-list", "source": "Products", "label": "المنتج"}
-          ]
-        },
-        {"id": "cta_label", "type": "string", "label": "نص الزر", "multilanguage": true},
-        {"id": "cta_url", "type": "string", "format": "url", "label": "رابط الزر"}
-      ]
-    },
-    {
-      "name": "mood-shopping",
-      "title": {"ar": "التسوق حسب المزاج", "en": "Mood Shopping"},
-      "icon": "sicon-heart",
-      "path": "mood-shopping",
-      "fields": [
-        {"id": "title", "type": "string", "label": "العنوان", "multilanguage": true},
-        {"id": "subtitle", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true},
-        {
-          "id": "moods",
-          "type": "collection",
-          "format": "collection",
-          "label": "الحالات",
-          "maxLength": 6,
-          "fields": [
-            {"id": "name", "type": "string", "label": "الاسم", "multilanguage": true},
-            {"id": "color", "type": "string", "format": "color", "label": "اللون"},
-            {"id": "products", "type": "items", "format": "dropdown-list", "source": "Products", "multichoice": true, "maxLength": 4, "label": "المنتجات"}
-          ]
-        }
-      ]
-    },
-    {
-      "name": "gift-composer",
-      "title": {"ar": "مؤلف الهدايا", "en": "Gift Composer"},
-      "icon": "sicon-gift",
-      "path": "gift-composer",
-      "fields": [
-        {"id": "title", "type": "string", "label": "العنوان", "multilanguage": true},
-        {"id": "body", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true},
-        {"id": "products", "type": "items", "format": "dropdown-list", "source": "Products", "multichoice": true, "maxLength": 8, "label": "منتجات الهدية"},
-        {"id": "max_items", "type": "number", "label": "أقصى عدد للقطع", "value": 3},
-        {"id": "wrap_price", "type": "number", "label": "سعر التغليف", "value": 35}
-      ]
-    },
-    {
-      "name": "editorial-story",
-      "title": {"ar": "قصة تحريرية", "en": "Editorial Story"},
-      "icon": "sicon-story",
-      "path": "editorial-story",
-      "fields": [
-        {"id": "kicker", "type": "string", "label": "النص العلوي", "multilanguage": true},
-        {"id": "title", "type": "string", "label": "العنوان", "multilanguage": true},
-        {"id": "body", "type": "string", "format": "textarea", "label": "القصة", "multilanguage": true},
-        {"id": "image", "type": "string", "format": "image", "label": "الصورة"},
-        {"id": "button_label", "type": "string", "label": "نص الزر", "multilanguage": true},
-        {"id": "button_url", "type": "string", "format": "url", "label": "رابط الزر"}
-      ]
-    },
-    {
-      "name": "journal-grid",
-      "title": {"ar": "من المجلة", "en": "From the Journal"},
-      "icon": "sicon-blog",
-      "path": "journal",
-      "fields": [
-        {"id": "title", "type": "string", "label": "العنوان", "multilanguage": true},
-        {
-          "id": "articles",
-          "type": "collection",
-          "format": "collection",
-          "label": "المقالات",
-          "maxLength": 6,
-          "fields": [
-            {"id": "title", "type": "string", "label": "عنوان المقال", "multilanguage": true, "required": true},
-            {"id": "category", "type": "string", "label": "التصنيف", "multilanguage": true},
-            {"id": "image", "type": "string", "format": "image", "label": "الصورة", "required": true},
-            {"id": "url", "type": "string", "format": "url", "label": "الرابط", "required": true},
-            {"id": "reading_time", "type": "number", "label": "دقائق القراءة", "value": 5}
-          ]
-        }
-      ]
-    },
-    {
-      "name": "closing-newsletter",
-      "title": {"ar": "ختام ونشرة بريدية", "en": "Closing Newsletter"},
-      "icon": "sicon-mail",
-      "path": "closing",
-      "fields": [
-        {"id": "title", "type": "string", "label": "العنوان", "multilanguage": true},
-        {"id": "body", "type": "string", "format": "textarea", "label": "الوصف", "multilanguage": true},
-        {"id": "button_label", "type": "string", "label": "نص الزر", "multilanguage": true},
-        {"id": "background", "type": "string", "format": "color", "label": "لون الخلفية", "value": "#261838"}
-      ]
-    }
-  ]
+    "version":  "1.2.0",
+    "name":  {
+                 "ar":  "خزامى — لافندر بحركة",
+                 "en":  "Lavender in Motion"
+             },
+    "repository":  "https://github.com/Alnajdea1/velora",
+    "support_url":  "https://github.com/Alnajdea1/velora/issues",
+    "author_email":  "elyas.alnajdi@outlook.com",
+    "features":  [
+                     "fonts",
+                     "color",
+                     "breadcrumb",
+                     "filters",
+                     "mega-menu"
+                 ],
+    "settings":  [
+                     {
+                         "id":  "accent",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون القزحية الأساسي",
+                         "value":  "#7657E8",
+                         "required":  true
+                     },
+                     {
+                         "id":  "dark",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون الباذنجان الداكن",
+                         "value":  "#261838",
+                         "required":  true
+                     },
+                     {
+                         "id":  "micro_accent",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون اللمسة الصغيرة",
+                         "value":  "#FF7C8B",
+                         "required":  true
+                     },
+                     {
+                         "id":  "reduce_motion",
+                         "type":  "boolean",
+                         "format":  "switch",
+                         "label":  "تقليل الحركة",
+                         "selected":  false
+                     },
+                     {
+                         "id":  "header_is_sticky",
+                         "type":  "boolean",
+                         "format":  "switch",
+                         "label":  "تثبيت القائمة العلوية",
+                         "selected":  true
+                     },
+                     {
+                         "id":  "product_show_breadcrumbs",
+                         "type":  "boolean",
+                         "format":  "switch",
+                         "label":  "إظهار مسار التنقل في صفحة المنتج",
+                         "selected":  true
+                     },
+                     {
+                         "id":  "sticky_add_to_cart",
+                         "type":  "boolean",
+                         "format":  "switch",
+                         "label":  "تثبيت زر الشراء على الجوال",
+                         "selected":  true
+                     },
+                     {
+                         "id":  "porcelain",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون الخزف الأبيض",
+                         "value":  "#FCFBFF",
+                         "required":  true
+                     },
+                     {
+                         "id":  "mist",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون ضباب اللافندر",
+                         "value":  "#F1ECFF",
+                         "required":  true
+                     },
+                     {
+                         "id":  "lilac",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون البتلة الليلكية",
+                         "value":  "#C9B8FF",
+                         "required":  true
+                     },
+                     {
+                         "id":  "sage",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون الميرمية النباتي",
+                         "value":  "#BACBB5",
+                         "required":  true
+                     },
+                     {
+                         "id":  "leaf",
+                         "type":  "string",
+                         "format":  "color",
+                         "label":  "لون ورق النبات",
+                         "value":  "#71836C",
+                         "required":  true
+                     },
+                     {
+                         "id":  "announcement_enabled",
+                         "type":  "boolean",
+                         "format":  "switch",
+                         "label":  "إظهار شريط الإعلان",
+                         "selected":  true
+                     },
+                     {
+                         "id":  "announcement_code",
+                         "type":  "string",
+                         "label":  "كود العرض في شريط الإعلان",
+                         "value":  "VELORA10"
+                     },
+                     {
+                         "id":  "newsletter_enabled",
+                         "type":  "boolean",
+                         "format":  "switch",
+                         "label":  "إظهار النشرة البريدية قبل التذييل",
+                         "selected":  true
+                     },
+                     {
+                         "id":  "card_radius",
+                         "type":  "number",
+                         "label":  "استدارة بطاقات المنتجات",
+                         "value":  28
+                     },
+                     {
+                         "id":  "editorial_radius",
+                         "type":  "number",
+                         "label":  "استدارة الكتل التحريرية",
+                         "value":  44
+                     },
+                     {
+                         "id":  "reviewer_panel",
+                         "type":  "boolean",
+                         "format":  "switch",
+                         "label":  "إظهار لوحة فهرس الشاشات للمراجعة",
+                         "selected":  false
+                     }
+                 ],
+    "components":  [
+                       {
+                           "name":  "lavender-hero",
+                           "title":  {
+                                         "ar":  "الغلاف الرئيسي — لافندر بحركة",
+                                         "en":  "Lavender in Motion Hero"
+                                     },
+                           "icon":  "sicon-image-carousel",
+                           "path":  "hero",
+                           "fields":  [
+                                          {
+                                              "id":  "kicker",
+                                              "type":  "string",
+                                              "label":  "النص العلوي",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "line_1",
+                                              "type":  "string",
+                                              "label":  "العنوان — السطر الأول",
+                                              "multilanguage":  true,
+                                              "required":  true
+                                          },
+                                          {
+                                              "id":  "line_2",
+                                              "type":  "string",
+                                              "label":  "العنوان — السطر الثاني",
+                                              "multilanguage":  true,
+                                              "required":  true
+                                          },
+                                          {
+                                              "id":  "line_3",
+                                              "type":  "string",
+                                              "label":  "العنوان — السطر الثالث",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "body",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "الوصف",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "primary_label",
+                                              "type":  "string",
+                                              "label":  "نص الزر الأساسي",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "primary_url",
+                                              "type":  "string",
+                                              "format":  "url",
+                                              "label":  "رابط الزر الأساسي"
+                                          },
+                                          {
+                                              "id":  "secondary_label",
+                                              "type":  "string",
+                                              "label":  "نص الرابط الثانوي",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "secondary_url",
+                                              "type":  "string",
+                                              "format":  "url",
+                                              "label":  "الرابط الثانوي"
+                                          },
+                                          {
+                                              "id":  "image",
+                                              "type":  "string",
+                                              "format":  "image",
+                                              "label":  "صورة المنتج الرئيسية",
+                                              "required":  false
+                                          },
+                                          {
+                                              "id":  "notes",
+                                              "type":  "collection",
+                                              "format":  "collection",
+                                              "label":  "ملصقات النوتات العطرية",
+                                              "maxLength":  4,
+                                              "fields":  [
+                                                             {
+                                                                 "id":  "tag",
+                                                                 "type":  "string",
+                                                                 "label":  "الرمز",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "label",
+                                                                 "type":  "string",
+                                                                 "label":  "النوتة",
+                                                                 "multilanguage":  true
+                                                             }
+                                                         ]
+                                          },
+                                          {
+                                              "id":  "image_alt",
+                                              "type":  "string",
+                                              "label":  "النص البديل للصورة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "product_name",
+                                              "type":  "string",
+                                              "label":  "اسم اختيار المحررة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "product_url",
+                                              "type":  "string",
+                                              "format":  "url",
+                                              "label":  "رابط اختيار المحررة"
+                                          },
+                                          {
+                                              "id":  "stat_1_value",
+                                              "type":  "string",
+                                              "label":  "قيمة الإحصائية الأولى",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "stat_1_label",
+                                              "type":  "string",
+                                              "label":  "وصف الإحصائية الأولى",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "stat_2_value",
+                                              "type":  "string",
+                                              "label":  "قيمة الإحصائية الثانية",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "stat_2_label",
+                                              "type":  "string",
+                                              "label":  "وصف الإحصائية الثانية",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "stat_3_value",
+                                              "type":  "string",
+                                              "label":  "قيمة الإحصائية الثالثة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "stat_3_label",
+                                              "type":  "string",
+                                              "label":  "وصف الإحصائية الثالثة",
+                                              "multilanguage":  true
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "fragrance-aura-explorer",
+                           "title":  {
+                                         "ar":  "مستكشف هالة العطر",
+                                         "en":  "Fragrance Aura Explorer"
+                                     },
+                           "icon":  "sicon-magic-wand",
+                           "path":  "aura-explorer",
+                           "fields":  [
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "subtitle",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "الوصف",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "families",
+                                              "type":  "collection",
+                                              "format":  "collection",
+                                              "label":  "العائلات العطرية",
+                                              "required":  true,
+                                              "minLength":  2,
+                                              "maxLength":  6,
+                                              "fields":  [
+                                                             {
+                                                                 "id":  "name",
+                                                                 "type":  "string",
+                                                                 "label":  "الاسم",
+                                                                 "multilanguage":  true,
+                                                                 "required":  true
+                                                             },
+                                                             {
+                                                                 "id":  "description",
+                                                                 "type":  "string",
+                                                                 "format":  "textarea",
+                                                                 "label":  "الوصف",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "color_from",
+                                                                 "type":  "string",
+                                                                 "format":  "color",
+                                                                 "label":  "لون البداية"
+                                                             },
+                                                             {
+                                                                 "id":  "color_to",
+                                                                 "type":  "string",
+                                                                 "format":  "color",
+                                                                 "label":  "لون النهاية"
+                                                             },
+                                                             {
+                                                                 "id":  "category",
+                                                                 "type":  "items",
+                                                                 "format":  "dropdown-list",
+                                                                 "source":  "Categories",
+                                                                 "label":  "التصنيف",
+                                                                 "required":  true
+                                                             }
+                                                         ]
+                                          },
+                                          {
+                                              "id":  "products_shown",
+                                              "type":  "number",
+                                              "label":  "عدد المنتجات",
+                                              "value":  2
+                                          },
+                                          {
+                                              "id":  "light_theme",
+                                              "type":  "boolean",
+                                              "format":  "switch",
+                                              "label":  "خلفية فاتحة",
+                                              "selected":  false
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "season-showcase",
+                           "title":  {
+                                         "ar":  "مختارات الموسم المنحوتة",
+                                         "en":  "Sculptural season picks"
+                                     },
+                           "icon":  "sicon-products",
+                           "path":  "season-showcase",
+                           "fields":  [
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "subtitle",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "الوصف",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "products",
+                                              "type":  "items",
+                                              "format":  "dropdown-list",
+                                              "source":  "Products",
+                                              "multichoice":  true,
+                                              "minLength":  3,
+                                              "maxLength":  3,
+                                              "label":  "ثلاثة منتجات",
+                                              "required":  true
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "botanical-categories",
+                           "title":  {
+                                         "ar":  "التنقل النباتي بين الأقسام",
+                                         "en":  "Botanical category navigation"
+                                     },
+                           "icon":  "sicon-layout-grid-rearrange",
+                           "path":  "botanical-categories",
+                           "fields":  [
+                                          {
+                                              "id":  "kicker",
+                                              "type":  "string",
+                                              "label":  "النص العلوي",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "categories",
+                                              "type":  "collection",
+                                              "format":  "collection",
+                                              "label":  "الأقسام",
+                                              "minLength":  4,
+                                              "maxLength":  4,
+                                              "required":  true,
+                                              "fields":  [
+                                                             {
+                                                                 "id":  "category",
+                                                                 "type":  "items",
+                                                                 "format":  "dropdown-list",
+                                                                 "source":  "Categories",
+                                                                 "label":  "التصنيف",
+                                                                 "required":  true
+                                                             },
+                                                             {
+                                                                 "id":  "title",
+                                                                 "type":  "string",
+                                                                 "label":  "الاسم المعروض",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "count_label",
+                                                                 "type":  "string",
+                                                                 "label":  "نص عدد المنتجات",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "image",
+                                                                 "type":  "string",
+                                                                 "format":  "image",
+                                                                 "label":  "الصورة الاختيارية"
+                                                             },
+                                                             {
+                                                                 "id":  "color",
+                                                                 "type":  "string",
+                                                                 "format":  "color",
+                                                                 "label":  "لون الخلفية"
+                                                             }
+                                                         ]
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "editorial-story",
+                           "title":  {
+                                         "ar":  "قصة تحريرية",
+                                         "en":  "Editorial Story"
+                                     },
+                           "icon":  "sicon-story",
+                           "path":  "editorial-story",
+                           "fields":  [
+                                          {
+                                              "id":  "kicker",
+                                              "type":  "string",
+                                              "label":  "النص العلوي",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "body",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "القصة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "image",
+                                              "type":  "string",
+                                              "format":  "image",
+                                              "label":  "الصورة"
+                                          },
+                                          {
+                                              "id":  "button_label",
+                                              "type":  "string",
+                                              "label":  "نص الزر",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "button_url",
+                                              "type":  "string",
+                                              "format":  "url",
+                                              "label":  "رابط الزر"
+                                          },
+                                          {
+                                              "id":  "image_alt",
+                                              "type":  "string",
+                                              "label":  "النص البديل للصورة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "tags",
+                                              "type":  "collection",
+                                              "format":  "collection",
+                                              "label":  "وسوم القصة",
+                                              "maxLength":  3,
+                                              "fields":  [
+                                                             {
+                                                                 "id":  "label",
+                                                                 "type":  "string",
+                                                                 "label":  "الوسم",
+                                                                 "multilanguage":  true
+                                                             }
+                                                         ]
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "lavender-routine-path",
+                           "title":  {
+                                         "ar":  "مسار روتين الخزامى",
+                                         "en":  "Lavender Routine Path"
+                                     },
+                           "icon":  "sicon-route",
+                           "path":  "routine-path",
+                           "fields":  [
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "steps",
+                                              "type":  "collection",
+                                              "format":  "collection",
+                                              "label":  "خطوات الروتين",
+                                              "minLength":  2,
+                                              "maxLength":  5,
+                                              "fields":  [
+                                                             {
+                                                                 "id":  "title",
+                                                                 "type":  "string",
+                                                                 "label":  "عنوان الخطوة",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "body",
+                                                                 "type":  "string",
+                                                                 "format":  "textarea",
+                                                                 "label":  "الوصف",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "product",
+                                                                 "type":  "items",
+                                                                 "format":  "dropdown-list",
+                                                                 "source":  "Products",
+                                                                 "label":  "المنتج"
+                                                             }
+                                                         ]
+                                          },
+                                          {
+                                              "id":  "cta_label",
+                                              "type":  "string",
+                                              "label":  "نص الزر",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "cta_url",
+                                              "type":  "string",
+                                              "format":  "url",
+                                              "label":  "رابط الزر"
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "mood-shopping",
+                           "title":  {
+                                         "ar":  "التسوق حسب المزاج",
+                                         "en":  "Mood Shopping"
+                                     },
+                           "icon":  "sicon-heart",
+                           "path":  "mood-shopping",
+                           "fields":  [
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "subtitle",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "الوصف",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "moods",
+                                              "type":  "collection",
+                                              "format":  "collection",
+                                              "label":  "الحالات",
+                                              "maxLength":  6,
+                                              "fields":  [
+                                                             {
+                                                                 "id":  "name",
+                                                                 "type":  "string",
+                                                                 "label":  "الاسم",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "color",
+                                                                 "type":  "string",
+                                                                 "format":  "color",
+                                                                 "label":  "اللون"
+                                                             },
+                                                             {
+                                                                 "id":  "products",
+                                                                 "type":  "items",
+                                                                 "format":  "dropdown-list",
+                                                                 "source":  "Products",
+                                                                 "multichoice":  true,
+                                                                 "maxLength":  4,
+                                                                 "label":  "المنتجات"
+                                                             }
+                                                         ]
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "gift-composer",
+                           "title":  {
+                                         "ar":  "مؤلف الهدايا",
+                                         "en":  "Gift Composer"
+                                     },
+                           "icon":  "sicon-gift",
+                           "path":  "gift-composer",
+                           "fields":  [
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "body",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "الوصف",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "products",
+                                              "type":  "items",
+                                              "format":  "dropdown-list",
+                                              "source":  "Products",
+                                              "multichoice":  true,
+                                              "maxLength":  8,
+                                              "label":  "منتجات الهدية"
+                                          },
+                                          {
+                                              "id":  "max_items",
+                                              "type":  "number",
+                                              "label":  "أقصى عدد للقطع",
+                                              "value":  3
+                                          },
+                                          {
+                                              "id":  "wrap_price",
+                                              "type":  "number",
+                                              "label":  "سعر التغليف",
+                                              "value":  35
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "journal-grid",
+                           "title":  {
+                                         "ar":  "من المجلة",
+                                         "en":  "From the Journal"
+                                     },
+                           "icon":  "sicon-blog",
+                           "path":  "journal",
+                           "fields":  [
+                                          {
+                                              "id":  "title",
+                                              "type":  "string",
+                                              "label":  "العنوان",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "articles",
+                                              "type":  "collection",
+                                              "format":  "collection",
+                                              "label":  "المقالات",
+                                              "maxLength":  6,
+                                              "fields":  [
+                                                             {
+                                                                 "id":  "title",
+                                                                 "type":  "string",
+                                                                 "label":  "عنوان المقال",
+                                                                 "multilanguage":  true,
+                                                                 "required":  true
+                                                             },
+                                                             {
+                                                                 "id":  "category",
+                                                                 "type":  "string",
+                                                                 "label":  "التصنيف",
+                                                                 "multilanguage":  true
+                                                             },
+                                                             {
+                                                                 "id":  "image",
+                                                                 "type":  "string",
+                                                                 "format":  "image",
+                                                                 "label":  "الصورة",
+                                                                 "required":  true
+                                                             },
+                                                             {
+                                                                 "id":  "url",
+                                                                 "type":  "string",
+                                                                 "format":  "url",
+                                                                 "label":  "الرابط",
+                                                                 "required":  true
+                                                             },
+                                                             {
+                                                                 "id":  "reading_time",
+                                                                 "type":  "number",
+                                                                 "label":  "دقائق القراءة",
+                                                                 "value":  5
+                                                             }
+                                                         ]
+                                          }
+                                      ]
+                       },
+                       {
+                           "name":  "fragrance-note-bloom",
+                           "title":  {
+                                         "ar":  "تفتّح النوتات العطرية",
+                                         "en":  "Fragrance Note Bloom"
+                                     },
+                           "icon":  "sicon-flower",
+                           "path":  "note-bloom",
+                           "fields":  [
+                                          {
+                                              "id":  "top_notes",
+                                              "type":  "string",
+                                              "label":  "نوتات المقدمة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "top_text",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "وصف المقدمة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "heart_notes",
+                                              "type":  "string",
+                                              "label":  "نوتات القلب",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "heart_text",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "وصف القلب",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "base_notes",
+                                              "type":  "string",
+                                              "label":  "نوتات القاعدة",
+                                              "multilanguage":  true
+                                          },
+                                          {
+                                              "id":  "base_text",
+                                              "type":  "string",
+                                              "format":  "textarea",
+                                              "label":  "وصف القاعدة",
+                                              "multilanguage":  true
+                                          }
+                                      ]
+                       }
+                   ]
 }
