@@ -1,6 +1,0 @@
-{% extends 'layouts.master' %}
-{% block title %}{{ trans('thanks.title') }}{% endblock %}
-{% block content %}
-  <section class="v-thanks v-dark"><div class="v-wrap"><span class="v-thanks__bloom v-petal">✓</span><h1>{{ trans('thanks.title') }}</h1><p>{{ trans('thanks.body') }}</p><div class="v-thanks-card"><dl><div><dt>{{ trans('thanks.order_number') }}</dt><dd>#{{ order.reference_id|default(order.id) }}</dd></div><div><dt>{{ trans('thanks.payment') }}</dt><dd>{{ order.payment_method.name }}</dd></div><div><dt>{{ trans('thanks.expected') }}</dt><dd>{{ order.expected_delivery_date }}</dd></div></dl>{% if order.tracking_url %}<a href="{{ order.tracking_url }}" class="v-btn v-btn--primary">{{ trans('thanks.track') }}</a>{% endif %}</div><a href="{{ link('home') }}" class="v-back-link">{{ trans('common.back_home') }}</a></div></section>
-{% endblock %}
-

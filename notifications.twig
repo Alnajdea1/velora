@@ -1,7 +1,0 @@
-{% extends 'layouts.master' %}
-{% block title %}{{ trans('account.notifications') }}{% endblock %}
-{% block content %}
-  <section class="v-page-hero v-curve-bottom"><div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><h1>{{ trans('account.notifications') }}</h1></div></section>
-  <section class="v-section"><div class="v-wrap v-account-layout"><aside class="v-account-nav"><salla-user-menu></salla-user-menu></aside><div class="v-notifications">{% hook 'customer:notifications.items.start' %}{% for notification in notifications %}<article class="v-notification {{ notification.is_read ? '' : 'is-new' }}"><span class="v-petal"></span><div><h2>{{ notification.title }}</h2><p>{{ notification.body }}</p><small>{{ notification.created_at|date('Y-m-d H:i') }}</small></div></article>{% else %}<div class="v-empty"><h2>{{ trans('account.notifications_empty') }}</h2></div>{% endfor %}{% hook 'customer:notifications.items.end' %}</div></div></section>
-{% endblock %}
-

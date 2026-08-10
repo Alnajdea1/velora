@@ -1,97 +1,60 @@
-{#
-| Variable                   | Type        | Description                                                          |
-|----------------------------|-------------|----------------------------------------------------------------------|
-| page                       | object      |                                                                      |
-| page.title                 | string      | *could be html                                                       |
-| page.slug                  | string      | ex: "cat.show"                                                       |
-| category                   | ?Category   |                                                                      |
-| category.name              | string      |                                                                      |
-| category.url               | string      |                                                                      |
-| category.sub_categories    | ?Category[] |                                                                      |
-| category.image             | ?string     |                                                                      |
-| filters                     | bool        | is filters allowed here or not                                        |
-| sort_options[]             | SortList[]  |                                                                      |
-| sort_options[].id          | string      | ourSuggest, bestSell, topRated, priceFromTopToLow, priceFromLowToTop |
-| sort_options[].name        | string      |                                                                      |
-| sort_options[].is_selected | bool        | Is current page sorted by it                                         |
-| search_query               | ?string     |                                                                      |
-#}
-{% extends "layouts.master" %}
+{% extends 'layouts.master' %}
+{% block title %}{{ page.title|striptags }}{% endblock %}
 {% block content %}
-	{% if theme.settings.get('product_index_show_breadcrumbs', true) %}
-		<div
-			class="container container--breadcrumbs">
-			{# add breadcumbs container in pages to make a space in case breadcrumbs is off #}
-			<nav class="breadcrumbs w-full py-5">
-				<salla-breadcrumb></salla-breadcrumb>
-			</nav>
-		</div>
-	{% endif %}
+  <section class="v-curve-bottom" style="padding:46px 0 90px;background:linear-gradient(170deg,var(--mist),var(--porcelain))">
+    <div class="v-wrap">
+      <salla-breadcrumb></salla-breadcrumb>
+      <h1 style="margin-top:16px;font-size:clamp(34px,3.6vw,52px)">{{ page.title|raw }}</h1>
+      <p style="margin-top:12px;max-width:620px;font-size:14px;line-height:1.85;color:var(--leaf)">{{ page.description }}</p>
+    </div>
+  </section>
 
-	{#
-    Hook: product.index.before_products_group_with_filter
-    Fires before the products grid and filter sidebar wrapper.
-    Use this hook to inject content above the products listing area.
-  #}
-	<div class="s-blocks-wrapper s-before-products-list !mt-0">{% hook 'product.index.before_products_group_with_filter' %}</div>
+  <section style="padding:40px 0 90px">
+    <div class="v-wrap v-collection {{ filters ? 'has-filters' : '' }}" data-collection>
+      {% if filters %}<aside class="v-filters" style="position:sticky;top:100px;padding:26px;border-radius:32px;background:var(--porcelain);box-shadow:inset 0 0 0 1px var(--mist)">
+        <salla-filters></salla-filters>
+      </aside>{% endif %}
 
-	<div class="container container--products-list flex items-start flex-col md:flex-row">
-		{% if filters %}
-			<button class="btn--close-sm close-filters sicon-cancel hidden"></button>
-			<salla-filters data-testid="store-products-filters" class="md:w-72 lg:sticky lg:top-20 flex-none" id="filters-menu"></salla-filters>
-		{% endif %}
+      <div>
+        <div class="v-card" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 18px;border-radius:24px;box-shadow:inset 0 0 0 1px var(--mist)">
+          <span style="font-size:13px;color:var(--leaf)">{{ trans('collection.count', { n: products|length }) }}</span>
+          <span style="flex:1"></span>
+          {% if filters %}<button type="button" class="v-btn v-btn--ghost v-filters-toggle" data-open="filters">{{ trans('collection.filters') }}</button>{% endif %}
+          {% if sort_options|length %}<select id="product-filter" class="v-field" style="width:auto" aria-label="{{ trans('collection.sort') }}">{% for sort in sort_options %}<option value="{{ sort.id }}" {{ sort.is_selected ? 'selected' : '' }}>{{ sort.name }}</option>{% endfor %}</select>{% endif %}
+          <div class="v-pill v-view-toggle" style="display:flex;gap:4px;padding:3px;background:var(--mist)">
+            <button type="button" class="v-chip v-pill" data-view="grid" aria-pressed="true">{{ trans('collection.grid') }}</button>
+            <button type="button" class="v-chip v-pill" data-view="list" aria-pressed="false">{{ trans('collection.list') }}</button>
+          </div>
+        </div>
 
-		<div class="main-content flex-1 w-full {{ filters ? 'ltr:lg:ml-8 rtl:lg:mr-8' : '' }}">
-			<div class="mb-4 sm:mb-6 flex justify-between items-center">
-				<h1 class="font-bold text-xl rtl:pl-3 ltr:pr-3" id="page-main-title">{{ page.title|raw }}</h1>
-				<div class="flex items-center space-x-2 rtl:space-x-reverse">
-					{% if filters %}
-						<a data-testid="store-products-filters-mobile-trigger" href="#filters-menu" class="filters-trigger bg-border-color text-primary lg:hidden mt-2">
-							<i class="sicon-filter text-gray-text text-2xl me-2.5"></i>
-						</a>
-					{% endif %}
-					{% if sort_options|length %}
-						<div class="flex items-center">
-							<label class="hidden sm:block rtl:ml-3 ltr:mr-3 whitespace-nowrap" for="product-filter">{{ trans('pages.categories.sorting') }}</label>
-							<select id="product-filter" class="form-input pt-0 pb-1 rtl:md:pl-10 ltr:md:pr-10">
-								{% for sort in sort_options %}
-									<option value="{{ sort.id }}" {{ sort.is_selected?'selected':'' }}>{{ sort.name }}</option>
-								{% endfor %}
-							</select>
-						</div>
-					{% endif %}
-				</div>
-			</div>
+        <div data-active-filters style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px"></div>
 
-			{% hook 'product:index.items.start' %}
+        {% hook 'product:index.items.start' %}
+        {% if products|length %}
+          <div class="v-grid v-grid--3" data-products style="margin-top:24px">
+            {% for product in products %}{% include 'components.product-card' with { product: product } %}{% endfor %}
+          </div>
+          <salla-pagination style="display:flex;justify-content:center;gap:8px;margin-top:40px"></salla-pagination>
+        {% else %}
+          <div class="v-empty" style="margin-top:24px">
+            <span class="v-petal" style="display:block;width:86px;height:86px;margin-inline:auto;background:linear-gradient(150deg,var(--lilac),var(--iris));animation:v-sway 9s ease-in-out infinite"></span>
+            <h3 style="margin-top:20px;font-size:24px">{{ trans('collection.empty_title') }}</h3>
+            <p style="margin-top:10px;max-width:340px;margin-inline:auto;font-size:13.5px;line-height:1.8;color:var(--leaf)">{{ trans('collection.empty_body') }}</p>
+            <a href="{{ link('products') }}" class="v-btn v-btn--dark v-pill" style="margin-top:20px">{{ trans('collection.clear') }}</a>
+          </div>
+        {% endif %}
+        {% hook 'product:index.items.end' %}
 
-			<div class="flex">
-				<salla-products-list data-testid="store-products-list" class="flex-1 min-w-0 overflow-auto " source="{{ page.slug }}" source-value="{{ page.id }}" {{ filters ?'filters-Results':'' }}></salla-products-list>
-			</div>
+        <template data-skeleton>
+          <div class="v-card" style="padding:14px">
+            <div class="v-skeleton" style="aspect-ratio:4/5"></div>
+            <div class="v-skeleton" style="height:14px;width:62%;margin-top:16px;border-radius:999px"></div>
+            <div class="v-skeleton" style="height:12px;width:38%;margin-top:9px;border-radius:999px"></div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
 
-			{% hook 'product:index.items.end' %}
-		</div>
-	</div>
-
-	{#
-    Hook: product.index.after_products_group_with_filter
-    Fires after the products grid and filter sidebar wrapper.
-    Use this hook to inject content below the products listing area.
-  #}
-	<div class="s-blocks-wrapper s-after-products-list">{% hook 'product.index.after_products_group_with_filter' %}</div>
-
-	{% if store.settings.category.testimonial_enabled %}
-		{% component 'home.testimonials' %}
-	{% endif %}
-
-	{#
-    Hook: product.index.after_testimonials
-    Fires after the testimonials (store reviews) section.
-    Use this hook to inject content below the testimonials area.
-  #}
-	<div class="s-blocks-wrapper s-after-testimonials">{% hook 'product.index.after_testimonials' %}</div>
-{% endblock %}
-
-{% block scripts %}
-	<script defer src="{{ 'product.js' | asset }}"></script>
+  {% if filters %}{% include 'components.filters-sheet' %}{% endif %}
 {% endblock %}

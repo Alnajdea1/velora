@@ -1,27 +1,207 @@
 {
-  "blocks": {
-    "header": {
-      "cart": "Cart"
-    },
-    "appBanner": {
-      "download_now": "download now"
-    }
-  },
-  "pages": {
-    "cart": {
-      "cart_options": "Cart Options"
-    },
-    "order": {
-      "can_edit_or_delete_your_review_within": "You can edit or delete your review within",
-      "edit_period_ended": "The period to edit the review has ended",
-      "delete_period_ended": "The period to delete the review has ended",
-      "days_since_added": "days since it was added",
-      "option_name": "Option name",
-      "option_content": "Content"
-    }
-  },
   "common": {
-    "bank_offer_sub_title_multiple": "Pay for your purchases via one of the following bank cards and get the specified discount",
-    "bank_offer_sub_title_single": "Pay for your purchases via :bank_name bank card and get discount"
+    "brand_fallback": "Store",
+    "search": "Search a scent or ingredient…",
+    "search_short": "Search",
+    "cart": "Bag",
+    "wishlist": "Wishlist",
+    "account": "Account",
+    "menu": "Menu",
+    "close": "Close",
+    "home": "Home",
+    "discover": "Discover",
+    "back_home": "Back home",
+    "currency": "SAR",
+    "numerals": "latin"
+  },
+  "announcement": {
+    "prefix": "Free delivery",
+    "text": "on orders above 250 SAR — use code"
+  },
+  "hero": {
+    "kicker": "New harvest collection",
+    "cta": "Explore the collection",
+    "cta_secondary": "Find your scent family",
+    "editor_pick": "Editor's pick"
+  },
+  "aura": {
+    "kicker": "Fragrance aura",
+    "title": "Six scent families, one aura that reads as you",
+    "cta": "Browse this family",
+    "count": "{n} products",
+    "families": {
+      "floral": "Floral",
+      "woody": "Woody",
+      "oriental": "Oriental",
+      "fresh": "Fresh",
+      "musky": "Musky",
+      "citrus": "Citrus"
+    }
+  },
+  "bloom": {
+    "kicker": "Note bloom",
+    "title": "Three layers blooming on skin",
+    "top": "Top notes",
+    "heart": "Heart notes",
+    "base": "Base notes"
+  },
+  "routine": {
+    "kicker": "Lavender path",
+    "title": "A flowing routine, not rows of cards",
+    "cta": "Build your routine"
+  },
+  "mood": {
+    "kicker": "Shop by mood",
+    "title": "What do you want to feel?",
+    "moods": {
+      "calm": "Calm",
+      "warm": "Warm",
+      "fresh": "Fresh",
+      "bold": "Bold",
+      "dreamy": "Dreamy",
+      "evening": "Evening"
+    }
+  },
+  "gift": {
+    "kicker": "Gift composer",
+    "title": "Compose a box that opens twice",
+    "step_shape": "1 — Box shape",
+    "step_items": "2 — Pieces (up to 3)",
+    "total": "Box total",
+    "cta": "Add the box"
+  },
+  "product": {
+    "details": "Product details",
+    "family": "Scent family",
+    "size": "Size",
+    "quantity": "Quantity",
+    "add_to_cart": "Add to bag",
+    "quick_add": "Quick add",
+    "notify": "Notify me",
+    "notes": "Fragrance notes",
+    "sold_out": "Sold out",
+    "in_stock": "In stock — last {n} pieces",
+    "reviews": "{n} reviews",
+    "related": "Completes with",
+    "ingredients": "Ingredients",
+    "installments": "Split into 4 interest-free payments",
+    "delivery": "24h delivery",
+    "authentic": "100% authentic",
+    "returns": "14-day returns",
+    "sample": "Free sample"
+  },
+  "collection": {
+    "title": "All fragrance & care",
+    "filters": "Filters",
+    "clear": "Clear filters",
+    "apply": "Show results",
+    "sort": "Sort",
+    "sort_featured": "Featured",
+    "sort_low": "Price: low",
+    "sort_high": "Price: high",
+    "sort_rating": "Top rated",
+    "grid": "Grid",
+    "list": "List",
+    "count": "{n} products",
+    "price": "Price",
+    "next": "Next",
+    "empty_title": "Nothing in this field yet",
+    "empty_body": "Widen the price range or drop one of the scent families."
+  },
+  "cart": {
+    "title": "Your bag",
+    "subtitle": "Every piece is wrapped in silk paper with a free scent sample.",
+    "remove": "Remove",
+    "note": "Packaging note",
+    "note_placeholder": "e.g. write “To Dana” on the card",
+    "summary": "Order summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "discount": "Discount",
+    "total": "Total",
+    "coupon": "Discount code",
+    "apply": "Apply",
+    "coupon_ok": "Discount applied",
+    "coupon_bad": "That code is not valid",
+    "checkout": "Checkout",
+    "checkout_note": "Secure payment with mada, Apple Pay, Tabby and Tamara.",
+    "free_shipping_unlocked": "Your order now ships free 🎉",
+    "free_shipping_remaining": "Add {amount} for free shipping",
+    "empty_title": "The bag is still empty",
+    "empty_body": "Start from the fragrance aura and pick the family that reads as you.",
+    "added": "Added to bag"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "empty_title": "Nothing saved yet",
+    "empty_body": "Tap the heart on any card to keep it here."
+  },
+  "account": {
+    "profile": "Profile",
+    "order": "Order",
+    "status": "Status",
+    "notifications": "Notifications",
+    "notifications_empty": "No new notifications",
+    "orders_empty": "You have no orders yet",
+    "greeting": "Hello, {name}",
+    "member_since": "Member since {year}",
+    "points": "Lavender points",
+    "orders": "Orders",
+    "addresses": "Addresses",
+    "loyalty": "Loyalty",
+    "reorder": "Reorder",
+    "track": "Track",
+    "details": "Details",
+    "delivered": "Delivered",
+    "shipping": "On the way",
+    "cancelled": "Cancelled"
+  },
+  "blog": {
+    "title": "From the journal",
+    "all": "All articles",
+    "empty": "No articles yet",
+    "read_time": "{n} min read"
+  },
+  "loyalty": {
+    "kicker": "Lavender points",
+    "title": "Three tiers, a gift inside each",
+    "body": "Collect points with every order and redeem them for rewards and special experiences.",
+    "tiers": {
+      "petal": "Petal",
+      "stem": "Stem",
+      "field": "Field"
+    }
+  },
+  "thanks": {
+    "title": "Your order is with us",
+    "body": "We wrap it today and send the tracking number to your phone within two hours.",
+    "order_number": "Order number",
+    "payment": "Payment",
+    "expected": "Expected delivery",
+    "track": "Track the order"
+  },
+  "errors": {
+    "e404_title": "This page evaporated like a top note",
+    "e404_body": "The link may have changed. Start from home or search an ingredient.",
+    "search_empty_title": "No matches yet",
+    "search_empty_body": "Try an ingredient or a scent family."
+  },
+  "newsletter": {
+    "title": "One letter a month, about the season’s scent",
+    "body": "Limited releases, distillation notes, and early invitations to the perfume lab.",
+    "placeholder": "Your email",
+    "cta": "Subscribe",
+    "done": "Subscribed, thank you"
+  },
+  "footer": {
+    "shop": "Shop",
+    "help": "Help",
+    "about": "About",
+    "contact": "Contact",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "track": "Track order",
+    "faq": "FAQ"
   }
 }

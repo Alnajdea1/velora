@@ -1,287 +1,154 @@
-import MobileMenu from 'mmenu-light';
-import Swal from 'sweetalert2';
-import Anime from './partials/anime';
-import initTootTip from './partials/tooltip';
-import AppHelpers from "./app-helpers";
+(() => {
+  'use strict';
 
-class App extends AppHelpers {
-  constructor() {
-    super();
-    window.app = this;
-  }
-
-  loadTheApp() {
-    this.commonThings();
-    this.initiateNotifier();
-    this.initiateMobileMenu();
-    if (header_is_sticky) {
-      this.initiateStickyMenu();
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const setOverlay = (name, open) => {
+    const overlay = $(`[data-overlay="${name}"]`);
+    if (!overlay) return;
+    overlay.hidden = !open;
+    document.documentElement.classList.toggle('v-lock', open);
+    if (open) {
+      const focusTarget = $('input,button,a,[tabindex]:not([tabindex="-1"])', overlay);
+      window.setTimeout(() => focusTarget?.focus(), 30);
     }
-    this.initAddToCart();
-    this.initiateDropdowns();
-    this.initiateModals();
-    this.initiateCollapse();
-    
-    // Ensure #more-menu-dropdown exists before running changeMenuDirection
-    const menuDirInterval = setInterval(() => {
-      if (document.querySelector('#more-menu-dropdown')) {
-        this.changeMenuDirection();
-        clearInterval(menuDirInterval);
-      }
-    }, 100);
-
-    initTootTip();
-    this.loadModalImgOnclick();
-
-    salla.comment.event.onAdded(() => window.location.reload());
-
-    this.status = 'ready';
-    document.dispatchEvent(new CustomEvent('theme::ready'));
-    this.log('Theme Loaded 🎉');
-  }
-
-  log(message) {
-    salla.log(`ThemeApp(Raed)::${message}`);
-    return this;
-  }
-
-    changeMenuDirection() {
-      setTimeout(() => {
-        app.all('.root-level.has-children', item => {
-          if (item.classList.contains('change-menu-dir')) return;
-          app.on('mouseover', item, () => {
-            let allSubMenus = item.querySelectorAll('.sub-menu');
-            allSubMenus.forEach((submenu, idx) => {
-              if (idx === 0) return;
-              let rect = submenu.getBoundingClientRect();
-              if (rect.left < 10 || rect.right > window.innerWidth - 10) {
-                app.addClass(item, 'change-menu-dir');
-              }
-            });
-          });
-        });
-      }, 1000);
-    }
-
-  loadModalImgOnclick(){
-    document.querySelectorAll('.load-img-onclick').forEach(link => {
-      link.addEventListener('click', (event) => {
-        event.preventDefault();
-        let modal = document.querySelector('#' + link.dataset.modalId),
-          img = modal.querySelector('img'),
-          imgSrc = img.dataset.src;
-        modal.open();
-
-        if (img.classList.contains('loaded')) return;
-
-        img.src = imgSrc;
-        img.classList.add('loaded');
-      })
-    })
-  }
-
-  commonThings() {
-    this.cleanContentArticles('.content-entry');
-  }
-
-  cleanContentArticles(elementsSelector) {
-    let articleElements = document.querySelectorAll(elementsSelector);
-
-    if (articleElements.length) {
-      articleElements.forEach(article => {
-        article.innerHTML = article.innerHTML.replace(/\&nbsp;/g, ' ')
-      })
-    }
-  }
-
-isElementLoaded(selector){
-  return new Promise((resolve=>{
-    const interval=setInterval(()=>{
-    if(document.querySelector(selector)){
-      clearInterval(interval)
-      return resolve(document.querySelector(selector))
-    }
-   },160)
-}))
-
-  
   };
 
-  copyToClipboard(event) {
-    event.preventDefault();
-    let aux = document.createElement("input"),
-    btn = event.currentTarget;
-    aux.setAttribute("value", btn.dataset.content);
-    document.body.appendChild(aux);
-    aux.select();
-    document.execCommand("copy");
-    document.body.removeChild(aux);
-    this.toggleElementClassIf(btn, 'copied', 'code-to-copy', () => true);
-    setTimeout(() => {
-      this.toggleElementClassIf(btn, 'code-to-copy', 'copied', () => true)
-    }, 1000);
-  }
+  const showToast = (message) => {
+    const toast = document.createElement('div');
+    toast.className = 'v-toast';
+    toast.setAttribute('role', 'status');
+    toast.textContent = message;
+    document.body.append(toast);
+    window.setTimeout(() => toast.remove(), 3200);
+  };
 
-  initiateNotifier() {
-    salla.notify.setNotifier(function (message, type, data) {
-      if (window.enable_add_product_toast && data?.data?.googleTags?.event === "addToCart") {
-        return;
-      }
-      if (typeof message == 'object') {
-        return Swal.fire(message).then(type);
+  const init = () => {
+    const header = $('[data-component="header"]');
+    const syncHeader = () => header?.setAttribute('data-scrolled', String(window.scrollY > 18));
+    syncHeader();
+    window.addEventListener('scroll', syncHeader, { passive: true });
+
+    document.addEventListener('click', async (event) => {
+      const opener = event.target.closest('[data-open]');
+      if (opener) setOverlay(opener.dataset.open, true);
+
+      const closer = event.target.closest('[data-close]');
+      if (closer) setOverlay(closer.closest('[data-overlay]')?.dataset.overlay, false);
+
+      if (event.target.matches('[data-overlay]')) setOverlay(event.target.dataset.overlay, false);
+
+      const notesButton = event.target.closest('[data-toggle-notes]');
+      if (notesButton) {
+        const panel = notesButton.parentElement.querySelector('.v-product__notes');
+        const open = panel.dataset.open !== 'true';
+        panel.dataset.open = String(open);
+        notesButton.setAttribute('aria-expanded', String(open));
       }
 
-      return Swal.mixin({
-        toast: true,
-        position: salla.config.get('theme.is_rtl') ? 'top-start' : 'top-end',
-        showConfirmButton: false,
-        timer: 2000,
-        didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      }).fire({
-        icon: type,
-        title: message,
-        showCloseButton: true,
-        timerProgressBar: true
-      })
+      const remove = event.target.closest('[data-remove-cart]');
+      if (remove && window.salla?.cart) {
+        remove.disabled = true;
+        try { await salla.cart.deleteItem(remove.dataset.removeCart); }
+        catch { remove.disabled = false; }
+      }
     });
-  }
 
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') $$('[data-overlay]:not([hidden])').forEach((overlay) => setOverlay(overlay.dataset.overlay, false));
+    });
 
-  initiateMobileMenu() {
+    $$('[data-component="aura-explorer"]').forEach((root) => {
+      $$('[data-aura]', root).forEach((tab) => tab.addEventListener('click', () => {
+        $$('[data-aura]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));
+        $$('[data-aura-panel]', root).forEach((panel) => { panel.hidden = panel.dataset.auraPanel !== tab.dataset.aura; });
+        tab.setAttribute('aria-selected', 'true');
+      }));
+    });
 
-  this.isElementLoaded('#mobile-menu').then((menu) => {
+    $$('[data-component="note-bloom"]').forEach((root) => {
+      $$('[data-bloom]', root).forEach((tab, index) => tab.addEventListener('click', () => {
+        $$('[data-bloom]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));
+        $$('[data-bloom-panel]', root).forEach((panel) => { panel.hidden = panel.dataset.bloomPanel !== tab.dataset.bloom; });
+        $$('[data-bloom-ring]', root).forEach((ring, ringIndex) => ring.dataset.active = String(ringIndex === index));
+        tab.setAttribute('aria-selected', 'true');
+      }));
+    });
 
- 
-  const mobileMenu = new MobileMenu(menu, "(max-width: 1024px)", "( slidingSubmenus: false)");
+    $$('[data-component="mood-shopping"]').forEach((root) => {
+      $$('[data-mood]', root).forEach((tab) => tab.addEventListener('click', () => {
+        $$('[data-mood]', root).forEach((item) => item.setAttribute('aria-pressed', 'false'));
+        $$('[data-mood-panel]', root).forEach((panel) => { panel.hidden = panel.dataset.moodPanel !== tab.dataset.mood; });
+        tab.setAttribute('aria-pressed', 'true');
+      }));
+    });
 
-  salla.lang.onLoaded(() => {
-    mobileMenu.navigation({ title: salla.lang.get('blocks.header.main_menu') });
-  });
-  const drawer = mobileMenu.offcanvas({ position: salla.config.get('theme.is_rtl') ? "right" : 'left' });
+    $$('[data-component="routine-path"]').forEach((root) => {
+      $$('[data-step]', root).forEach((step) => $('button', step)?.addEventListener('click', () => {
+        $$('.v-path__node', root).forEach((node) => node.setAttribute('aria-current', 'false'));
+        $('button', step).setAttribute('aria-current', 'true');
+      }));
+    });
 
-  this.onClick("a[href='#mobile-menu']", event => {
-    document.body.classList.add('menu-opened');
-    event.preventDefault() || drawer.close() || drawer.open()
-    
-  });
-  this.onClick(".close-mobile-menu", event => {
-    document.body.classList.remove('menu-opened');
-    event.preventDefault() || drawer.close()
-  });
-  });
-
-  }
-
-  initiateStickyMenu() {
-    let header = this.element('#mainnav'),
-      height = this.element('#mainnav .inner')?.clientHeight;
-    //when it's landing page, there is no header
-    if (!header) {
-      return;
-    }
-
-    window.addEventListener('load', () => setTimeout(() => this.setHeaderHeight(), 500))
-    window.addEventListener('resize', () => this.setHeaderHeight())
-
-    window.addEventListener('scroll', () => {
-      window.scrollY >= header.offsetTop + height ? header.classList.add('fixed-pinned', 'animated') : header.classList.remove('fixed-pinned');
-      window.scrollY >= 200 ? header.classList.add('fixed-header') : header.classList.remove('fixed-header', 'animated');
-    }, { passive: true });
-  }
-
-  setHeaderHeight() {
-    let height = this.element('#mainnav .inner').clientHeight,
-      header = this.element('#mainnav');
-    header.style.height = height + 'px';
-  }
-
-  initiateDropdowns() {
-    this.onClick('.dropdown__trigger', ({ target: btn }) => {
-      btn.parentElement.classList.toggle('is-opened');
-      document.body.classList.toggle('dropdown--is-opened');
-      // Click Outside || Click on close btn
-      window.addEventListener('click', ({ target: element }) => {
-        if (!element.closest('.dropdown__menu') && element !== btn || element.classList.contains('dropdown__close')) {
-          btn.parentElement.classList.remove('is-opened');
-          document.body.classList.remove('dropdown--is-opened');
-        }
+    $$('[data-component="gift-composer"]').forEach((root) => {
+      const chosen = new Map();
+      const max = Number(root.dataset.maxItems || 3);
+      const wrap = Number(root.dataset.wrapPrice || 0);
+      const total = $('[data-gift-total]', root);
+      const list = $('[data-gift-chosen]', root);
+      const add = $('[data-gift-add]', root);
+      const render = () => {
+        list.innerHTML = [...chosen.values()].map((item) => `<span>${item.label}</span>`).join('');
+        total.textContent = chosen.size ? new Intl.NumberFormat(document.documentElement.lang, { style:'currency', currency:'SAR' }).format([...chosen.values()].reduce((sum, item) => sum + item.price, wrap)) : '—';
+        add.disabled = !chosen.size;
+      };
+      $$('[data-gift-item]', root).forEach((button) => button.addEventListener('click', () => {
+        const id = button.dataset.giftItem;
+        if (chosen.has(id)) chosen.delete(id);
+        else if (chosen.size < max) chosen.set(id, { label:button.textContent.trim(), price:Number(button.dataset.price || 0) });
+        button.setAttribute('aria-pressed', String(chosen.has(id)));
+        render();
+      }));
+      $$('[data-gift-shape]', root).forEach((button) => button.addEventListener('click', () => {
+        $$('[data-gift-shape]', root).forEach((item) => item.setAttribute('aria-pressed', 'false'));
+        button.setAttribute('aria-pressed', 'true');
+        $('[data-gift-box]', root).dataset.shape = button.dataset.giftShape;
+      }));
+      add?.addEventListener('click', async () => {
+        if (!window.salla?.cart) return;
+        add.disabled = true;
+        try {
+          for (const id of chosen.keys()) await salla.cart.addItem({ id, quantity:1 });
+          showToast(add.textContent.trim());
+        } finally { add.disabled = false; }
       });
     });
-  }
 
-  initiateModals() {
-    this.onClick('[data-modal-trigger]', e => {
-      let id = '#' + e.target.dataset.modalTrigger;
-      this.removeClass(id, 'hidden');
-      setTimeout(() => this.toggleModal(id, true)); //small amont of time to running toggle After adding hidden
+    $$('[data-gallery]').forEach((root) => {
+      $$('[data-gallery-thumb]', root).forEach((thumb) => thumb.addEventListener('click', () => {
+        $$('[data-gallery-thumb]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));
+        $$('[data-gallery-slide]', root).forEach((slide) => { slide.hidden = slide.dataset.gallerySlide !== thumb.dataset.galleryThumb; });
+        thumb.setAttribute('aria-selected', 'true');
+      }));
     });
-    salla.event.document.onClick("[data-close-modal]", e => this.toggleModal('#' + e.target.dataset.closeModal, false));
-  }
 
-  toggleModal(id, isOpen) {
-    this.toggleClassIf(`${id} .s-salla-modal-overlay`, 'ease-out duration-300 opacity-100', 'opacity-0', () => isOpen)
-      .toggleClassIf(`${id} .s-salla-modal-body`,
-        'ease-out duration-300 opacity-100 translate-y-0 sm:scale-100', //add these classes
-        'opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95', //remove these classes
-        () => isOpen)
-      .toggleElementClassIf(document.body, 'modal-is-open', 'modal-is-closed', () => isOpen);
-    if (!isOpen) {
-      setTimeout(() => this.addClass(id, 'hidden'), 350);
+    const viewRoot = $('[data-products]');
+    $$('[data-view]').forEach((button) => button.addEventListener('click', () => {
+      $$('[data-view]').forEach((item) => item.setAttribute('aria-pressed', 'false'));
+      button.setAttribute('aria-pressed', 'true');
+      viewRoot?.setAttribute('data-view', button.dataset.view);
+    }));
+
+    $('#product-filter')?.addEventListener('change', (event) => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('sort', event.target.value);
+      window.location.assign(url.toString());
+    });
+
+    if (window.salla?.event) {
+      salla.event.on('cart::item.added', () => showToast(document.documentElement.lang === 'ar' ? 'أُضيف إلى السلة' : 'Added to bag'));
     }
-  }
+  };
 
-  initiateCollapse() {
-    document.querySelectorAll('.btn--collapse')
-      .forEach((trigger) => {
-        const content = document.querySelector('#' + trigger.dataset.show);
-        if (!content) return;
-
-        const state = { isOpen: false }
-
-        const toggleState = (isOpen) => {
-          state.isOpen = !isOpen;
-          this.toggleElementClassIf([content, trigger], 'is-closed', 'is-opened', () => isOpen);
-        }
-
-        trigger.addEventListener('click', () => {
-          const { isOpen } = state;
-          toggleState(isOpen);
-        });
-      });
-  }
-
-
-  /**
-   * Workaround for seeking to simplify & clean, There are three ways to use this method:
-   * 1- direct call: `this.anime('.my-selector')` - will use default values
-   * 2- direct call with overriding defaults: `this.anime('.my-selector', {duration:3000})`
-   * 3- return object to play it letter: `this.anime('.my-selector', false).duration(3000).play()` - will not play animation unless calling play method.
-   * @param {string|HTMLElement} selector
-   * @param {object|undefined|null|null} options - in case there is need to set attributes one by one set it `false`;
-   * @return {Anime|*}
-   */
-  anime(selector, options = null) {
-    let anime = new Anime(selector, options);
-    return options === false ? anime : anime.play();
-  }
-
-  /**
-   * These actions are responsible for pressing "add to cart" button,
-   * they can be from any page, especially when mega-menu is enabled
-   */
-  initAddToCart() {
-    salla.cart.event.onUpdated(summary => {
-      document.querySelectorAll('[data-cart-total]').forEach(el => el.innerHTML = salla.money(summary.total));
-      document.querySelectorAll('[data-cart-count]').forEach(el => el.innerText = salla.helpers.number(summary.count));
-    });
-
-    salla.cart.event.onItemAdded((response, prodId) => {
-      app.element('salla-cart-summary').animateToCart(app.element(`#product-${prodId} img`));
-    });
-  }
-}
-
-salla.onReady(() => (new App).loadTheApp());
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+})();

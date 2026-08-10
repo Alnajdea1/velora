@@ -83,8 +83,11 @@ if (localeData.ar && localeData.en) {
 }
 
 if (manifest) {
-  for (const key of ['name', 'repository', 'author_email', 'features', 'settings', 'components']) {
+  for (const key of ['name', 'repository', 'support_url', 'author_email', 'features', 'settings', 'components']) {
     if (!(key in manifest)) errors.push(`twilight.json is missing top-level key: ${key}`);
+  }
+  for (const key of ['repository', 'support_url', 'author_email']) {
+    if (!String(manifest[key] || '').trim()) errors.push(`twilight.json has an empty top-level value: ${key}`);
   }
   const componentNames = new Set();
   for (const component of manifest.components || []) {

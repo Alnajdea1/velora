@@ -1,8 +1,0 @@
-{% extends 'layouts.master' %}
-{% block title %}{{ trans('wishlist.title') }}{% endblock %}
-{% block content %}
-  <section class="v-page-hero v-curve-bottom"><div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><h1>{{ trans('wishlist.title') }}</h1></div></section>
-  <section class="v-section"><div class="v-wrap">{% hook 'customer:wishlist.items.start' %}
-    {% if products|length %}<div class="v-grid v-grid--4">{% for product in products %}{% include 'components.product-card' with {product:product} %}{% endfor %}</div><salla-pagination></salla-pagination>{% else %}<div class="v-empty v-empty--large"><h2>{{ trans('wishlist.empty_title') }}</h2><p>{{ trans('wishlist.empty_body') }}</p><a href="{{ link('products') }}" class="v-btn v-btn--primary">{{ trans('common.discover') }}</a></div>{% endif %}
-    {% hook 'customer:wishlist.items.end' %}</div></section>
-{% endblock %}

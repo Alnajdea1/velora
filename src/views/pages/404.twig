@@ -1,0 +1,6 @@
+{% extends 'layouts.master' %}
+{% block title %}404{% endblock %}
+{% block content %}
+  <section class="v-not-found"><div class="v-wrap"><div class="v-not-found__art"><span class="v-petal"></span><strong>404</strong></div><h1>{{ trans('errors.e404_title') }}</h1><p>{{ trans('errors.e404_body') }}</p><div><a href="{{ link('home') }}" class="v-btn v-btn--primary">{{ trans('common.back_home') }}</a><button type="button" class="v-btn v-btn--ghost" data-open="search">{{ trans('common.search_short') }}</button></div></div></section>
+{% endblock %}
+
