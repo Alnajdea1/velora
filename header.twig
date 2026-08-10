@@ -1,0 +1,35 @@
+<header class="v-header" data-scrolled="false" data-component="header">
+  <div class="v-header__bar">
+    <a href="{{ link('home') }}" class="v-brand" style="display:flex;align-items:center;gap:10px">
+      {% if store.logo %}
+        <img src="{{ store.logo }}" alt="{{ store.name }}" style="height:34px;width:auto">
+      {% else %}
+        <span class="v-petal" style="width:34px;height:34px;background:linear-gradient(150deg,var(--lilac),var(--iris));animation:v-sway 9s ease-in-out infinite"></span>
+        <span style="font-family:var(--display);font-size:22px">{{ store.name }}</span>
+      {% endif %}
+    </a>
+
+    <nav class="v-nav" aria-label="{{ trans('common.menu') }}" style="display:none;gap:4px">
+      {% for item in menus.header %}
+        <a href="{{ item.url }}" class="v-pill" style="padding:9px 15px;color:var(--leaf);font-size:13.5px;font-weight:700">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+
+    <span style="flex:1"></span>
+
+    <button type="button" class="v-pill" data-open="search"
+            style="display:flex;align-items:center;gap:9px;padding:10px 16px;border:0;background:var(--mist);color:var(--leaf);font-size:13px;cursor:pointer">
+      <span aria-hidden="true">⌕</span><span class="v-hide-sm">{{ trans('common.search') }}</span>
+    </button>
+
+    <a href="{{ link('wishlist') }}" class="v-pill" aria-label="{{ trans('common.wishlist') }}"
+       style="position:relative;width:42px;height:42px;display:grid;place-items:center">♥
+      <salla-count type="wishlist" class="v-badge--off v-badge" style="position:absolute;top:2px;inset-inline-end:0"></salla-count>
+    </a>
+
+    <salla-cart-summary-button class="v-btn v-btn--dark v-pill"></salla-cart-summary-button>
+    <salla-localization-modal></salla-localization-modal>
+
+    <button type="button" class="v-btn v-btn--ghost v-burger" data-open="nav" aria-label="{{ trans('common.menu') }}">☰</button>
+  </div>
+</header>

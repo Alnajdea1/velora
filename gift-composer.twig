@@ -1,0 +1,45 @@
+{# velora.gift_composer #}
+<section class="v-section v-dark v-curve-top" data-component="gift-composer"
+         data-max-items="{{ component.max_items|default(3) }}" data-wrap-price="{{ component.wrap_price|default(35) }}"
+         style="position:relative;overflow:hidden">
+  <div class="v-wrap" style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:54px;align-items:center">
+    <div>
+      <span style="font-family:var(--latin);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--coral)">{{ trans('gift.kicker') }}</span>
+      <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('gift.title')) }}</h2>
+      <p style="margin-top:16px;max-width:400px;font-size:14.5px;line-height:1.9;color:rgba(241,236,255,.65)">{{ component.body }}</p>
+
+      <div style="margin-top:26px">
+        <div style="font-size:12px;font-weight:700;color:var(--lilac);margin-bottom:12px">{{ trans('gift.step_shape') }}</div>
+        <div style="display:flex;gap:12px">
+          {% for shape in ['petal','arch','soft'] %}
+            <button type="button" data-gift-shape="{{ shape }}" aria-pressed="{{ loop.first ? 'true' : 'false' }}"
+                    style="width:74px;height:74px;border:0;cursor:pointer;background:linear-gradient(150deg,var(--lilac),var(--iris));border-radius:{{ shape == 'petal' ? 'var(--petal)' : (shape == 'arch' ? '999px 999px 18px 18px' : '26px') }}"></button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div style="margin-top:26px">
+        <div style="font-size:12px;font-weight:700;color:var(--lilac);margin-bottom:12px">{{ trans('gift.step_items') }}</div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px">
+          {% for product in component.products %}
+            <button type="button" class="v-chip" data-gift-item="{{ product.id }}" data-price="{{ product.price }}" aria-pressed="false">{{ product.name }}</button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="v-editorial" style="padding:30px;background:rgba(252,251,255,.07)">
+      <div class="v-gift__box" data-gift-box style="border-radius:var(--petal);background:linear-gradient(165deg,var(--lilac),var(--iris))">
+        <span aria-hidden="true" class="v-gift__ribbon"></span>
+        <div data-gift-chosen style="position:absolute;bottom:16px;inset-inline:16px;display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px">
+        <div>
+          <div style="font-size:11.5px;color:var(--lilac)">{{ trans('gift.total') }}</div>
+          <div class="num" data-gift-total style="font-size:24px">—</div>
+        </div>
+        <button type="button" class="v-btn v-btn--coral" data-gift-add disabled>{{ trans('gift.cta') }}</button>
+      </div>
+    </div>
+  </div>
+</section>

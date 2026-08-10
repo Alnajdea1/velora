@@ -1,0 +1,54 @@
+{# @param product #}
+<article class="v-product" data-product-id="{{ product.id }}">
+  <div class="v-product__media">
+    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+    {% if product.images[1] %}<img src="{{ product.images[1].url }}" alt="" loading="lazy" aria-hidden="true">{% endif %}
+
+    <div style="position:absolute;top:12px;inset-inline-start:12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+      {% if product.promotion_title %}<span class="v-badge">{{ product.promotion_title }}</span>{% endif %}
+      {% if not product.is_available %}<span class="v-badge v-badge--soldout">{{ trans('product.sold_out') }}</span>{% endif %}
+    </div>
+
+    <salla-button shape="icon" fill="none" class="v-pill" onclick="salla.wishlist.toggle({{ product.id }})"
+                  style="position:absolute;top:12px;inset-inline-end:12px" aria-label="{{ trans('common.wishlist') }}">♥</salla-button>
+
+    <div class="v-product__quickadd">
+      <salla-add-product-button product-id="{{ product.id }}" class="v-btn v-btn--primary" style="width:100%">
+        {{ product.is_available ? trans('product.quick_add') : trans('product.notify') }}
+      </salla-add-product-button>
+    </div>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:7px;padding-inline:4px">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
+      <span style="font-family:var(--latin);font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--leaf)">{{ product.category.name }}</span>
+      <span style="font-size:11px;font-weight:700;color:var(--iris);white-space:nowrap">★ {{ product.rating.stars|localize_number }}</span>
+    </div>
+    <h3 style="font-size:19px"><a href="{{ product.url }}" style="color:var(--aubergine)">{{ product.name }}</a></h3>
+    <p style="margin:0;font-size:12.5px;line-height:1.6;color:var(--leaf)">{{ product.subtitle }}</p>
+
+    <div class="v-product__price">
+      <span class="num" style="font-size:19px">{{ product.price|money }}</span>
+      {% if product.is_on_sale %}
+        <span class="v-product__old">{{ product.regular_price|money }}</span>
+        {% if product.discount_percentage %}<span class="v-badge v-badge--off">−{{ product.discount_percentage }}</span>{% endif %}
+      {% endif %}
+    </div>
+
+    {% if product.metadata.fragrance_notes %}
+      <div style="margin-top:4px;border-top:1px solid var(--mist);padding-top:9px">
+        <button type="button" data-toggle-notes aria-expanded="false"
+                style="display:flex;align-items:center;gap:7px;background:none;border:0;padding:0;cursor:pointer;font-size:12px;font-weight:700;color:var(--iris)">
+          {{ trans('product.notes') }}
+        </button>
+        <div class="v-product__notes" data-open="false">
+          <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:9px">
+            {% for note in product.metadata.fragrance_notes|split(',') %}
+              <span class="v-pill" style="padding:5px 11px;background:var(--mist);font-size:11.5px">{{ note|trim }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</article>

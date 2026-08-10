@@ -1,0 +1,11 @@
+{% extends 'layouts.master' %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+  <article class="v-blog-single">
+    <header class="v-page-hero v-page-hero--article v-curve-bottom"><div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><small>{{ article.category.name }}</small><h1>{{ article.title }}</h1><p>{{ article.summary }}</p><div class="v-article-meta"><span>{{ article.author.name }}</span><span>{{ article.published_at|date('Y-m-d') }}</span><span>{{ trans('blog.read_time', {n:article.reading_time}) }}</span></div></div></header>
+    {% if article.image %}<div class="v-wrap"><img class="v-blog-cover v-editorial" src="{{ article.image }}" alt="{{ article.title }}" fetchpriority="high"></div>{% endif %}
+    <div class="v-wrap v-prose v-blog-content">{{ article.content|raw }}</div>
+    <footer class="v-wrap v-article-footer">{% for tag in article.tags %}<a class="v-chip" href="{{ tag.url }}">{{ tag.name }}</a>{% endfor %}<salla-social-share aria-label="{{ article.title }}"></salla-social-share></footer>
+  </article>
+{% endblock %}
+

@@ -1,0 +1,7 @@
+{% extends 'layouts.master' %}
+{% block title %}{{ trans('loyalty.title') }}{% endblock %}
+{% block content %}
+  <section class="v-page-hero v-page-hero--dark v-curve-bottom"><div class="v-wrap"><span class="v-kicker">{{ trans('loyalty.kicker') }}</span><h1>{{ trans('loyalty.title') }}</h1><p>{{ trans('loyalty.body') }}</p></div></section>
+  <section class="v-section"><div class="v-wrap"><salla-loyalty></salla-loyalty><div class="v-loyalty-tiers"><article><span class="v-petal"></span><h2>{{ trans('loyalty.tiers.petal') }}</h2></article><article><span class="v-petal"></span><h2>{{ trans('loyalty.tiers.stem') }}</h2></article><article><span class="v-petal"></span><h2>{{ trans('loyalty.tiers.field') }}</h2></article></div></div></section>
+{% endblock %}
+

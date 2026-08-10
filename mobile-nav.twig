@@ -1,0 +1,19 @@
+<div class="v-sheet" data-overlay="nav" hidden>
+  <div class="v-sheet__panel">
+    <span class="v-sheet__grab" aria-hidden="true"></span>
+    <div class="v-grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      {% for category in categories|slice(0, 4) %}
+        <a href="{{ category.url }}" style="position:relative;height:112px;padding:14px;border-radius:{{ loop.index0 == 0 ? '110px 110px 20px 20px' : (loop.index0 == 1 ? '20px 20px 110px 110px' : '20px') }};background:var(--mist);color:var(--aubergine);font-family:var(--display);font-size:16px">{{ category.name }}</a>
+      {% endfor %}
+    </div>
+    <nav style="display:flex;flex-direction:column;margin-top:22px">
+      {% for item in menus.header %}
+        <a href="{{ item.url }}" style="display:flex;justify-content:space-between;padding:16px 4px;border-bottom:1px solid var(--mist);color:var(--aubergine);font-size:15px;font-weight:700">{{ item.title }}<span style="color:var(--lilac)">›</span></a>
+      {% endfor %}
+    </nav>
+    <div style="display:flex;gap:10px;margin-top:22px">
+      <a href="{{ link('wishlist') }}" class="v-btn v-btn--ghost" style="flex:1;justify-content:center">♥ {{ trans('common.wishlist') }}</a>
+      <a href="{{ link('cart') }}" class="v-btn v-btn--dark" style="flex:1;justify-content:center">{{ trans('common.cart') }}</a>
+    </div>
+  </div>
+</div>

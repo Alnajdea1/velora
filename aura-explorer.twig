@@ -1,0 +1,37 @@
+{# velora.aura_explorer #}
+<section id="aura" class="v-section v-curve-top {{ component.light_theme ? '' : 'v-dark' }}" data-component="aura-explorer" style="position:relative;overflow:hidden">
+  <span aria-hidden="true" style="position:absolute;top:-10%;inset-inline-start:12%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(118,87,232,.5),transparent 68%);animation:v-aura 16s ease-in-out infinite"></span>
+  <div class="v-wrap" style="position:relative">
+    <div style="text-align:center;max-width:620px;margin-inline:auto">
+      <span style="font-family:var(--latin);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--lilac)">{{ trans('aura.kicker') }}</span>
+      <h2 style="margin-top:16px;font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('aura.title')) }}</h2>
+      <p style="margin-top:16px;font-size:14.5px;line-height:1.85;color:rgba(241,236,255,.65)">{{ component.subtitle }}</p>
+    </div>
+
+    <div class="v-aura__orbit" style="margin-top:62px" role="tablist">
+      {% for family in component.families %}
+        <button type="button" role="tab" class="v-aura__orb" data-aura="{{ loop.index0 }}"
+                aria-selected="{{ loop.first ? 'true' : 'false' }}"
+                style="background:linear-gradient(150deg,{{ family.color_from }},{{ family.color_to }});transform:translateY({{ (loop.index0 - 2.5)|abs * 30 - 18 }}px)">
+          <span style="font-family:var(--display);font-size:17px">{{ family.name }}</span>
+        </button>
+      {% endfor %}
+    </div>
+
+    {% for family in component.families %}
+      <div class="v-editorial" data-aura-panel="{{ loop.index0 }}" {{ loop.first ? '' : 'hidden' }}
+           style="margin-top:62px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px;align-items:center;padding:38px;background:rgba(252,251,255,.06)">
+        <div>
+          <h3 style="font-size:34px">{{ family.name }}</h3>
+          <p style="margin-top:14px;font-size:15px;line-height:1.9;color:rgba(241,236,255,.7);max-width:400px">{{ family.description }}</p>
+          <a href="{{ family.category.url }}" class="v-btn v-pill" style="margin-top:24px;background:var(--porcelain);color:var(--aubergine)">{{ trans('aura.cta') }}</a>
+        </div>
+        <div class="v-grid v-grid--2">
+          {% for product in family.category.products|slice(0, component.products_shown|default(2)) %}
+            {% include 'components.product-card' with { product: product } %}
+          {% endfor %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>

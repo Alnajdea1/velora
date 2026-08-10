@@ -1,0 +1,15 @@
+{% extends 'layouts.master' %}
+{% block title %}{{ trans('account.profile') }}{% endblock %}
+{% block content %}
+  <section class="v-page-hero v-curve-bottom"><div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><h1>{{ trans('account.greeting', {name:user.name}) }}</h1><p>{{ user.email }}</p></div></section>
+  <section class="v-section"><div class="v-wrap v-account-layout">
+    <aside class="v-account-nav"><salla-user-menu></salla-user-menu></aside>
+    <div class="v-account-card">
+      {% hook 'customer:profile.form.start' %}
+      <salla-user-profile></salla-user-profile>
+      {% hook 'customer:profile.form.end' %}
+    </div>
+  </div></section>
+  <salla-verify-modal></salla-verify-modal>
+{% endblock %}
+

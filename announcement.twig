@@ -1,0 +1,5 @@
+<div class="v-announce v-dark" style="padding:9px 20px;text-align:center;font-size:12.5px">
+  <span style="color:var(--lilac)">{{ trans('announcement.prefix') }}</span>
+  {{ trans('announcement.text') }}
+  {% if store.settings.coupon_code %}<b style="color:var(--coral)">{{ store.settings.coupon_code }}</b>{% endif %}
+</div>
