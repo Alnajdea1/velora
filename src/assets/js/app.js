@@ -217,8 +217,25 @@
         const currentLanguage = String(
           sallaApi?.config?.get?.('user.language_code') || document.documentElement.lang || 'ar'
         ).slice(0, 2);
-        const nextUrl = new URL(window.location.href);
+        languageSwitcher.disabled = true;
 
+        try {
+          const languages = await sallaApi?.config?.languages?.();
+          const target = languages?.find((language) => {
+            const code = String(language.code || language.iso_code || '').slice(0, 2).toLowerCase();
+            return code === targetLanguage;
+          });
+
+          if (target?.url) {
+            sallaApi?.cookie?.set?.('s-lang', targetLanguage);
+            window.location.assign(target.url);
+            return;
+          }
+        } catch {
+          // Fall back to Salla's language query parameter if the languages API is unavailable.
+        }
+
+        const nextUrl = new URL(window.location.href);
         nextUrl.searchParams.set('lang', targetLanguage);
         if (currentLanguage && currentLanguage !== targetLanguage) {
           nextUrl.pathname = nextUrl.pathname.replace(
@@ -229,6 +246,7 @@
 
         sallaApi?.cookie?.set?.('s-lang', targetLanguage);
         window.location.assign(nextUrl.toString());
+        languageSwitcher.disabled = false;
         return;
       }
 
