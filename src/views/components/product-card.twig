@@ -14,15 +14,15 @@
       {% if product.can_show_remained_quantity and product.quantity <= 5 and product.is_available %}<span class="v-badge v-badge--low">{{ trans('product.low_stock', { n: product.quantity }) }}</span>{% endif %}
     </div>
 
-    <salla-button shape="icon" fill="none" class="v-pill v-product__wish" onclick="salla.wishlist.toggle({{ product.id }})"
-                  aria-label="{{ trans('common.wishlist') }}">♥</salla-button>
-
     <div class="v-product__quickadd">
       <salla-add-product-button product-id="{{ product.id }}" class="v-btn v-btn--primary" style="width:100%">
         {{ product.is_available ? trans('product.quick_add') : trans('product.notify') }}
       </salla-add-product-button>
     </div>
   </div>
+
+  <salla-button shape="icon" fill="none" class="v-pill v-product__wish" onclick="salla.wishlist.toggle({{ product.id }})"
+                aria-label="{{ trans('common.wishlist') }}">♥</salla-button>
 
   <div style="display:flex;flex-direction:column;gap:7px;padding-inline:4px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">

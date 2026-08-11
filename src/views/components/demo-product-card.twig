@@ -7,8 +7,8 @@
     <span class="v-bottle v-bottle--card" aria-hidden="true"><i></i><b></b><em></em></span>
     {% if demo.badge %}<span class="v-badge v-product__badge">{{ demo.badge }}</span>{% endif %}
     {% if demo.soldout %}<span class="v-badge v-badge--soldout v-product__badge">{{ trans('product.sold_out') }}</span>{% endif %}
-    <button type="button" class="v-pill v-product__wish v-product__wish--demo" data-demo-wishlist data-fallback-url="{{ link('wishlist') }}" aria-label="{{ trans('common.wishlist') }}" aria-pressed="false">♡</button>
   </div>
+  <button type="button" class="v-pill v-product__wish v-product__wish--demo" data-demo-wishlist data-fallback-url="{{ link('wishlist') }}" aria-label="{{ trans('common.wishlist') }}" aria-pressed="false">♡</button>
   <div style="display:flex;flex-direction:column;gap:7px;padding-inline:4px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
       <span class="v-kicker" data-demo-brand>VELORA</span><span data-demo-rating style="font-size:11px;font-weight:700;color:var(--iris)">★ {{ demo.rating }}</span>
