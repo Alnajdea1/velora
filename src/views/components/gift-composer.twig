@@ -13,8 +13,8 @@
         <div style="font-size:12px;font-weight:700;color:var(--lilac);margin-bottom:12px">{{ trans('gift.step_shape') }}</div>
         <div style="display:flex;gap:12px">
           {% for shape in ['petal','arch','soft'] %}
-            <button type="button" data-gift-shape="{{ shape }}" aria-pressed="{{ loop.first ? 'true' : 'false' }}"
-                    style="width:74px;height:74px;border:0;cursor:pointer;background:linear-gradient(150deg,var(--lilac),var(--iris));border-radius:{{ shape == 'petal' ? 'var(--petal)' : (shape == 'arch' ? '999px 999px 18px 18px' : '26px') }}"></button>
+            <button type="button" class="v-gift__shape v-gift__shape--{{ shape }}" data-gift-shape="{{ shape }}" aria-pressed="{{ loop.first ? 'true' : 'false' }}"
+                    style="width:74px;height:74px;border:0;cursor:pointer;border-radius:{{ shape == 'petal' ? 'var(--petal)' : (shape == 'arch' ? '999px 999px 18px 18px' : '26px') }}"></button>
           {% endfor %}
         </div>
       </div>
@@ -37,7 +37,7 @@
     </div>
 
     <div class="v-editorial" style="padding:30px;background:rgba(252,251,255,.07)">
-      <div class="v-gift__box" data-gift-box style="border-radius:var(--petal);background:linear-gradient(165deg,var(--lilac),var(--iris))">
+      <div class="v-gift__box" data-gift-box data-shape="petal" style="border-radius:var(--petal);background:linear-gradient(165deg,var(--lilac),var(--iris))">
         <span aria-hidden="true" class="v-gift__ribbon"></span>
         <div data-gift-chosen style="position:absolute;bottom:16px;inset-inline:16px;display:flex;flex-direction:column;gap:6px"></div>
       </div>
