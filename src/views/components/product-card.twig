@@ -1,5 +1,5 @@
 {# @param product #}
-<article class="v-product" data-product-id="{{ product.id }}" data-product-state="{{ product.is_available ? (product.is_on_sale ? 'sale' : 'regular') : 'sold-out' }}">
+<article class="v-product" data-product-id="{{ product.id }}" data-card-url="{{ product.url }}" data-product-state="{{ product.is_available ? (product.is_on_sale ? 'sale' : 'regular') : 'sold-out' }}" role="link" tabindex="0">
   <div class="v-product__media">
     {% if product.image.url %}
       <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" width="640" height="800">

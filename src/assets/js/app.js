@@ -23,6 +23,96 @@
     window.setTimeout(() => toast.remove(), 3200);
   };
 
+  const waitForProductsApi = async () => {
+    for (let attempt = 0; attempt < 30; attempt += 1) {
+      if (window.salla?.product?.fetch) return true;
+      await new Promise((resolve) => window.setTimeout(resolve, 100));
+    }
+    return false;
+  };
+
+  const formatMoney = (value, currency = 'SAR') => {
+    const locale = document.documentElement.lang || 'ar';
+    return new Intl.NumberFormat(locale, {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: 2,
+    }).format(Number(value || 0));
+  };
+
+  const hydrateDemoCards = async () => {
+    const cards = $$('[data-demo-card]');
+    if (!cards.length || !(await waitForProductsApi())) return;
+
+    try {
+      const response = await salla.product.fetch({
+        source: 'latest',
+        source_value: '',
+        limit: Math.min(cards.length, 50),
+        includes: ['brand', 'rating'],
+        with: ['images'],
+      });
+      const products = response?.data || [];
+      if (!products.length) return;
+
+      cards.forEach((card, index) => {
+        const product = products[index % products.length];
+        const imageUrl = product.image?.url || product.images?.[0]?.url;
+        const price = product.is_on_sale && product.sale_price ? product.sale_price : product.price;
+        const rating = product.rating?.starts ?? product.rating?.rate ?? 0;
+        const media = $('.v-product__media', card);
+        const wishlist = $('[data-demo-wishlist]', card);
+        const oldPrice = $('[data-demo-old]', card);
+
+        card.dataset.cardUrl = product.url || card.dataset.cardUrl;
+        card.dataset.productId = String(product.id);
+
+        if (wishlist) {
+          wishlist.dataset.productId = String(product.id);
+          wishlist.setAttribute('aria-pressed', String(Boolean(product.is_in_wishlist)));
+          wishlist.textContent = product.is_in_wishlist ? '♥' : '♡';
+        }
+
+        if (imageUrl && media) {
+          let image = $('.v-demo-real-image', media);
+          if (!image) {
+            image = document.createElement('img');
+            image.className = 'v-demo-real-image';
+            media.prepend(image);
+          }
+          image.src = imageUrl;
+          image.alt = product.image?.alt || product.name || '';
+          $('.v-bottle--card', media)?.setAttribute('hidden', '');
+        }
+
+        const brand = $('[data-demo-brand]', card);
+        const ratingNode = $('[data-demo-rating]', card);
+        const name = $('[data-demo-name]', card);
+        const subtitle = $('[data-demo-subtitle]', card);
+        const priceNode = $('[data-demo-price]', card);
+        const notes = $('[data-demo-notes]', card);
+
+        if (brand) brand.textContent = product.brand?.name || product.category?.name || 'VELORA';
+        if (ratingNode) ratingNode.textContent = `★ ${Number(rating).toFixed(1)}`;
+        if (name) name.textContent = product.name || name.textContent;
+        if (subtitle) subtitle.textContent = product.subtitle || subtitle.textContent;
+        if (priceNode) priceNode.textContent = formatMoney(price, product.currency || 'SAR');
+        if (notes && product.description) {
+          const plainDescription = product.description.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+          if (plainDescription) notes.textContent = plainDescription.slice(0, 90);
+        }
+
+        if (oldPrice) {
+          const showOldPrice = product.is_on_sale && product.regular_price > price;
+          oldPrice.hidden = !showOldPrice;
+          if (showOldPrice) oldPrice.textContent = formatMoney(product.regular_price, product.currency || 'SAR');
+        }
+      });
+    } catch {
+      // Keep the approved visual demo cards if live products are unavailable in the editor.
+    }
+  };
+
   const init = () => {
     const header = $('[data-component="header"]');
     const syncHeader = () => header?.setAttribute('data-scrolled', String(window.scrollY > 18));
@@ -30,6 +120,29 @@
     window.addEventListener('scroll', syncHeader, { passive: true });
 
     document.addEventListener('click', async (event) => {
+      const demoWishlist = event.target.closest('[data-demo-wishlist]');
+      if (demoWishlist) {
+        event.preventDefault();
+        event.stopPropagation();
+        const productId = Number(demoWishlist.dataset.productId || 0);
+
+        if (!productId || !window.salla?.wishlist?.toggle) {
+          window.location.assign(demoWishlist.dataset.fallbackUrl);
+          return;
+        }
+
+        demoWishlist.disabled = true;
+        try {
+          await salla.wishlist.toggle(productId);
+          const selected = demoWishlist.getAttribute('aria-pressed') !== 'true';
+          demoWishlist.setAttribute('aria-pressed', String(selected));
+          demoWishlist.textContent = selected ? '♥' : '♡';
+        } finally {
+          demoWishlist.disabled = false;
+        }
+        return;
+      }
+
       const opener = event.target.closest('[data-open]');
       if (opener) setOverlay(opener.dataset.open, true);
 
@@ -52,11 +165,22 @@
         try { await salla.cart.deleteItem(remove.dataset.removeCart); }
         catch { remove.disabled = false; }
       }
+
+      const card = event.target.closest('[data-card-url]');
+      const interactive = event.target.closest('a,button,input,select,textarea,salla-button,salla-add-product-button,[role="button"]');
+      if (card && !interactive && card.dataset.cardUrl) window.location.assign(card.dataset.cardUrl);
     });
 
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') $$('[data-overlay]:not([hidden])').forEach((overlay) => setOverlay(overlay.dataset.overlay, false));
+      const card = event.target.closest('[data-card-url]');
+      if (card && event.target === card && (event.key === 'Enter' || event.key === ' ')) {
+        event.preventDefault();
+        window.location.assign(card.dataset.cardUrl);
+      }
     });
+
+    hydrateDemoCards();
 
     $$('[data-component="aura-explorer"]').forEach((root) => {
       $$('[data-aura]', root).forEach((tab) => tab.addEventListener('click', () => {

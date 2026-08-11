@@ -127,7 +127,7 @@ a:hover{color:var(--aubergine)}
 /* ── Product card ──────────────────────────────────────────────── */
 .v-product{display:flex;flex-direction:column;gap:14px;padding:14px 14px 18px;border-radius:28px;
   background:var(--porcelain);box-shadow:0 18px 40px -34px rgba(38,24,56,.35);
-  transition:transform .5s var(--ease),box-shadow .5s ease}
+  cursor:pointer;transition:transform .5s var(--ease),box-shadow .5s ease}
 .v-product:hover{transform:translateY(-6px);box-shadow:0 40px 70px -40px rgba(38,24,56,.45)}
 .v-product__media{position:relative;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:var(--mist);
   transition:border-radius .6s var(--ease)}
@@ -139,7 +139,9 @@ a:hover{color:var(--aubergine)}
 .v-product__badges{position:absolute;z-index:3;top:12px;inset-inline-start:12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;transition:top .55s var(--ease),inset-inline-start .55s var(--ease)}
 .v-product__badge{position:absolute;z-index:3;top:12px;inset-inline-start:12px;transition:top .55s var(--ease),inset-inline-start .55s var(--ease)}
 .v-product__wish{position:absolute!important;z-index:3;top:12px;inset-inline-end:12px;transition:top .55s var(--ease),inset-inline-end .55s var(--ease)}
-.v-product__wish--demo{width:38px;height:38px;display:grid;place-items:center;background:rgba(252,251,255,.84)}
+.v-product__wish--demo{width:38px;height:38px;display:grid;place-items:center;border:0;cursor:pointer;background:rgba(252,251,255,.84)}
+.v-product__wish--demo[aria-pressed="true"]{background:var(--coral);color:#fff}
+.v-demo-real-image{position:absolute;inset:7%;width:86%!important;height:86%!important;object-fit:contain!important;z-index:1;filter:drop-shadow(0 28px 28px rgba(38,24,56,.22))}
 .v-product:hover .v-product__badges,.v-product:hover .v-product__badge{top:42px;inset-inline-start:58px}
 .v-product:hover .v-product__wish{top:42px;inset-inline-end:58px}
 .v-product__quickadd{position:absolute;inset-inline:12px;bottom:12px;opacity:0;transform:translateY(14px);

@@ -2,20 +2,20 @@
 {% set demo_name = store.language.is_rtl ? demo.ar : demo.en %}
 {% set demo_subtitle = store.language.is_rtl ? demo.sar : demo.sen %}
 {% set demo_notes = store.language.is_rtl ? demo.nar : demo.nen %}
-<article class="v-product v-product--demo" data-product-state="{{ demo.soldout ? 'sold-out' : (demo.old ? 'sale' : 'regular') }}">
+<article class="v-product v-product--demo" data-demo-card data-card-url="{{ link('products') }}" data-product-state="{{ demo.soldout ? 'sold-out' : (demo.old ? 'sale' : 'regular') }}" role="link" tabindex="0">
   <div class="v-product__media" style="background:linear-gradient(155deg,{{ demo.t1 }},{{ demo.t2 }})">
     <span class="v-bottle v-bottle--card" aria-hidden="true"><i></i><b></b><em></em></span>
     {% if demo.badge %}<span class="v-badge v-product__badge">{{ demo.badge }}</span>{% endif %}
     {% if demo.soldout %}<span class="v-badge v-badge--soldout v-product__badge">{{ trans('product.sold_out') }}</span>{% endif %}
-    <span class="v-pill v-product__wish v-product__wish--demo" aria-hidden="true">♡</span>
+    <button type="button" class="v-pill v-product__wish v-product__wish--demo" data-demo-wishlist data-fallback-url="{{ link('wishlist') }}" aria-label="{{ trans('common.wishlist') }}" aria-pressed="false">♡</button>
   </div>
   <div style="display:flex;flex-direction:column;gap:7px;padding-inline:4px">
     <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px">
-      <span class="v-kicker">VELORA</span><span style="font-size:11px;font-weight:700;color:var(--iris)">★ {{ demo.rating }}</span>
+      <span class="v-kicker" data-demo-brand>VELORA</span><span data-demo-rating style="font-size:11px;font-weight:700;color:var(--iris)">★ {{ demo.rating }}</span>
     </div>
-    <h3 style="font-size:19px">{{ demo_name }}</h3>
-    <p style="margin:0;font-size:12.5px;line-height:1.6;color:var(--leaf)">{{ demo_subtitle }}</p>
-    <div class="v-product__price"><span class="num" style="font-size:19px">{{ demo.price }} {{ trans('common.currency') }}</span>{% if demo.old %}<span class="v-product__old">{{ demo.old }} {{ trans('common.currency') }}</span>{% endif %}</div>
-    {% if demo_notes %}<div class="v-product__notes-static">{{ demo_notes }}</div>{% endif %}
+    <h3 data-demo-name style="font-size:19px">{{ demo_name }}</h3>
+    <p data-demo-subtitle style="margin:0;font-size:12.5px;line-height:1.6;color:var(--leaf)">{{ demo_subtitle }}</p>
+    <div class="v-product__price"><span data-demo-price class="num" style="font-size:19px">{{ demo.price }} {{ trans('common.currency') }}</span>{% if demo.old %}<span data-demo-old class="v-product__old">{{ demo.old }} {{ trans('common.currency') }}</span>{% else %}<span data-demo-old class="v-product__old" hidden></span>{% endif %}</div>
+    {% if demo_notes %}<div data-demo-notes class="v-product__notes-static">{{ demo_notes }}</div>{% endif %}
   </div>
 </article>
