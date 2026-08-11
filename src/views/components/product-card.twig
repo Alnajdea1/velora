@@ -8,14 +8,14 @@
     {% endif %}
     {% if product.images[1] %}<img src="{{ product.images[1].url }}" alt="" loading="lazy" aria-hidden="true">{% endif %}
 
-    <div style="position:absolute;top:12px;inset-inline-start:12px;display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+    <div class="v-product__badges">
       {% if product.promotion_title %}<span class="v-badge">{{ product.promotion_title }}</span>{% endif %}
       {% if not product.is_available %}<span class="v-badge v-badge--soldout">{{ trans('product.sold_out') }}</span>{% endif %}
       {% if product.can_show_remained_quantity and product.quantity <= 5 and product.is_available %}<span class="v-badge v-badge--low">{{ trans('product.low_stock', { n: product.quantity }) }}</span>{% endif %}
     </div>
 
-    <salla-button shape="icon" fill="none" class="v-pill" onclick="salla.wishlist.toggle({{ product.id }})"
-                  style="position:absolute;top:12px;inset-inline-end:12px" aria-label="{{ trans('common.wishlist') }}">♥</salla-button>
+    <salla-button shape="icon" fill="none" class="v-pill v-product__wish" onclick="salla.wishlist.toggle({{ product.id }})"
+                  aria-label="{{ trans('common.wishlist') }}">♥</salla-button>
 
     <div class="v-product__quickadd">
       <salla-add-product-button product-id="{{ product.id }}" class="v-btn v-btn--primary" style="width:100%">
