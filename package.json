@@ -1,15 +1,18 @@
 {
   "name": "lavender-reimagined-salla-theme",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Lavender, Reimagined — beauty & fragrance Salla Twilight theme, Arabic RTL first",
   "private": true,
   "engines": {
     "node": ">=18"
   },
   "scripts": {
+    "build": "node scripts/build-theme.mjs",
+    "production": "node scripts/build-theme.mjs",
+    "development": "node scripts/build-theme.mjs",
     "dev": "salla theme preview --with-editor",
     "preview": "salla theme preview --with-editor",
-    "check": "node scripts/validate-theme.mjs",
+    "check": "npm run production && node scripts/validate-theme.mjs",
     "publish": "salla theme publish"
   },
   "dependencies": {

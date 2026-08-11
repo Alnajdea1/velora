@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>{% block title %}{{ page.title|striptags }}{% endblock %}{% if page.title %} — {% endif %}{{ store.name }}</title>
   {% hook 'head:start' %}
-  <link rel="stylesheet" href="{{ 'styles/app.css'|asset }}">
+  <link rel="stylesheet" href="{{ 'app.css'|asset }}">
   <style>
     :root{
       --porcelain:{{ theme.settings.get('porcelain', '#FCFBFF') }};
@@ -38,7 +38,7 @@
   {% include 'components.mobile-nav' %}
   {% if theme.settings.get('reviewer_panel', false) %}{% include 'components.reviewer-panel' %}{% endif %}
 
-  <script src="{{ 'js/app.js'|asset }}" defer></script>
+  <script src="{{ 'app.js'|asset }}" defer></script>
   {% block scripts %}{% endblock %}
   {% hook 'body' %}
   {% hook 'body:end' %}

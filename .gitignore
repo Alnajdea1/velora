@@ -1,5 +1,6 @@
 node_modules/
-public/
+# Keep public/app.css and public/app.js committed so Salla's GitHub preview can
+# serve the theme immediately; `npm run production` regenerates them.
 dist/
 .cache/
 .parcel-cache/

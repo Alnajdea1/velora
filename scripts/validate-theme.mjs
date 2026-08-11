@@ -23,6 +23,9 @@ const requiredPages = [
   'src/views/pages/page-single.twig',
   'src/assets/js/app.js',
   'src/assets/styles/app.css',
+  'scripts/build-theme.mjs',
+  'public/app.js',
+  'public/app.css',
   'src/locales/ar.json',
   'src/locales/en.json'
 ];
@@ -127,6 +130,17 @@ if (fs.existsSync(homeTemplate)) {
   const source = fs.readFileSync(homeTemplate, 'utf8');
   if (!/{%\s*component\s+home\s*%}/.test(source)) {
     errors.push('Homepage must render merchant-ordered Velora components with {% component home %}');
+  }
+}
+
+const masterTemplate = path.join(root, 'src/views/layouts/master.twig');
+if (fs.existsSync(masterTemplate)) {
+  const source = fs.readFileSync(masterTemplate, 'utf8');
+  if (!source.includes("'app.css'|asset") && !source.includes("'app.css' | asset")) {
+    errors.push("Master layout must load the compiled public asset as {{ 'app.css'|asset }}");
+  }
+  if (!source.includes("'app.js'|asset") && !source.includes("'app.js' | asset")) {
+    errors.push("Master layout must load the compiled public asset as {{ 'app.js'|asset }}");
   }
 }
 
