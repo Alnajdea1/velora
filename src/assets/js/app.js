@@ -212,41 +212,49 @@
       const languageSwitcher = event.target.closest('[data-language-switch]');
       if (languageSwitcher) {
         event.preventDefault();
-        const targetLanguage = languageSwitcher.dataset.languageSwitch;
+        event.stopPropagation();
+        const targetLanguage = String(languageSwitcher.dataset.languageSwitch || 'en')
+          .slice(0, 2)
+          .toLowerCase();
         const sallaApi = window.salla || window.Salla;
         const currentLanguage = String(
           sallaApi?.config?.get?.('user.language_code') || document.documentElement.lang || 'ar'
-        ).slice(0, 2);
+        ).slice(0, 2).toLowerCase();
         languageSwitcher.disabled = true;
 
         try {
-          const languages = await sallaApi?.config?.languages?.();
-          const target = languages?.find((language) => {
-            const code = String(language.code || language.iso_code || '').slice(0, 2).toLowerCase();
-            return code === targetLanguage;
-          });
+          if (sallaApi?.onReady) await sallaApi.onReady();
+          if (window.customElements?.whenDefined) {
+            await Promise.race([
+              window.customElements.whenDefined('salla-localization-modal'),
+              new Promise((resolve) => window.setTimeout(resolve, 1500))
+            ]);
+          }
 
-          if (target?.url) {
-            sallaApi?.cookie?.set?.('s-lang', targetLanguage);
-            window.location.assign(target.url);
+          const localization = document.getElementById('velora-localization');
+          if (localization && typeof localization.submit === 'function') {
+            localization.language = targetLanguage;
+            localization.currency = localization.currency
+              || sallaApi?.config?.get?.('user.currency_code', 'SAR')
+              || 'SAR';
+            localization.submit();
             return;
           }
         } catch {
-          // Fall back to Salla's language query parameter if the languages API is unavailable.
+          // Use the same URL and cookie flow as Salla's localization component.
         }
 
-        const nextUrl = new URL(window.location.href);
-        nextUrl.searchParams.set('lang', targetLanguage);
-        if (currentLanguage && currentLanguage !== targetLanguage) {
-          nextUrl.pathname = nextUrl.pathname.replace(
-            new RegExp(`/${currentLanguage}(?=/|$)`),
-            `/${targetLanguage}`
-          );
-        }
-
+        const nextUrl = sallaApi?.helpers?.addParamToUrl
+          ? sallaApi.helpers.addParamToUrl('lang', targetLanguage)
+          : (() => {
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', targetLanguage);
+            return url.toString();
+          })();
         sallaApi?.cookie?.set?.('s-lang', targetLanguage);
-        window.location.assign(nextUrl.toString());
-        languageSwitcher.disabled = false;
+        window.location.assign(
+          String(nextUrl).replace(`/${currentLanguage}/`, `/${targetLanguage}/`)
+        );
         return;
       }
 
