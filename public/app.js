@@ -216,45 +216,12 @@
         const targetLanguage = String(languageSwitcher.dataset.languageSwitch || 'en')
           .slice(0, 2)
           .toLowerCase();
-        const sallaApi = window.salla || window.Salla;
-        const currentLanguage = String(
-          sallaApi?.config?.get?.('user.language_code') || document.documentElement.lang || 'ar'
-        ).slice(0, 2).toLowerCase();
         languageSwitcher.disabled = true;
-
         try {
-          if (sallaApi?.onReady) await sallaApi.onReady();
-          if (window.customElements?.whenDefined) {
-            await Promise.race([
-              window.customElements.whenDefined('salla-localization-modal'),
-              new Promise((resolve) => window.setTimeout(resolve, 1500))
-            ]);
-          }
-
-          const localization = document.getElementById('velora-localization');
-          if (localization && typeof localization.submit === 'function') {
-            localization.language = targetLanguage;
-            localization.currency = localization.currency
-              || sallaApi?.config?.get?.('user.currency_code', 'SAR')
-              || 'SAR';
-            localization.submit();
-            return;
-          }
-        } catch {
-          // Use the same URL and cookie flow as Salla's localization component.
+          if (window.VeloraLocale?.switchTo) await window.VeloraLocale.switchTo(targetLanguage);
+        } finally {
+          languageSwitcher.disabled = false;
         }
-
-        const nextUrl = sallaApi?.helpers?.addParamToUrl
-          ? sallaApi.helpers.addParamToUrl('lang', targetLanguage)
-          : (() => {
-            const url = new URL(window.location.href);
-            url.searchParams.set('lang', targetLanguage);
-            return url.toString();
-          })();
-        sallaApi?.cookie?.set?.('s-lang', targetLanguage);
-        window.location.assign(
-          String(nextUrl).replace(`/${currentLanguage}/`, `/${targetLanguage}/`)
-        );
         return;
       }
 
@@ -422,9 +389,9 @@
       if (event.target.value) window.location.assign(event.target.value);
     });
 
-    const addedMessage = document.documentElement.lang === 'ar' ? 'أُضيف إلى السلة' : 'Added to bag';
-    if (window.salla?.cart?.event?.onItemAdded) salla.cart.event.onItemAdded(() => showToast(addedMessage));
-    else if (window.salla?.event) salla.event.on('cart::item.added', () => showToast(addedMessage));
+    const addedMessage = () => document.documentElement.lang === 'ar' ? 'أُضيف إلى السلة' : 'Added to bag';
+    if (window.salla?.cart?.event?.onItemAdded) salla.cart.event.onItemAdded(() => showToast(addedMessage()));
+    else if (window.salla?.event) salla.event.on('cart::item.added', () => showToast(addedMessage()));
   };
 
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();

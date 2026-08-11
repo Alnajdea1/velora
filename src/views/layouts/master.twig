@@ -40,6 +40,7 @@
   {% include 'components.mobile-nav' %}
   {% if theme.settings.get('reviewer_panel', false) %}{% include 'components.reviewer-panel' %}{% endif %}
 
+  <script src="{{ 'i18n.js'|asset }}" defer></script>
   <script src="{{ 'app.js'|asset }}" defer></script>
   {% block scripts %}{% endblock %}
   {% hook 'body' %}

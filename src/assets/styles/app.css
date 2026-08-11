@@ -261,6 +261,16 @@ html[lang^="ar"] .v-page-hero p{margin-inline-start:0;margin-inline-end:0;text-a
 html[lang^="ar"] .v-ar-title-block{margin-inline:0 auto!important;text-align:right!important}
 html[lang^="ar"] .v-page-hero--article{text-align:right}
 html[lang^="ar"] .v-not-found h1,html[lang^="ar"] .v-thanks h1,html[lang^="ar"] .v-cart-empty h2{text-align:center}
+html[dir="ltr"]{direction:ltr}
+html[dir="ltr"] body{direction:ltr;text-align:left}
+html[dir="ltr"] h1,html[dir="ltr"] h2,html[dir="ltr"] h3{text-align:left}
+html[dir="ltr"] .v-page-hero .v-wrap,html[dir="ltr"] .v-section-heading,html[dir="ltr"] .v-botanical>.v-wrap{text-align:left}
+html[dir="ltr"] .v-page-hero p{margin-inline-start:0;margin-inline-end:0;text-align:left}
+html[dir="ltr"] .v-ar-title-block{margin-inline:0 auto!important;text-align:left!important}
+html[dir="ltr"] .v-page-hero--article{text-align:left}
+html[dir="ltr"] .v-hero__copy{direction:ltr;text-align:left}
+html[dir="ltr"] .v-hero__actions,html[dir="ltr"] .v-hero__stats{direction:ltr;justify-content:flex-start}
+html[dir="ltr"] .v-not-found h1,html[dir="ltr"] .v-thanks h1,html[dir="ltr"] .v-cart-empty h2{text-align:center}
 
 /* ── Storefront pages ─────────────────────────────────────────── */
 button,input,textarea,select{font:inherit}
