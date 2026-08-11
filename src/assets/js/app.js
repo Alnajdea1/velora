@@ -209,11 +209,26 @@
       const opener = event.target.closest('[data-open]');
       if (opener) setOverlay(opener.dataset.open, true);
 
-      const localizationOpener = event.target.closest('[data-localization-open]');
-      if (localizationOpener) {
-        const localizationModal = document.querySelector('salla-localization-modal');
-        if (localizationModal && typeof localizationModal.open === 'function') localizationModal.open();
-        else window.salla?.event?.dispatch?.('localization::open');
+      const languageSwitcher = event.target.closest('[data-language-switch]');
+      if (languageSwitcher) {
+        event.preventDefault();
+        const targetLanguage = languageSwitcher.dataset.languageSwitch;
+        const sallaApi = window.salla || window.Salla;
+        const currentLanguage = String(
+          sallaApi?.config?.get?.('user.language_code') || document.documentElement.lang || 'ar'
+        ).slice(0, 2);
+        const nextUrl = new URL(window.location.href);
+
+        nextUrl.searchParams.set('lang', targetLanguage);
+        if (currentLanguage && currentLanguage !== targetLanguage) {
+          nextUrl.pathname = nextUrl.pathname.replace(
+            new RegExp(`/${currentLanguage}(?=/|$)`),
+            `/${targetLanguage}`
+          );
+        }
+
+        sallaApi?.cookie?.set?.('s-lang', targetLanguage);
+        window.location.assign(nextUrl.toString());
         return;
       }
 

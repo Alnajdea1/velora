@@ -2,8 +2,7 @@
 <header class="v-header" data-scrolled="false" data-component="header">
   <div class="v-header__bar">
     <div class="v-header__actions">
-      <button type="button" class="v-header__language" data-localization-open aria-label="{{ is_ar ? 'English' : 'العربية' }}">{{ is_ar ? 'EN' : 'AR' }}</button>
-      <salla-localization-modal></salla-localization-modal>
+      <button type="button" class="v-header__language" data-language-switch="{{ is_ar ? 'en' : 'ar' }}" aria-label="{{ is_ar ? 'English' : 'العربية' }}">{{ is_ar ? 'EN' : 'AR' }}</button>
       <salla-cart-summary show-cart-label class="v-header__cart v-btn v-btn--dark v-pill"></salla-cart-summary>
 
       <a href="{{ link('wishlist') }}" class="v-header__wishlist v-pill" aria-label="{{ trans('common.wishlist') }}">
