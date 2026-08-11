@@ -44,7 +44,7 @@
           <p style="margin-top:14px;font-size:15px;line-height:1.9;color:rgba(241,236,255,.7);max-width:400px">{{ family.description }}</p>
           <a href="{{ family.category.url ?: link('products') }}" class="v-btn v-pill" style="margin-top:24px;background:var(--porcelain);color:var(--aubergine)">{{ trans('aura.cta') }}</a>
         </div>
-        <div class="v-grid v-grid--2">
+        <div class="v-grid v-grid--2 v-aura__products">
           {% for product in family.category.products|slice(0, component.products_shown|default(2)) %}
             {% include 'components.product-card' with { product: product } %}
           {% else %}

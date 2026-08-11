@@ -1,6 +1,12 @@
-{% if theme.settings.get('announcement_enabled', true) %}<div class="v-announce v-dark" style="padding:9px 20px;text-align:center;font-size:12.5px">
-  <span style="color:var(--lilac)">{{ trans('announcement.prefix') }}</span>
-  {{ trans('announcement.text') }}
-  <b style="color:var(--coral)">{{ theme.settings.get('announcement_code', 'VELORA10') }}</b>
+{% if theme.settings.get('announcement_enabled', true) %}<div class="v-announce v-dark" role="region" aria-label="{{ trans('announcement.prefix') }}">
+  <div class="v-announce__track">
+    {% for copy in [1, 2] %}
+      <span class="v-announce__item" {{ copy == 2 ? 'aria-hidden="true"' : '' }}>
+        <span>{{ trans('announcement.prefix') }}</span>
+        {{ trans('announcement.text') }}
+        <b>{{ theme.settings.get('announcement_code', 'VELORA10') }}</b>
+      </span>
+    {% endfor %}
+  </div>
 </div>
 {% endif %}

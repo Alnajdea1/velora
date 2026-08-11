@@ -7,6 +7,11 @@
     <span class="v-bottle v-bottle--card" aria-hidden="true"><i></i><b></b><em></em></span>
     {% if demo.badge %}<span class="v-badge v-product__badge">{{ demo.badge }}</span>{% endif %}
     {% if demo.soldout %}<span class="v-badge v-badge--soldout v-product__badge">{{ trans('product.sold_out') }}</span>{% endif %}
+    <div class="v-product__quickadd">
+      <button type="button" class="v-btn v-btn--primary" data-demo-quickadd data-fallback-url="{{ link('products') }}" style="width:100%" {{ demo.soldout ? 'disabled' : '' }}>
+        {{ demo.soldout ? trans('product.notify') : trans('product.quick_add') }}
+      </button>
+    </div>
   </div>
   <button type="button" class="v-pill v-product__wish v-product__wish--demo" data-demo-wishlist data-fallback-url="{{ link('wishlist') }}" aria-label="{{ trans('common.wishlist') }}" aria-pressed="false">♡</button>
   <div style="display:flex;flex-direction:column;gap:7px;padding-inline:4px">

@@ -1,6 +1,7 @@
 {# velora.gift_composer #}
-<section class="v-section v-dark v-curve-top" data-component="gift-composer"
+<section class="v-section v-dark v-curve-top" data-component="gift-composer" {{ component.guaranteed_fallback ? 'data-gift-fallback="true"' : '' }}
          data-max-items="{{ component.max_items|default(3) }}" data-wrap-price="{{ component.wrap_price|default(35) }}"
+         data-fallback-url="{{ link('products') }}"
          style="position:relative;overflow:hidden">
   <div class="v-wrap" style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:54px;align-items:center">
     <div>
@@ -24,7 +25,12 @@
           {% for product in component.products %}
             <button type="button" class="v-chip" data-gift-item="{{ product.id }}" data-price="{{ product.price }}" aria-pressed="false">{{ product.name }}</button>
           {% else %}
-            {% for label in [store.language.is_rtl ? 'عبير البنفسج' : 'Violet Veil', store.language.is_rtl ? 'مسك مخملي' : 'Velvet Musk', store.language.is_rtl ? 'زيت الترميم' : 'Repair Oil'] %}<span class="v-chip" aria-disabled="true">{{ label }}</span>{% endfor %}
+            {% set demo_gifts = [
+              {'id':'demo-violet','ar':'عبير البنفسج','en':'Violet Veil','price':320},
+              {'id':'demo-musk','ar':'مسك مخملي','en':'Velvet Musk','price':265},
+              {'id':'demo-oil','ar':'زيت الترميم','en':'Repair Oil','price':145}
+            ] %}
+            {% for item in demo_gifts %}<button type="button" class="v-chip" data-gift-item="{{ item.id }}" data-price="{{ item.price }}" data-demo-gift="true" aria-pressed="false">{{ store.language.is_rtl ? item.ar : item.en }}</button>{% endfor %}
           {% endfor %}
         </div>
       </div>

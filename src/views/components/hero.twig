@@ -27,7 +27,7 @@
       </dl>
     </div>
 
-    <div class="v-hero__art" aria-label="{{ component.image_alt ?: trans('hero.art_alt') }}">
+    <div class="v-hero__art" data-hero-motion aria-label="{{ component.image_alt ?: trans('hero.art_alt') }}">
       <div class="v-hero__arch">
         <span class="v-hero__glow" aria-hidden="true"></span>
         {% if component.image %}
@@ -41,6 +41,10 @@
         </div>
       </div>
       <span class="v-hero__leaf v-petal" aria-hidden="true"></span>
+      <span class="v-hero__stem" aria-hidden="true"><i></i><b></b><em></em></span>
+      <span class="v-hero__petal v-hero__petal--1" aria-hidden="true"></span>
+      <span class="v-hero__petal v-hero__petal--2" aria-hidden="true"></span>
+      <span class="v-hero__petal v-hero__petal--3" aria-hidden="true"></span>
       {% set default_notes = [
         {'tag':'TOP','label':trans('hero.note_top')},
         {'tag':'HEART','label':trans('hero.note_heart')},

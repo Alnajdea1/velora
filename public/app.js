@@ -62,6 +62,7 @@
         const rating = product.rating?.starts ?? product.rating?.rate ?? 0;
         const media = $('.v-product__media', card);
         const wishlist = $('[data-demo-wishlist]', card);
+        const quickAdd = $('[data-demo-quickadd]', card);
         const oldPrice = $('[data-demo-old]', card);
 
         card.dataset.cardUrl = product.url || card.dataset.cardUrl;
@@ -71,6 +72,11 @@
           wishlist.dataset.productId = String(product.id);
           wishlist.setAttribute('aria-pressed', String(Boolean(product.is_in_wishlist)));
           wishlist.textContent = product.is_in_wishlist ? '♥' : '♡';
+        }
+
+        if (quickAdd) {
+          quickAdd.dataset.productId = String(product.id);
+          quickAdd.disabled = product.is_available === false;
         }
 
         if (imageUrl && media) {
@@ -119,7 +125,64 @@
     syncHeader();
     window.addEventListener('scroll', syncHeader, { passive: true });
 
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      const movingSections = $$('[data-component]').filter((section) => section.querySelector(':scope > .v-wrap'));
+      movingSections.forEach((section) => section.classList.add('v-motion-ready'));
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.dataset.inView = 'true';
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+        movingSections.forEach((section) => observer.observe(section));
+      } else movingSections.forEach((section) => { section.dataset.inView = 'true'; });
+
+      $$('[data-hero-motion]').forEach((hero) => {
+        const reset = () => {
+          hero.style.setProperty('--hero-x', '0px');
+          hero.style.setProperty('--hero-y', '0px');
+          hero.style.setProperty('--hero-x-reverse', '0px');
+          hero.style.setProperty('--hero-y-reverse', '0px');
+        };
+        hero.addEventListener('pointermove', (event) => {
+          if (event.pointerType === 'touch') return;
+          const bounds = hero.getBoundingClientRect();
+          const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 14;
+          const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * 12;
+          hero.style.setProperty('--hero-x', `${x.toFixed(2)}px`);
+          hero.style.setProperty('--hero-y', `${y.toFixed(2)}px`);
+          hero.style.setProperty('--hero-x-reverse', `${(-x * 0.65).toFixed(2)}px`);
+          hero.style.setProperty('--hero-y-reverse', `${(-y * 0.65).toFixed(2)}px`);
+        }, { passive: true });
+        hero.addEventListener('pointerleave', reset, { passive: true });
+      });
+    }
+
+    const guaranteedGift = $('[data-gift-fallback="true"]');
+    const editorGift = $('[data-component="gift-composer"]:not([data-gift-fallback])');
+    if (guaranteedGift && editorGift) guaranteedGift.remove();
+
     document.addEventListener('click', async (event) => {
+      const demoQuickAdd = event.target.closest('[data-demo-quickadd]');
+      if (demoQuickAdd) {
+        event.preventDefault();
+        event.stopPropagation();
+        const productId = Number(demoQuickAdd.dataset.productId || 0);
+        if (!productId || !window.salla?.cart?.quickAdd) {
+          window.location.assign(demoQuickAdd.dataset.fallbackUrl);
+          return;
+        }
+        demoQuickAdd.disabled = true;
+        try {
+          await salla.cart.quickAdd(productId);
+          showToast(demoQuickAdd.textContent.trim());
+        } finally { demoQuickAdd.disabled = false; }
+        return;
+      }
+
       const demoWishlist = event.target.closest('[data-demo-wishlist]');
       if (demoWishlist) {
         event.preventDefault();
@@ -252,7 +315,7 @@
       $$('[data-gift-item]', root).forEach((button) => button.addEventListener('click', () => {
         const id = button.dataset.giftItem;
         if (chosen.has(id)) chosen.delete(id);
-        else if (chosen.size < max) chosen.set(id, { label:button.textContent.trim(), price:Number(button.dataset.price || 0) });
+        else if (chosen.size < max) chosen.set(id, { label:button.textContent.trim(), price:Number(button.dataset.price || 0), demo:button.dataset.demoGift === 'true' });
         button.setAttribute('aria-pressed', String(chosen.has(id)));
         render();
       }));
@@ -262,6 +325,10 @@
         $('[data-gift-box]', root).dataset.shape = button.dataset.giftShape;
       }));
       add?.addEventListener('click', async () => {
+        if ([...chosen.values()].some((item) => item.demo)) {
+          window.location.assign(root.dataset.fallbackUrl);
+          return;
+        }
         if (!window.salla?.cart) return;
         add.disabled = true;
         try {

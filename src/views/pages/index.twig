@@ -2,6 +2,8 @@
 {% block content %}
   {% if theme.settings.get('velora_home_editor', false) %}
     {% component home %}{# merchant-ordered Velora components declared in twilight.json #}
+    {# Keep the approved signature composer visible even in legacy saved editor layouts. JS removes this fallback when an editor-managed composer already exists. #}
+    {% include 'components.gift-composer' with { component: {'guaranteed_fallback': true} } %}
   {% else %}
     {#
       Guaranteed approved composition. This prevents a previously saved Salla home-page
