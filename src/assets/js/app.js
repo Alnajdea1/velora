@@ -182,6 +182,29 @@
 
     hydrateDemoCards();
 
+    $$('[data-offer-countdown]').forEach((section) => {
+      let remaining = (2 * 24 * 60 * 60) + (11 * 60 * 60) + (48 * 60) + 20;
+      const units = {
+        days: $('[data-countdown-unit="days"]', section),
+        hours: $('[data-countdown-unit="hours"]', section),
+        minutes: $('[data-countdown-unit="minutes"]', section),
+        seconds: $('[data-countdown-unit="seconds"]', section),
+      };
+      const localize = (value) => new Intl.NumberFormat(document.documentElement.lang || 'ar', { minimumIntegerDigits: 2, useGrouping: false }).format(value);
+      const render = () => {
+        const days = Math.floor(remaining / 86400);
+        const hours = Math.floor((remaining % 86400) / 3600);
+        const minutes = Math.floor((remaining % 3600) / 60);
+        const seconds = remaining % 60;
+        if (units.days) units.days.textContent = localize(days);
+        if (units.hours) units.hours.textContent = localize(hours);
+        if (units.minutes) units.minutes.textContent = localize(minutes);
+        if (units.seconds) units.seconds.textContent = localize(seconds);
+      };
+      render();
+      window.setInterval(() => { remaining = Math.max(0, remaining - 1); render(); }, 1000);
+    });
+
     $$('[data-component="aura-explorer"]').forEach((root) => {
       $$('[data-aura]', root).forEach((tab) => tab.addEventListener('click', () => {
         $$('[data-aura]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));

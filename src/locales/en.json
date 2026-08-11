@@ -277,6 +277,23 @@
     "track": "Track order",
     "faq": "FAQ"
   },
+  "offer": {
+    "badge": "Ends this weekend",
+    "title_line_1": "30% off",
+    "title_line_2": "the lavender harvest",
+    "body": "Covers 50ml and 75ml parfums and the night care sets. The discount applies automatically at checkout.",
+    "countdown_label": "Time remaining on the offer",
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Min",
+    "seconds": "Sec",
+    "cta": "Shop the offer",
+    "categories_label": "Offer categories",
+    "tile_50": "50ml",
+    "tile_75": "75ml",
+    "tile_night": "Night care",
+    "tile_gifts": "Gifts"
+  },
   "reviewer": {
     "label": "Screen review panel",
     "pages": "Screens",

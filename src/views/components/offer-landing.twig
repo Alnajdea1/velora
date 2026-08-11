@@ -1,0 +1,40 @@
+{# Approved prototype: promotional lavender-harvest landing composition. #}
+{% set offer_tiles = component.tiles ?: [] %}
+<section class="v-offer" data-component="offer-landing" data-offer-countdown>
+  <span class="v-offer__aura" aria-hidden="true"></span>
+  <div class="v-wrap v-offer__grid">
+    <div class="v-offer__copy">
+      <span class="v-offer__badge">{{ component.badge ?: trans('offer.badge') }}</span>
+      <h2 class="v-offer__title">
+        <span>{{ component.title_line_1 ?: trans('offer.title_line_1') }}</span>
+        <span>{{ component.title_line_2 ?: trans('offer.title_line_2') }}</span>
+      </h2>
+      <p class="v-offer__body">{{ component.body ?: trans('offer.body') }}</p>
+
+      <div class="v-offer__countdown" aria-label="{{ trans('offer.countdown_label') }}" aria-live="off">
+        <div><strong data-countdown-unit="days">٠٢</strong><span>{{ trans('offer.days') }}</span></div>
+        <div><strong data-countdown-unit="hours">١١</strong><span>{{ trans('offer.hours') }}</span></div>
+        <div><strong data-countdown-unit="minutes">٤٨</strong><span>{{ trans('offer.minutes') }}</span></div>
+        <div><strong data-countdown-unit="seconds">٢٠</strong><span>{{ trans('offer.seconds') }}</span></div>
+      </div>
+
+      <a href="{{ component.cta_url ?: link('products') }}" class="v-btn v-btn--light v-pill v-offer__cta">
+        {{ component.cta_label ?: trans('offer.cta') }}
+      </a>
+    </div>
+
+    <div class="v-offer__tiles" aria-label="{{ trans('offer.categories_label') }}">
+      {% if offer_tiles|length %}
+        {% for tile in offer_tiles|slice(0, 4) %}
+          <a href="{{ tile.url ?: link('products') }}" class="v-offer__tile v-offer__tile--{{ loop.index }}">
+            <span>{{ tile.label }}</span>
+          </a>
+        {% endfor %}
+      {% else %}
+        {% for label in [trans('offer.tile_50'), trans('offer.tile_75'), trans('offer.tile_night'), trans('offer.tile_gifts')] %}
+          <a href="{{ link('products') }}" class="v-offer__tile v-offer__tile--{{ loop.index }}"><span>{{ label }}</span></a>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</section>

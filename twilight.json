@@ -516,6 +516,91 @@
       "is_default": true
     },
     {
+      "name": "lavender-harvest-offer",
+      "title": {
+        "ar": "عرض حصاد اللافندر",
+        "en": "Lavender harvest offer"
+      },
+      "icon": "sicon-percentage",
+      "path": "home.velora-offer-landing",
+      "fields": [
+        {
+          "id": "badge",
+          "type": "string",
+          "label": "شارة العرض",
+          "multilanguage": true,
+          "format": "text"
+        },
+        {
+          "id": "title_line_1",
+          "type": "string",
+          "label": "العنوان — السطر الأول",
+          "multilanguage": true,
+          "format": "text"
+        },
+        {
+          "id": "title_line_2",
+          "type": "string",
+          "label": "العنوان — السطر الثاني",
+          "multilanguage": true,
+          "format": "text"
+        },
+        {
+          "id": "body",
+          "type": "string",
+          "format": "textarea",
+          "label": "وصف العرض",
+          "multilanguage": true
+        },
+        {
+          "id": "cta_label",
+          "type": "string",
+          "label": "نص زر العرض",
+          "multilanguage": true,
+          "format": "text"
+        },
+        {
+          "id": "cta_url",
+          "type": "string",
+          "format": "url",
+          "label": "رابط زر العرض"
+        },
+        {
+          "id": "tiles",
+          "type": "collection",
+          "format": "collection",
+          "label": "بطاقات فئات العرض",
+          "required": false,
+          "minLength": 4,
+          "maxLength": 4,
+          "fields": [
+            {
+              "id": "tiles.label",
+              "type": "string",
+              "label": "اسم الفئة",
+              "multilanguage": true,
+              "format": "text"
+            },
+            {
+              "id": "tiles.url",
+              "type": "string",
+              "format": "url",
+              "label": "رابط الفئة"
+            }
+          ],
+          "item_label": "فئة العرض",
+          "value": [
+            { "tiles.label": "٥٠ مل" },
+            { "tiles.label": "٧٥ مل" },
+            { "tiles.label": "عناية ليلية" },
+            { "tiles.label": "هدايا" }
+          ]
+        }
+      ],
+      "key": "3d7f4f6a-fc14-4cb3-8b12-7fe56cf6ef3f",
+      "is_default": true
+    },
+    {
       "name": "botanical-categories",
       "title": {
         "ar": "التنقل النباتي بين الأقسام",
