@@ -96,10 +96,13 @@ a:hover{color:var(--aubergine)}
   padding:16px 28px;border-radius:var(--r-control);font-family:var(--ui);font-size:14px;font-weight:800;
   transition:background .3s var(--ease),transform .3s var(--ease)}
 .v-btn--primary{background:var(--iris);color:var(--porcelain);box-shadow:0 24px 44px -26px rgba(118,87,232,.9)}
-.v-btn--primary:hover{background:var(--aubergine);transform:translateY(-2px)}
+.v-btn--primary:hover{background:var(--aubergine);color:var(--porcelain);transform:translateY(-2px)}
 .v-btn--dark{background:var(--aubergine);color:var(--porcelain)}
 .v-btn--ghost{background:var(--mist);color:var(--aubergine)}
 .v-btn--coral{background:var(--coral);color:#fff;border-radius:999px}
+.v-btn--dark:hover{color:var(--porcelain)}
+.v-btn--ghost:hover{color:var(--aubergine)}
+.v-btn--coral:hover{color:#fff}
 .v-btn:focus-visible{outline:0;box-shadow:0 0 0 3px var(--porcelain),0 0 0 6px var(--lilac)}
 .v-btn[disabled]{background:var(--mist);color:var(--lilac);cursor:not-allowed;box-shadow:none;transform:none}
 .v-btn.is-loading::before{content:'';width:15px;height:15px;border-radius:999px;
