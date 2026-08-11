@@ -4,7 +4,7 @@
     <div class="v-header__actions">
       <button type="button" class="v-header__language" data-localization-open aria-label="{{ is_ar ? 'English' : 'العربية' }}">{{ is_ar ? 'EN' : 'AR' }}</button>
       <salla-localization-modal></salla-localization-modal>
-      <salla-cart-summary-button class="v-header__cart v-btn v-btn--dark v-pill"></salla-cart-summary-button>
+      <salla-cart-summary show-cart-label class="v-header__cart v-btn v-btn--dark v-pill"></salla-cart-summary>
 
       <a href="{{ link('wishlist') }}" class="v-header__wishlist v-pill" aria-label="{{ trans('common.wishlist') }}">
         <span aria-hidden="true">♥</span>
