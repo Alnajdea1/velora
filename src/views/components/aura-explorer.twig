@@ -2,7 +2,7 @@
 <section id="aura" class="v-section v-curve-top {{ component.light_theme ? '' : 'v-dark' }}" data-component="aura-explorer" style="position:relative;overflow:hidden">
   <span aria-hidden="true" style="position:absolute;top:-10%;inset-inline-start:12%;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(118,87,232,.5),transparent 68%);animation:v-aura 16s ease-in-out infinite"></span>
   <div class="v-wrap" style="position:relative">
-    <div style="text-align:center;max-width:620px;margin-inline:auto">
+    <div class="v-ar-title-block" style="text-align:center;max-width:620px;margin-inline:auto">
       <span style="font-family:var(--latin);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--lilac)">{{ trans('aura.kicker') }}</span>
       <h2 style="margin-top:16px;font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('aura.title')) }}</h2>
       <p style="margin-top:16px;font-size:14.5px;line-height:1.85;color:rgba(241,236,255,.65)">{{ component.subtitle }}</p>

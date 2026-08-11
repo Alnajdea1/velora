@@ -209,6 +209,14 @@
       const opener = event.target.closest('[data-open]');
       if (opener) setOverlay(opener.dataset.open, true);
 
+      const localizationOpener = event.target.closest('[data-localization-open]');
+      if (localizationOpener) {
+        const localizationModal = document.querySelector('salla-localization-modal');
+        if (localizationModal && typeof localizationModal.open === 'function') localizationModal.open();
+        else window.salla?.event?.dispatch?.('localization::open');
+        return;
+      }
+
       const closer = event.target.closest('[data-close]');
       if (closer) setOverlay(closer.closest('[data-overlay]')?.dataset.overlay, false);
 

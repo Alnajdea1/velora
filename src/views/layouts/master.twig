@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="{{ store.language.code|default('ar') }}" dir="{{ store.language.is_rtl ? 'rtl' : 'ltr' }}"
+{% set current_locale = store.language.code|default('ar') %}
+{% set is_arabic = (current_locale|slice(0, 2)) == 'ar' %}
+<html lang="{{ current_locale }}" dir="{{ (store.language.is_rtl or is_arabic) ? 'rtl' : 'ltr' }}"
       data-reduce-motion="{{ theme.settings.get('reduce_motion', false) ? 'true' : 'false' }}">
 <head>
   <meta charset="utf-8">

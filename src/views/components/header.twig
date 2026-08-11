@@ -1,35 +1,46 @@
+{% set is_ar = ((store.language.code|default('ar'))|slice(0, 2)) == 'ar' %}
 <header class="v-header" data-scrolled="false" data-component="header">
   <div class="v-header__bar">
-    <a href="{{ link('home') }}" class="v-brand" style="display:flex;flex-direction:row-reverse;align-items:center;gap:10px">
-      {% if store.logo %}
-        <img src="{{ store.logo }}" alt="{{ store.name }}" class="v-brand__logo">
-      {% else %}
-        <span class="v-brand__mark v-petal" aria-hidden="true"></span>
-      {% endif %}
-      <span class="v-brand__name">{{ store.name }}</span>
-    </a>
+    <div class="v-header__actions">
+      <button type="button" class="v-header__language" data-localization-open aria-label="{{ is_ar ? 'English' : 'العربية' }}">{{ is_ar ? 'EN' : 'AR' }}</button>
+      <salla-localization-modal></salla-localization-modal>
+      <salla-cart-summary-button class="v-header__cart v-btn v-btn--dark v-pill"></salla-cart-summary-button>
 
-    <nav class="v-nav" aria-label="{{ trans('common.menu') }}" style="display:none;gap:4px">
-      {% for item in menus.header %}
-        <a href="{{ item.url }}" class="v-pill" style="padding:9px 15px;color:var(--leaf);font-size:13.5px;font-weight:700">{{ item.title }}</a>
-      {% endfor %}
-    </nav>
+      <a href="{{ link('wishlist') }}" class="v-header__wishlist v-pill" aria-label="{{ trans('common.wishlist') }}">
+        <span aria-hidden="true">♥</span>
+        <salla-count type="wishlist" class="v-badge--off v-badge"></salla-count>
+      </a>
 
-    <span style="flex:1"></span>
+      <button type="button" class="v-header__search v-pill" data-open="search">
+        <span aria-hidden="true">⌕</span><span class="v-hide-sm">{{ trans('common.search') }}</span>
+      </button>
 
-    <button type="button" class="v-pill" data-open="search"
-            style="display:flex;align-items:center;gap:9px;padding:10px 16px;border:0;background:var(--mist);color:var(--leaf);font-size:13px;cursor:pointer">
-      <span aria-hidden="true">⌕</span><span class="v-hide-sm">{{ trans('common.search') }}</span>
-    </button>
+      <button type="button" class="v-btn v-btn--ghost v-burger" data-open="nav" aria-label="{{ trans('common.menu') }}">☰</button>
+    </div>
 
-    <a href="{{ link('wishlist') }}" class="v-pill" aria-label="{{ trans('common.wishlist') }}"
-       style="position:relative;width:42px;height:42px;display:grid;place-items:center">♥
-      <salla-count type="wishlist" class="v-badge--off v-badge" style="position:absolute;top:2px;inset-inline-end:0"></salla-count>
-    </a>
+    <div class="v-header__identity">
+      <nav class="v-nav" aria-label="{{ trans('common.menu') }}">
+        {% if menus.header|default([])|length %}
+          {% for item in menus.header %}
+            <a href="{{ item.url }}" class="v-nav__link">{{ item.title }}</a>
+          {% endfor %}
+        {% else %}
+          <a href="{{ link('products') }}" class="v-nav__link">{{ is_ar ? 'الجديد' : 'New' }}</a>
+          <a href="{{ link('products') }}" class="v-nav__link">{{ is_ar ? 'العطور' : 'Fragrance' }}</a>
+          <a href="{{ link('products') }}" class="v-nav__link">{{ is_ar ? 'العناية' : 'Care' }}</a>
+          <a href="{{ link('products') }}" class="v-nav__link">{{ is_ar ? 'الهدايا' : 'Gifts' }}</a>
+          <a href="{{ link('blog') }}" class="v-nav__link">{{ is_ar ? 'المجلة' : 'Journal' }}</a>
+        {% endif %}
+      </nav>
 
-    <salla-cart-summary-button class="v-btn v-btn--dark v-pill"></salla-cart-summary-button>
-    <salla-localization-modal></salla-localization-modal>
-
-    <button type="button" class="v-btn v-btn--ghost v-burger" data-open="nav" aria-label="{{ trans('common.menu') }}">☰</button>
+      <a href="{{ link('home') }}" class="v-brand">
+        <span class="v-brand__name">{{ store.name }}</span>
+        {% if store.logo %}
+          <img src="{{ store.logo }}" alt="{{ store.name }}" class="v-brand__logo">
+        {% else %}
+          <span class="v-brand__mark v-petal" aria-hidden="true"></span>
+        {% endif %}
+      </a>
+    </div>
   </div>
 </header>

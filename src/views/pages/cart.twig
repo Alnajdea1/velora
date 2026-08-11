@@ -1,10 +1,10 @@
 {% extends 'layouts.master' %}
 {% block title %}{{ trans('cart.title') }}{% endblock %}
 {% block content %}
-  <section class="v-page-hero v-curve-bottom">
+  <section class="v-page-hero v-page-hero--cart v-curve-bottom">
     <div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><h1>{{ trans('cart.title') }}</h1><p>{{ trans('cart.subtitle') }}</p></div>
   </section>
-  <section class="v-section">
+  <section class="v-section v-cart-page">
     <div class="v-wrap">
       {% hook 'cart:start' %}
       {% if cart.items|length %}
@@ -41,7 +41,7 @@
             {% hook 'cart:summary.end' %}</aside>
         </div>
       {% else %}
-        <div class="v-empty v-empty--large"><span class="v-petal v-empty__petal"></span><h2>{{ trans('cart.empty_title') }}</h2><p>{{ trans('cart.empty_body') }}</p><a href="{{ link('products') }}" class="v-btn v-btn--primary">{{ trans('common.discover') }}</a></div>
+        <div class="v-empty v-empty--large v-cart-empty"><span class="v-petal v-empty__petal"></span><h2>{{ trans('cart.empty_title') }}</h2><p>{{ trans('cart.empty_body') }}</p><a href="{{ link('products') }}" class="v-btn v-btn--primary">{{ trans('common.discover') }}</a></div>
       {% endif %}
       {% hook 'cart:end' %}
     </div>
