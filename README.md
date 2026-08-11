@@ -52,6 +52,12 @@ src/
 
 ## Approved homepage order
 
+Version 1.2.1 renders this approved sequence directly by default so an older saved Salla
+homepage configuration cannot produce a blank or legacy-looking preview. Every section is also
+registered with a stable Twilight component `key` and `is_default` metadata. After adding and
+ordering the Velora components in the editor, enable the `velora_home_editor` theme setting to
+switch from the guaranteed composition to merchant-managed ordering.
+
 In Salla's theme editor, add the following components in this exact order to reproduce
 `Velora-Lavender-Approved-Prototype.html`:
 

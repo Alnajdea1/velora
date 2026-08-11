@@ -28,6 +28,14 @@
       <div class="v-grid v-grid--4" data-mood-panel="{{ loop.index0 }}" {{ loop.first ? '' : 'hidden' }} style="margin-top:34px">
         {% for product in mood.products|slice(0, 4) %}
           {% include 'components.product-card' with { product: product } %}
+        {% else %}
+          {% set mood_demos = [
+            {'ar':'جذور الميرمية','en':'Sage Roots','sar':'عطر خشبي ٥٠ مل','sen':'Woody parfum 50ml','price':380,'rating':'4.7','nar':'ميرمية، أرز، فيتيفر','nen':'Sage, Cedar, Vetiver','t1':'#DCE6D8','t2':'#71836C'},
+            {'ar':'مسك مخملي','en':'Velvet Musk','sar':'زيت عطري ٣٠ مل','sen':'Perfume oil 30ml','price':265,'rating':'4.9','nar':'مسك، أوركيد، خشب أبيض','nen':'Musk, Orchid, White wood','t1':'#F6EFEA','t2':'#C9B8FF'},
+            {'ar':'ندى الحقول','en':'Field Dew','sar':'ماء عطري ١٠٠ مل','sen':'Scented water 100ml','price':210,'old':260,'rating':'4.6','nar':'نعناع، ليمون، أوراق خضراء','nen':'Mint, Lemon, Green leaves','t1':'#EAF3FF','t2':'#BACBB5'},
+            {'ar':'عبير البنفسج','en':'Violet Veil','sar':'أو دو بارفان ٥٠ مل','sen':'Eau de parfum 50ml','price':320,'old':395,'rating':'4.9','nar':'برغموت، لافندر، مسك','nen':'Bergamot, Lavender, Musk','t1':'#F1ECFF','t2':'#C9B8FF'}
+          ] %}
+          {% for demo in mood_demos %}{% include 'components.demo-product-card' with { demo: demo } %}{% endfor %}
         {% endfor %}
       </div>
     {% endfor %}

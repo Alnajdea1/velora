@@ -92,12 +92,33 @@ if (manifest) {
     if (!String(manifest[key] || '').trim()) errors.push(`twilight.json has an empty top-level value: ${key}`);
   }
   const componentNames = new Set();
+  const componentKeys = new Set();
   for (const component of manifest.components || []) {
-    if (!component.name || !component.path) errors.push('Every component needs name and path');
+    if (!component.name || !component.path || !component.key) errors.push('Every component needs name, key and path');
     if (componentNames.has(component.name)) errors.push(`Duplicate component name: ${component.name}`);
     componentNames.add(component.name);
+    if (componentKeys.has(component.key)) errors.push(`Duplicate component key: ${component.key}`);
+    componentKeys.add(component.key);
     const componentFile = `src/views/components/${String(component.path).replaceAll('.', '/')}.twig`;
     if (!fs.existsSync(path.join(root, componentFile))) errors.push(`Component template missing: ${componentFile}`);
+    for (const field of component.fields || []) {
+      if (field.type === 'items' && field.source !== String(field.source || '').toLowerCase()) {
+        errors.push(`Items source must be lowercase (${component.name}.${field.id}): ${field.source}`);
+      }
+      if (field.type === 'collection') {
+        for (const child of field.fields || []) {
+          if (!String(child.id || '').startsWith(`${field.id}.`)) {
+            errors.push(`Collection child id must be prefixed (${component.name}.${field.id}): ${child.id}`);
+          }
+          if (child.type === 'items' && child.source !== String(child.source || '').toLowerCase()) {
+            errors.push(`Items source must be lowercase (${component.name}.${child.id}): ${child.source}`);
+          }
+        }
+      }
+    }
+  }
+  if (!(manifest.components || []).some((component) => component.is_default)) {
+    errors.push('At least one homepage component must be marked is_default');
   }
 }
 

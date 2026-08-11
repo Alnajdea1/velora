@@ -17,6 +17,14 @@
       {'name':trans('aura.families.citrus'),'description':trans('aura.descriptions.citrus'),'color_from':'#FFD9DE','color_to':'#FF7C8B'}
     ] %}
     {% set families = component.families|length ? component.families : default_families %}
+    {% set demo_products = [
+      {'ar':'عبير البنفسج','en':'Violet Veil','sar':'أو دو بارفان ٥٠ مل','sen':'Eau de parfum 50ml','price':320,'old':395,'rating':'4.9','nar':'برغموت، لافندر، مسك','nen':'Bergamot, Lavender, Musk','t1':'#F1ECFF','t2':'#C9B8FF'},
+      {'ar':'ليل اللافندر','en':'Lavender Nocturne','sar':'أو دو بارفان ٧٥ مل','sen':'Eau de parfum 75ml','price':460,'rating':'4.8','nar':'عنبر، بنفسج، فانيلا','nen':'Amber, Violet, Vanilla','t1':'#C9B8FF','t2':'#261838'},
+      {'ar':'جذور الميرمية','en':'Sage Roots','sar':'عطر خشبي ٥٠ مل','sen':'Woody parfum 50ml','price':380,'rating':'4.7','nar':'ميرمية، أرز، فيتيفر','nen':'Sage, Cedar, Vetiver','t1':'#DCE6D8','t2':'#71836C'},
+      {'ar':'ندى الحقول','en':'Field Dew','sar':'ماء عطري ١٠٠ مل','sen':'Scented water 100ml','price':210,'old':260,'rating':'4.6','nar':'نعناع، ليمون، أوراق خضراء','nen':'Mint, Lemon, Green leaves','t1':'#EAF3FF','t2':'#BACBB5'},
+      {'ar':'مسك مخملي','en':'Velvet Musk','sar':'زيت عطري ٣٠ مل','sen':'Perfume oil 30ml','price':265,'rating':'4.9','nar':'مسك، أوركيد، خشب أبيض','nen':'Musk, Orchid, White wood','t1':'#F6EFEA','t2':'#C9B8FF'},
+      {'ar':'حمضيات بيضاء','en':'White Citrus','sar':'كولونيا ١٠٠ مل','sen':'Cologne 100ml','price':240,'rating':'4.5','nar':'جريب فروت، نيرولي، مسك','nen':'Grapefruit, Neroli, Musk','t1':'#FFF4EC','t2':'#FF7C8B','soldout':true}
+    ] %}
     <div class="v-aura__orbit" style="margin-top:62px" role="tablist">
       {% for family in families %}
         <button type="button" role="tab" class="v-aura__orb" data-aura="{{ loop.index0 }}"
@@ -28,6 +36,7 @@
     </div>
 
     {% for family in families %}
+      {% set family_index = loop.index0 %}
       <div class="v-editorial" data-aura-panel="{{ loop.index0 }}" {{ loop.first ? '' : 'hidden' }}
            style="margin-top:62px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:32px;align-items:center;padding:38px;background:rgba(252,251,255,.06)">
         <div>
@@ -38,6 +47,8 @@
         <div class="v-grid v-grid--2">
           {% for product in family.category.products|slice(0, component.products_shown|default(2)) %}
             {% include 'components.product-card' with { product: product } %}
+          {% else %}
+            {% for demo in demo_products|slice(family_index, 2) %}{% include 'components.demo-product-card' with { demo: demo } %}{% endfor %}
           {% endfor %}
         </div>
       </div>

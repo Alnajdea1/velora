@@ -23,6 +23,8 @@
         <div style="display:flex;flex-wrap:wrap;gap:9px">
           {% for product in component.products %}
             <button type="button" class="v-chip" data-gift-item="{{ product.id }}" data-price="{{ product.price }}" aria-pressed="false">{{ product.name }}</button>
+          {% else %}
+            {% for label in [store.language.is_rtl ? 'عبير البنفسج' : 'Violet Veil', store.language.is_rtl ? 'مسك مخملي' : 'Velvet Musk', store.language.is_rtl ? 'زيت الترميم' : 'Repair Oil'] %}<span class="v-chip" aria-disabled="true">{{ label }}</span>{% endfor %}
           {% endfor %}
         </div>
       </div>

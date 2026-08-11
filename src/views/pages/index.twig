@@ -1,4 +1,21 @@
 {% extends 'layouts.master' %}
 {% block content %}
-  {% component home %}{# merchant-ordered homepage components declared in twilight.json #}
+  {% if theme.settings.get('velora_home_editor', false) %}
+    {% component home %}{# merchant-ordered Velora components declared in twilight.json #}
+  {% else %}
+    {#
+      Guaranteed approved composition. This prevents a previously saved Salla home-page
+      configuration from hiding Velora after a theme source update. Merchants can opt into
+      editor ordering from the theme setting once their Velora components are configured.
+    #}
+    {% include 'components.hero' with { component: {} } %}
+    {% include 'components.aura-explorer' with { component: {} } %}
+    {% include 'components.season-showcase' with { component: {} } %}
+    {% include 'components.botanical-categories' with { component: {} } %}
+    {% include 'components.editorial-story' with { component: {} } %}
+    {% include 'components.routine-path' with { component: {} } %}
+    {% include 'components.mood-shopping' with { component: {} } %}
+    {% include 'components.gift-composer' with { component: {} } %}
+    {% include 'components.journal' with { component: {} } %}
+  {% endif %}
 {% endblock %}

@@ -15,6 +15,19 @@
           <div style="margin-top:16px;font-family:var(--display);font-size:19px;line-height:1.5;color:var(--aubergine)">{{ article.title }}</div>
           <div style="margin-top:8px;font-size:12.5px;color:var(--leaf)">{{ trans('blog.read_time', { n: article.reading_time }) }}</div>
         </a>
+      {% else %}
+        {% set demo_articles = [
+          {'ar':'كيف تختارين عطراً يهدأ مع بشرتك؟','en':'How to choose a scent that settles with your skin','cat_ar':'دليل العطر','cat_en':'Scent guide','time':5,'c1':'#F1ECFF','c2':'#C9B8FF'},
+          {'ar':'طقوس المساء: أربع خطوات بلا استعجال','en':'Evening ritual: four unhurried steps','cat_ar':'العناية','cat_en':'Care','time':4,'c1':'#DCE6D8','c2':'#71836C'},
+          {'ar':'من الحقل إلى الزجاجة في يوم واحد','en':'From field to bottle in one day','cat_ar':'حكاياتنا','cat_en':'Stories','time':6,'c1':'#C9B8FF','c2':'#7657E8'}
+        ] %}
+        {% for article in demo_articles %}
+          <a href="{{ link('blog') }}">
+            <div class="v-journal-demo v-petal" style="--demo-from:{{ article.c1 }};--demo-to:{{ article.c2 }}"><i></i><b></b><span class="v-pill">{{ store.language.is_rtl ? article.cat_ar : article.cat_en }}</span></div>
+            <div style="margin-top:16px;font-family:var(--display);font-size:19px;line-height:1.5;color:var(--aubergine)">{{ store.language.is_rtl ? article.ar : article.en }}</div>
+            <div style="margin-top:8px;font-size:12.5px;color:var(--leaf)">{{ trans('blog.read_time', { n: article.time }) }}</div>
+          </a>
+        {% endfor %}
       {% endfor %}
     </div>
   </div>
