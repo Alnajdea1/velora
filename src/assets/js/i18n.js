@@ -135,10 +135,12 @@
   const syncControls = (locale) => {
     document.querySelectorAll('[data-language-switch]').forEach((button) => {
       const target = locale === 'ar' ? 'en' : 'ar';
-      button.dataset.languageSwitch = target;
-      button.textContent = target === 'en' ? 'EN' : 'AR';
-      button.setAttribute('aria-label', target === 'en' ? 'English' : 'العربية');
-      button.disabled = false;
+      const label = target === 'en' ? 'EN' : 'AR';
+      const ariaLabel = target === 'en' ? 'English' : 'العربية';
+      if (button.dataset.languageSwitch !== target) button.dataset.languageSwitch = target;
+      if (button.textContent.trim() !== label) button.textContent = label;
+      if (button.getAttribute('aria-label') !== ariaLabel) button.setAttribute('aria-label', ariaLabel);
+      if (button.disabled) button.disabled = false;
       if (button.dataset.veloraLocaleBound !== 'true') {
         button.dataset.veloraLocaleBound = 'true';
         button.addEventListener('click', async (event) => {
@@ -181,34 +183,13 @@
     return activeLocale;
   };
 
-  const languageCandidates = (languages) => {
-    if (Array.isArray(languages)) return languages;
-    if (languages && typeof languages === 'object') return Object.values(languages);
-    return [];
-  };
-
-  const switchTo = async (locale) => {
+  const switchTo = (locale) => {
     const target = locale === 'en' ? 'en' : 'ar';
-    const api = window.salla || window.Salla;
-    try {
-      if (api?.onReady) await api.onReady();
-      const languages = await Promise.resolve(api?.config?.languages?.());
-      const candidate = languageCandidates(languages).find((item) => {
-        const code = typeof item === 'string' ? item : item?.code || item?.language_code || item?.locale || item?.id;
-        return String(code || '').slice(0, 2).toLowerCase() === target;
-      });
-      const serverUrl = candidate && typeof candidate === 'object'
-        ? candidate.url || candidate.link || candidate.redirect_url
-        : null;
-      if (serverUrl) {
-        try { window.localStorage.setItem('velora-locale', target); } catch {}
-        api?.cookie?.set?.('s-lang', target);
-        window.location.assign(serverUrl);
-        return 'server';
-      }
-    } catch {}
+    // Apply the complete client-side locale immediately. Waiting for Salla's
+    // optional languages endpoint can leave the control disabled indefinitely
+    // in preview stores that expose only one server locale.
     applyLocale(target);
-    return 'client';
+    return Promise.resolve('client');
   };
 
   const serverLocale = String(document.documentElement.lang || 'ar').slice(0, 2).toLowerCase();
