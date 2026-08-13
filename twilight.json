@@ -1,1139 +1,1151 @@
 {
-  "version": "1.2.16",
-  "name": {
-    "ar": "خزامى — لافندر بحركة",
-    "en": "Lavender in Motion"
-  },
-  "repository": "https://github.com/Alnajdea1/velora",
-  "support_url": "https://github.com/Alnajdea1/velora/issues",
-  "author_email": "elyas.alnajdi@outlook.com",
-  "features": [
-    "fonts",
-    "color",
-    "breadcrumb",
-    "filters",
-    "mega-menu"
-  ],
-  "settings": [
-    {
-      "id": "accent",
-      "type": "string",
-      "format": "color",
-      "label": "لون القزحية الأساسي",
-      "value": "#7657E8",
-      "required": true
+    "version": "1.2.16",
+    "name": {
+        "ar": "خزامى",
+        "en": "Lavender in Motion"
     },
-    {
-      "id": "dark",
-      "type": "string",
-      "format": "color",
-      "label": "لون الباذنجان الداكن",
-      "value": "#261838",
-      "required": true
-    },
-    {
-      "id": "micro_accent",
-      "type": "string",
-      "format": "color",
-      "label": "لون اللمسة الصغيرة",
-      "value": "#FF7C8B",
-      "required": true
-    },
-    {
-      "id": "reduce_motion",
-      "type": "boolean",
-      "format": "switch",
-      "label": "تقليل الحركة",
-      "selected": false
-    },
-    {
-      "id": "header_is_sticky",
-      "type": "boolean",
-      "format": "switch",
-      "label": "تثبيت القائمة العلوية",
-      "selected": true
-    },
-    {
-      "id": "product_show_breadcrumbs",
-      "type": "boolean",
-      "format": "switch",
-      "label": "إظهار مسار التنقل في صفحة المنتج",
-      "selected": true
-    },
-    {
-      "id": "sticky_add_to_cart",
-      "type": "boolean",
-      "format": "switch",
-      "label": "تثبيت زر الشراء على الجوال",
-      "selected": true
-    },
-    {
-      "id": "porcelain",
-      "type": "string",
-      "format": "color",
-      "label": "لون الخزف الأبيض",
-      "value": "#FCFBFF",
-      "required": true
-    },
-    {
-      "id": "mist",
-      "type": "string",
-      "format": "color",
-      "label": "لون ضباب اللافندر",
-      "value": "#F1ECFF",
-      "required": true
-    },
-    {
-      "id": "lilac",
-      "type": "string",
-      "format": "color",
-      "label": "لون البتلة الليلكية",
-      "value": "#C9B8FF",
-      "required": true
-    },
-    {
-      "id": "sage",
-      "type": "string",
-      "format": "color",
-      "label": "لون الميرمية النباتي",
-      "value": "#BACBB5",
-      "required": true
-    },
-    {
-      "id": "leaf",
-      "type": "string",
-      "format": "color",
-      "label": "لون ورق النبات",
-      "value": "#71836C",
-      "required": true
-    },
-    {
-      "id": "announcement_enabled",
-      "type": "boolean",
-      "format": "switch",
-      "label": "إظهار شريط الإعلان",
-      "selected": true
-    },
-    {
-      "id": "announcement_code",
-      "type": "string",
-      "label": "كود العرض في شريط الإعلان",
-      "value": "VELORA10"
-    },
-    {
-      "id": "newsletter_enabled",
-      "type": "boolean",
-      "format": "switch",
-      "label": "إظهار النشرة البريدية قبل التذييل",
-      "selected": true
-    },
-    {
-      "id": "card_radius",
-      "type": "number",
-      "label": "استدارة بطاقات المنتجات",
-      "value": 28
-    },
-    {
-      "id": "editorial_radius",
-      "type": "number",
-      "label": "استدارة الكتل التحريرية",
-      "value": 44
-    },
-    {
-      "id": "reviewer_panel",
-      "type": "boolean",
-      "format": "switch",
-      "label": "إظهار لوحة فهرس الشاشات للمراجعة",
-      "selected": false
-    },
-    {
-      "id": "velora_home_editor",
-      "type": "boolean",
-      "icon": "sicon-layout-grid-rearrange",
-      "label": "استخدام أقسام الصفحة الرئيسية من محرر الثيم",
-      "description": "اتركه مغلقاً لعرض ترتيب Velora المعتمد تلقائياً. فعّله فقط بعد إضافة أقسام Velora وترتيبها في محرر الصفحة الرئيسية.",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
+    "repository": "https://github.com/Alnajdea1/velora",
+    "support_url": "https://github.com/Alnajdea1/velora/issues",
+    "author_email": "elyas.alnajdi@outlook.com",
+    "features": [
+        "fonts",
+        "color",
+        "breadcrumb",
+        "filters",
+        "mega-menu"
+    ],
+    "settings": [
+        {
+            "id": "accent",
+            "type": "string",
+            "format": "color",
+            "label": "لون القزحية الأساسي",
+            "value": "#7657E8",
+            "required": true
+        },
+        {
+            "id": "dark",
+            "type": "string",
+            "format": "color",
+            "label": "لون الباذنجان الداكن",
+            "value": "#261838",
+            "required": true
+        },
+        {
+            "id": "micro_accent",
+            "type": "string",
+            "format": "color",
+            "label": "لون اللمسة الصغيرة",
+            "value": "#FF7C8B",
+            "required": true
+        },
+        {
+            "id": "reduce_motion",
+            "type": "boolean",
+            "format": "switch",
+            "label": "تقليل الحركة",
+            "selected": false
+        },
+        {
+            "id": "header_is_sticky",
+            "type": "boolean",
+            "format": "switch",
+            "label": "تثبيت القائمة العلوية",
+            "selected": true
+        },
+        {
+            "id": "product_show_breadcrumbs",
+            "type": "boolean",
+            "format": "switch",
+            "label": "إظهار مسار التنقل في صفحة المنتج",
+            "selected": true
+        },
+        {
+            "id": "sticky_add_to_cart",
+            "type": "boolean",
+            "format": "switch",
+            "label": "تثبيت زر الشراء على الجوال",
+            "selected": true
+        },
+        {
+            "id": "porcelain",
+            "type": "string",
+            "format": "color",
+            "label": "لون الخزف الأبيض",
+            "value": "#FCFBFF",
+            "required": true
+        },
+        {
+            "id": "mist",
+            "type": "string",
+            "format": "color",
+            "label": "لون ضباب اللافندر",
+            "value": "#F1ECFF",
+            "required": true
+        },
+        {
+            "id": "lilac",
+            "type": "string",
+            "format": "color",
+            "label": "لون البتلة الليلكية",
+            "value": "#C9B8FF",
+            "required": true
+        },
+        {
+            "id": "sage",
+            "type": "string",
+            "format": "color",
+            "label": "لون الميرمية النباتي",
+            "value": "#BACBB5",
+            "required": true
+        },
+        {
+            "id": "leaf",
+            "type": "string",
+            "format": "color",
+            "label": "لون ورق النبات",
+            "value": "#71836C",
+            "required": true
+        },
+        {
+            "id": "announcement_enabled",
+            "type": "boolean",
+            "format": "switch",
+            "label": "إظهار شريط الإعلان",
+            "selected": true
+        },
+        {
+            "id": "announcement_code",
+            "type": "string",
+            "label": "كود العرض في شريط الإعلان",
+            "value": "VELORA10"
+        },
+        {
+            "id": "newsletter_enabled",
+            "type": "boolean",
+            "format": "switch",
+            "label": "إظهار النشرة البريدية قبل التذييل",
+            "selected": true
+        },
+        {
+            "id": "card_radius",
+            "type": "number",
+            "label": "استدارة بطاقات المنتجات",
+            "value": 28
+        },
+        {
+            "id": "editorial_radius",
+            "type": "number",
+            "label": "استدارة الكتل التحريرية",
+            "value": 44
+        },
+        {
+            "id": "reviewer_panel",
+            "type": "boolean",
+            "format": "switch",
+            "label": "إظهار لوحة فهرس الشاشات للمراجعة",
+            "selected": false
+        },
+        {
+            "id": "velora_home_editor",
+            "type": "boolean",
+            "icon": "sicon-layout-grid-rearrange",
+            "label": "استخدام أقسام الصفحة الرئيسية من محرر الثيم",
+            "description": "اتركه مغلقاً لعرض ترتيب Velora المعتمد تلقائياً. فعّله فقط بعد إضافة أقسام Velora وترتيبها في محرر الصفحة الرئيسية.",
+            "format": "switch",
+            "required": false,
+            "value": false,
+            "selected": false
+        }
+    ],
+    "components": [
+        {
+            "name": "lavender-hero",
+            "title": {
+                "ar": "الغلاف الرئيسي — لافندر بحركة",
+                "en": "Lavender in Motion Hero"
+            },
+            "icon": "sicon-image-carousel",
+            "path": "home.velora-hero",
+            "fields": [
+                {
+                    "id": "kicker",
+                    "type": "string",
+                    "label": "النص العلوي",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "line_1",
+                    "type": "string",
+                    "label": "العنوان — السطر الأول",
+                    "multilanguage": true,
+                    "required": false,
+                    "format": "text"
+                },
+                {
+                    "id": "line_2",
+                    "type": "string",
+                    "label": "العنوان — السطر الثاني",
+                    "multilanguage": true,
+                    "required": false,
+                    "format": "text"
+                },
+                {
+                    "id": "line_3",
+                    "type": "string",
+                    "label": "العنوان — السطر الثالث",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "body",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "الوصف",
+                    "multilanguage": true
+                },
+                {
+                    "id": "primary_label",
+                    "type": "string",
+                    "label": "نص الزر الأساسي",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "primary_url",
+                    "type": "string",
+                    "format": "url",
+                    "label": "رابط الزر الأساسي"
+                },
+                {
+                    "id": "secondary_label",
+                    "type": "string",
+                    "label": "نص الرابط الثانوي",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "secondary_url",
+                    "type": "string",
+                    "format": "url",
+                    "label": "الرابط الثانوي"
+                },
+                {
+                    "id": "image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "صورة المنتج الرئيسية",
+                    "required": false
+                },
+                {
+                    "id": "notes",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "ملصقات النوتات العطرية",
+                    "maxLength": 4,
+                    "fields": [
+                        {
+                            "id": "notes.tag",
+                            "type": "string",
+                            "label": "الرمز",
+                            "multilanguage": true,
+                            "format": "text"
+                        },
+                        {
+                            "id": "notes.label",
+                            "type": "string",
+                            "label": "النوتة",
+                            "multilanguage": true,
+                            "format": "text"
+                        }
+                    ],
+                    "item_label": "ملصقات النوتات العطرية",
+                    "required": false,
+                    "value": [
+                        {
+                            "notes.tag": "TOP",
+                            "notes.label": "برغموت مشرق"
+                        },
+                        {
+                            "notes.tag": "HEART",
+                            "notes.label": "لافندر مقطوف يدوياً"
+                        },
+                        {
+                            "notes.tag": "BASE",
+                            "notes.label": "مسك مخملي"
+                        }
+                    ]
+                },
+                {
+                    "id": "image_alt",
+                    "type": "string",
+                    "label": "النص البديل للصورة",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "product_name",
+                    "type": "string",
+                    "label": "اسم اختيار المحررة",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "product_url",
+                    "type": "string",
+                    "format": "url",
+                    "label": "رابط اختيار المحررة"
+                },
+                {
+                    "id": "stat_1_value",
+                    "type": "string",
+                    "label": "قيمة الإحصائية الأولى",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "stat_1_label",
+                    "type": "string",
+                    "label": "وصف الإحصائية الأولى",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "stat_2_value",
+                    "type": "string",
+                    "label": "قيمة الإحصائية الثانية",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "stat_2_label",
+                    "type": "string",
+                    "label": "وصف الإحصائية الثانية",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "stat_3_value",
+                    "type": "string",
+                    "label": "قيمة الإحصائية الثالثة",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "stat_3_label",
+                    "type": "string",
+                    "label": "وصف الإحصائية الثالثة",
+                    "multilanguage": true,
+                    "format": "text"
+                }
+            ],
+            "key": "996f56c4-6f8a-4a42-a43a-3b6ec635befe",
+            "is_default": true
+        },
+        {
+            "name": "fragrance-aura-explorer",
+            "title": {
+                "ar": "مستكشف هالة العطر",
+                "en": "Fragrance Aura Explorer"
+            },
+            "icon": "sicon-magic-wand",
+            "path": "home.velora-aura-explorer",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "subtitle",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "الوصف",
+                    "multilanguage": true
+                },
+                {
+                    "id": "families",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "العائلات العطرية",
+                    "required": false,
+                    "minLength": 2,
+                    "maxLength": 6,
+                    "fields": [
+                        {
+                            "id": "families.name",
+                            "type": "string",
+                            "label": "الاسم",
+                            "multilanguage": true,
+                            "required": false,
+                            "format": "text"
+                        },
+                        {
+                            "id": "families.description",
+                            "type": "string",
+                            "format": "textarea",
+                            "label": "الوصف",
+                            "multilanguage": true
+                        },
+                        {
+                            "id": "families.color_from",
+                            "type": "string",
+                            "format": "color",
+                            "label": "لون البداية"
+                        },
+                        {
+                            "id": "families.color_to",
+                            "type": "string",
+                            "format": "color",
+                            "label": "لون النهاية"
+                        },
+                        {
+                            "id": "families.category",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "source": "categories",
+                            "label": "التصنيف",
+                            "required": false,
+                            "options": [],
+                            "selected": [],
+                            "searchable": true,
+                            "multichoice": false
+                        }
+                    ],
+                    "item_label": "العائلات العطرية",
+                    "value": [
+                        {
+                            "families.name": "زهري",
+                            "families.description": "بتلات مقطوفة فجراً، ندى خفيف، ودفء أنثوي هادئ.",
+                            "families.color_from": "#F1ECFF",
+                            "families.color_to": "#C9B8FF"
+                        },
+                        {
+                            "families.name": "خشبي",
+                            "families.description": "سيقان جافة وخشب أبيض وأرض دافئة بعد الغروب.",
+                            "families.color_from": "#BACBB5",
+                            "families.color_to": "#71836C"
+                        },
+                        {
+                            "families.name": "شرقي",
+                            "families.description": "راتنجات وتوابل ناعمة ودفء يزداد قرباً مع الوقت.",
+                            "families.color_from": "#C9B8FF",
+                            "families.color_to": "#7657E8"
+                        },
+                        {
+                            "families.name": "منعش",
+                            "families.description": "أوراق خضراء وهواء بارد وماء شفاف.",
+                            "families.color_from": "#DCE6D8",
+                            "families.color_to": "#BACBB5"
+                        },
+                        {
+                            "families.name": "مسكي",
+                            "families.description": "أثر مخملي نظيف يلتصق بالبشرة بهدوء.",
+                            "families.color_from": "#FCFBFF",
+                            "families.color_to": "#C9B8FF"
+                        },
+                        {
+                            "families.name": "حمضي",
+                            "families.description": "قشور مشرقة ومرارة رقيقة تفتح الحواس.",
+                            "families.color_from": "#FFD9DE",
+                            "families.color_to": "#FF7C8B"
+                        }
+                    ]
+                },
+                {
+                    "id": "products_shown",
+                    "type": "number",
+                    "label": "عدد المنتجات",
+                    "value": 2
+                },
+                {
+                    "id": "light_theme",
+                    "type": "boolean",
+                    "format": "switch",
+                    "label": "خلفية فاتحة",
+                    "selected": false,
+                    "value": false,
+                    "required": false
+                }
+            ],
+            "key": "1252bfe7-e445-4fcb-8fb5-861a57689454",
+            "is_default": true
+        },
+        {
+            "name": "season-showcase",
+            "title": {
+                "ar": "مختارات الموسم المنحوتة",
+                "en": "Sculptural season picks"
+            },
+            "icon": "sicon-products",
+            "path": "home.velora-season-showcase",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "subtitle",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "الوصف",
+                    "multilanguage": true
+                },
+                {
+                    "id": "products",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "source": "products",
+                    "multichoice": true,
+                    "minLength": 3,
+                    "maxLength": 3,
+                    "label": "ثلاثة منتجات",
+                    "required": false,
+                    "options": [],
+                    "selected": [],
+                    "searchable": true
+                }
+            ],
+            "key": "b7f52eb7-c913-45ef-af16-3b7842a17727",
+            "is_default": true
+        },
+        {
+            "name": "lavender-harvest-offer",
+            "title": {
+                "ar": "عرض حصاد اللافندر",
+                "en": "Lavender harvest offer"
+            },
+            "icon": "sicon-percentage",
+            "path": "home.velora-offer-landing",
+            "fields": [
+                {
+                    "id": "badge",
+                    "type": "string",
+                    "label": "شارة العرض",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "title_line_1",
+                    "type": "string",
+                    "label": "العنوان — السطر الأول",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "title_line_2",
+                    "type": "string",
+                    "label": "العنوان — السطر الثاني",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "body",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "وصف العرض",
+                    "multilanguage": true
+                },
+                {
+                    "id": "cta_label",
+                    "type": "string",
+                    "label": "نص زر العرض",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "cta_url",
+                    "type": "string",
+                    "format": "url",
+                    "label": "رابط زر العرض"
+                },
+                {
+                    "id": "tiles",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "بطاقات فئات العرض",
+                    "required": false,
+                    "minLength": 4,
+                    "maxLength": 4,
+                    "fields": [
+                        {
+                            "id": "tiles.label",
+                            "type": "string",
+                            "label": "اسم الفئة",
+                            "multilanguage": true,
+                            "format": "text"
+                        },
+                        {
+                            "id": "tiles.url",
+                            "type": "string",
+                            "format": "url",
+                            "label": "رابط الفئة"
+                        }
+                    ],
+                    "item_label": "فئة العرض",
+                    "value": [
+                        {
+                            "tiles.label": "٥٠ مل"
+                        },
+                        {
+                            "tiles.label": "٧٥ مل"
+                        },
+                        {
+                            "tiles.label": "عناية ليلية"
+                        },
+                        {
+                            "tiles.label": "هدايا"
+                        }
+                    ]
+                }
+            ],
+            "key": "3d7f4f6a-fc14-4cb3-8b12-7fe56cf6ef3f",
+            "is_default": true
+        },
+        {
+            "name": "botanical-categories",
+            "title": {
+                "ar": "التنقل النباتي بين الأقسام",
+                "en": "Botanical category navigation"
+            },
+            "icon": "sicon-layout-grid-rearrange",
+            "path": "home.velora-botanical-categories",
+            "fields": [
+                {
+                    "id": "kicker",
+                    "type": "string",
+                    "label": "النص العلوي",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "categories",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "الأقسام",
+                    "minLength": 4,
+                    "maxLength": 4,
+                    "required": false,
+                    "fields": [
+                        {
+                            "id": "categories.category",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "source": "categories",
+                            "label": "التصنيف",
+                            "required": false,
+                            "options": [],
+                            "selected": [],
+                            "searchable": true,
+                            "multichoice": false
+                        },
+                        {
+                            "id": "categories.title",
+                            "type": "string",
+                            "label": "الاسم المعروض",
+                            "multilanguage": true,
+                            "format": "text"
+                        },
+                        {
+                            "id": "categories.count_label",
+                            "type": "string",
+                            "label": "نص عدد المنتجات",
+                            "multilanguage": true,
+                            "format": "text"
+                        },
+                        {
+                            "id": "categories.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "الصورة الاختيارية"
+                        },
+                        {
+                            "id": "categories.color",
+                            "type": "string",
+                            "format": "color",
+                            "label": "لون الخلفية"
+                        }
+                    ],
+                    "item_label": "الأقسام"
+                }
+            ],
+            "key": "1d801151-05da-4010-988b-a6be758e8542",
+            "is_default": true
+        },
+        {
+            "name": "editorial-story",
+            "title": {
+                "ar": "قصة تحريرية",
+                "en": "Editorial Story"
+            },
+            "icon": "sicon-story",
+            "path": "home.velora-editorial-story",
+            "fields": [
+                {
+                    "id": "kicker",
+                    "type": "string",
+                    "label": "النص العلوي",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "body",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "القصة",
+                    "multilanguage": true
+                },
+                {
+                    "id": "image",
+                    "type": "string",
+                    "format": "image",
+                    "label": "الصورة"
+                },
+                {
+                    "id": "button_label",
+                    "type": "string",
+                    "label": "نص الزر",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "button_url",
+                    "type": "string",
+                    "format": "url",
+                    "label": "رابط الزر"
+                },
+                {
+                    "id": "image_alt",
+                    "type": "string",
+                    "label": "النص البديل للصورة",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "tags",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "وسوم القصة",
+                    "maxLength": 3,
+                    "fields": [
+                        {
+                            "id": "tags.label",
+                            "type": "string",
+                            "label": "الوسم",
+                            "multilanguage": true,
+                            "format": "text"
+                        }
+                    ],
+                    "item_label": "وسوم القصة",
+                    "required": false,
+                    "value": [
+                        {
+                            "tags.label": "قطف يدوي"
+                        },
+                        {
+                            "tags.label": "تقطير بارد"
+                        },
+                        {
+                            "tags.label": "بدون كحول قاسٍ"
+                        }
+                    ]
+                }
+            ],
+            "key": "942586a6-fc8f-4a8a-84b7-11a09e88f5ba",
+            "is_default": true
+        },
+        {
+            "name": "lavender-routine-path",
+            "title": {
+                "ar": "مسار روتين الخزامى",
+                "en": "Lavender Routine Path"
+            },
+            "icon": "sicon-route",
+            "path": "home.velora-routine-path",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "steps",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "خطوات الروتين",
+                    "minLength": 2,
+                    "maxLength": 5,
+                    "fields": [
+                        {
+                            "id": "steps.title",
+                            "type": "string",
+                            "label": "عنوان الخطوة",
+                            "multilanguage": true,
+                            "format": "text"
+                        },
+                        {
+                            "id": "steps.body",
+                            "type": "string",
+                            "format": "textarea",
+                            "label": "الوصف",
+                            "multilanguage": true
+                        },
+                        {
+                            "id": "steps.product",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "source": "products",
+                            "label": "المنتج",
+                            "options": [],
+                            "selected": [],
+                            "searchable": true,
+                            "multichoice": false,
+                            "required": false
+                        }
+                    ],
+                    "item_label": "خطوات الروتين",
+                    "required": false,
+                    "value": [
+                        {
+                            "steps.title": "تنظيف لطيف",
+                            "steps.body": "رغوة خفيفة بماء اللافندر تزيل الأثر دون جفاف."
+                        },
+                        {
+                            "steps.title": "موازنة",
+                            "steps.body": "تونر بأوراق الميرمية يهدّئ ويعيد الحموضة الطبيعية."
+                        },
+                        {
+                            "steps.title": "ترميم",
+                            "steps.body": "زيت مركّز يُدفأ بين الكفين ثم يُطبّق بالضغط."
+                        },
+                        {
+                            "steps.title": "ختم",
+                            "steps.body": "كريم ليلي يحبس الرطوبة ويترك أثراً عطرياً خفيفاً."
+                        }
+                    ]
+                },
+                {
+                    "id": "cta_label",
+                    "type": "string",
+                    "label": "نص الزر",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "cta_url",
+                    "type": "string",
+                    "format": "url",
+                    "label": "رابط الزر"
+                }
+            ],
+            "key": "05761ec5-cee8-42fa-a5cb-4bb6582b0fdd",
+            "is_default": true
+        },
+        {
+            "name": "mood-shopping",
+            "title": {
+                "ar": "التسوق حسب المزاج",
+                "en": "Mood Shopping"
+            },
+            "icon": "sicon-heart",
+            "path": "home.velora-mood-shopping",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "subtitle",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "الوصف",
+                    "multilanguage": true
+                },
+                {
+                    "id": "moods",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "الحالات",
+                    "maxLength": 6,
+                    "fields": [
+                        {
+                            "id": "moods.name",
+                            "type": "string",
+                            "label": "الاسم",
+                            "multilanguage": true,
+                            "format": "text"
+                        },
+                        {
+                            "id": "moods.color",
+                            "type": "string",
+                            "format": "color",
+                            "label": "اللون"
+                        },
+                        {
+                            "id": "moods.products",
+                            "type": "items",
+                            "format": "dropdown-list",
+                            "source": "products",
+                            "multichoice": true,
+                            "maxLength": 4,
+                            "label": "المنتجات",
+                            "options": [],
+                            "selected": [],
+                            "searchable": true,
+                            "required": false
+                        }
+                    ],
+                    "item_label": "الحالات",
+                    "required": false,
+                    "value": [
+                        {
+                            "moods.name": "هادئ",
+                            "moods.color": "#BACBB5"
+                        },
+                        {
+                            "moods.name": "دافئ",
+                            "moods.color": "#FFCBD2"
+                        },
+                        {
+                            "moods.name": "منعش",
+                            "moods.color": "#C9B8FF"
+                        },
+                        {
+                            "moods.name": "جريء",
+                            "moods.color": "#7657E8"
+                        },
+                        {
+                            "moods.name": "حالم",
+                            "moods.color": "#EBD8FF"
+                        },
+                        {
+                            "moods.name": "مسائي",
+                            "moods.color": "#261838"
+                        }
+                    ]
+                }
+            ],
+            "key": "6c54bd72-f5c4-44da-a254-ab908695a96d",
+            "is_default": true
+        },
+        {
+            "name": "gift-composer",
+            "title": {
+                "ar": "مؤلف الهدايا",
+                "en": "Gift Composer"
+            },
+            "icon": "sicon-gift",
+            "path": "home.velora-gift-composer",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "body",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "الوصف",
+                    "multilanguage": true
+                },
+                {
+                    "id": "products",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "source": "products",
+                    "multichoice": true,
+                    "maxLength": 8,
+                    "label": "منتجات الهدية",
+                    "options": [],
+                    "selected": [],
+                    "searchable": true,
+                    "required": false
+                },
+                {
+                    "id": "max_items",
+                    "type": "number",
+                    "label": "أقصى عدد للقطع",
+                    "value": 3
+                },
+                {
+                    "id": "wrap_price",
+                    "type": "number",
+                    "label": "سعر التغليف",
+                    "value": 35
+                }
+            ],
+            "key": "f5120a23-c9b4-474a-9280-ae2efc111d3e",
+            "is_default": true
+        },
+        {
+            "name": "journal-grid",
+            "title": {
+                "ar": "من المجلة",
+                "en": "From the Journal"
+            },
+            "icon": "sicon-blog",
+            "path": "home.velora-journal",
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "label": "العنوان",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "articles",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "المقالات",
+                    "maxLength": 6,
+                    "fields": [
+                        {
+                            "id": "articles.title",
+                            "type": "string",
+                            "label": "عنوان المقال",
+                            "multilanguage": true,
+                            "required": false,
+                            "format": "text"
+                        },
+                        {
+                            "id": "articles.category",
+                            "type": "string",
+                            "label": "التصنيف",
+                            "multilanguage": true,
+                            "format": "text"
+                        },
+                        {
+                            "id": "articles.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "الصورة",
+                            "required": false
+                        },
+                        {
+                            "id": "articles.url",
+                            "type": "string",
+                            "format": "url",
+                            "label": "الرابط",
+                            "required": false
+                        },
+                        {
+                            "id": "articles.reading_time",
+                            "type": "number",
+                            "label": "دقائق القراءة",
+                            "value": 5
+                        }
+                    ],
+                    "item_label": "المقالات",
+                    "required": false,
+                    "value": [
+                        {
+                            "articles.title": "كيف تختارين عطراً يهدأ مع بشرتك؟",
+                            "articles.category": "دليل العطر",
+                            "articles.reading_time": 5
+                        },
+                        {
+                            "articles.title": "طقوس المساء: أربع خطوات بلا استعجال",
+                            "articles.category": "العناية",
+                            "articles.reading_time": 4
+                        },
+                        {
+                            "articles.title": "من الحقل إلى الزجاجة في يوم واحد",
+                            "articles.category": "حكاياتنا",
+                            "articles.reading_time": 6
+                        }
+                    ]
+                }
+            ],
+            "key": "9e2ea983-406b-47c4-b653-f7ae60534fd5",
+            "is_default": true
+        },
+        {
+            "name": "fragrance-note-bloom",
+            "title": {
+                "ar": "تفتّح النوتات العطرية",
+                "en": "Fragrance Note Bloom"
+            },
+            "icon": "sicon-flower",
+            "path": "note-bloom",
+            "fields": [
+                {
+                    "id": "top_notes",
+                    "type": "string",
+                    "label": "نوتات المقدمة",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "top_text",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "وصف المقدمة",
+                    "multilanguage": true
+                },
+                {
+                    "id": "heart_notes",
+                    "type": "string",
+                    "label": "نوتات القلب",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "heart_text",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "وصف القلب",
+                    "multilanguage": true
+                },
+                {
+                    "id": "base_notes",
+                    "type": "string",
+                    "label": "نوتات القاعدة",
+                    "multilanguage": true,
+                    "format": "text"
+                },
+                {
+                    "id": "base_text",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": "وصف القاعدة",
+                    "multilanguage": true
+                }
+            ],
+            "key": "9e5caeb0-09bd-4dd9-8471-8096c90f904f",
+            "is_default": false
+        }
+    ],
+    "description": {
+        "ar": null,
+        "en": null
     }
-  ],
-  "components": [
-    {
-      "name": "lavender-hero",
-      "title": {
-        "ar": "الغلاف الرئيسي — لافندر بحركة",
-        "en": "Lavender in Motion Hero"
-      },
-      "icon": "sicon-image-carousel",
-      "path": "home.velora-hero",
-      "fields": [
-        {
-          "id": "kicker",
-          "type": "string",
-          "label": "النص العلوي",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "line_1",
-          "type": "string",
-          "label": "العنوان — السطر الأول",
-          "multilanguage": true,
-          "required": false,
-          "format": "text"
-        },
-        {
-          "id": "line_2",
-          "type": "string",
-          "label": "العنوان — السطر الثاني",
-          "multilanguage": true,
-          "required": false,
-          "format": "text"
-        },
-        {
-          "id": "line_3",
-          "type": "string",
-          "label": "العنوان — السطر الثالث",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "body",
-          "type": "string",
-          "format": "textarea",
-          "label": "الوصف",
-          "multilanguage": true
-        },
-        {
-          "id": "primary_label",
-          "type": "string",
-          "label": "نص الزر الأساسي",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "primary_url",
-          "type": "string",
-          "format": "url",
-          "label": "رابط الزر الأساسي"
-        },
-        {
-          "id": "secondary_label",
-          "type": "string",
-          "label": "نص الرابط الثانوي",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "secondary_url",
-          "type": "string",
-          "format": "url",
-          "label": "الرابط الثانوي"
-        },
-        {
-          "id": "image",
-          "type": "string",
-          "format": "image",
-          "label": "صورة المنتج الرئيسية",
-          "required": false
-        },
-        {
-          "id": "notes",
-          "type": "collection",
-          "format": "collection",
-          "label": "ملصقات النوتات العطرية",
-          "maxLength": 4,
-          "fields": [
-            {
-              "id": "notes.tag",
-              "type": "string",
-              "label": "الرمز",
-              "multilanguage": true,
-              "format": "text"
-            },
-            {
-              "id": "notes.label",
-              "type": "string",
-              "label": "النوتة",
-              "multilanguage": true,
-              "format": "text"
-            }
-          ],
-          "item_label": "ملصقات النوتات العطرية",
-          "required": false,
-          "value": [
-            {
-              "notes.tag": "TOP",
-              "notes.label": "برغموت مشرق"
-            },
-            {
-              "notes.tag": "HEART",
-              "notes.label": "لافندر مقطوف يدوياً"
-            },
-            {
-              "notes.tag": "BASE",
-              "notes.label": "مسك مخملي"
-            }
-          ]
-        },
-        {
-          "id": "image_alt",
-          "type": "string",
-          "label": "النص البديل للصورة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "product_name",
-          "type": "string",
-          "label": "اسم اختيار المحررة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "product_url",
-          "type": "string",
-          "format": "url",
-          "label": "رابط اختيار المحررة"
-        },
-        {
-          "id": "stat_1_value",
-          "type": "string",
-          "label": "قيمة الإحصائية الأولى",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "stat_1_label",
-          "type": "string",
-          "label": "وصف الإحصائية الأولى",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "stat_2_value",
-          "type": "string",
-          "label": "قيمة الإحصائية الثانية",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "stat_2_label",
-          "type": "string",
-          "label": "وصف الإحصائية الثانية",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "stat_3_value",
-          "type": "string",
-          "label": "قيمة الإحصائية الثالثة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "stat_3_label",
-          "type": "string",
-          "label": "وصف الإحصائية الثالثة",
-          "multilanguage": true,
-          "format": "text"
-        }
-      ],
-      "key": "996f56c4-6f8a-4a42-a43a-3b6ec635befe",
-      "is_default": true
-    },
-    {
-      "name": "fragrance-aura-explorer",
-      "title": {
-        "ar": "مستكشف هالة العطر",
-        "en": "Fragrance Aura Explorer"
-      },
-      "icon": "sicon-magic-wand",
-      "path": "home.velora-aura-explorer",
-      "fields": [
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "subtitle",
-          "type": "string",
-          "format": "textarea",
-          "label": "الوصف",
-          "multilanguage": true
-        },
-        {
-          "id": "families",
-          "type": "collection",
-          "format": "collection",
-          "label": "العائلات العطرية",
-          "required": false,
-          "minLength": 2,
-          "maxLength": 6,
-          "fields": [
-            {
-              "id": "families.name",
-              "type": "string",
-              "label": "الاسم",
-              "multilanguage": true,
-              "required": false,
-              "format": "text"
-            },
-            {
-              "id": "families.description",
-              "type": "string",
-              "format": "textarea",
-              "label": "الوصف",
-              "multilanguage": true
-            },
-            {
-              "id": "families.color_from",
-              "type": "string",
-              "format": "color",
-              "label": "لون البداية"
-            },
-            {
-              "id": "families.color_to",
-              "type": "string",
-              "format": "color",
-              "label": "لون النهاية"
-            },
-            {
-              "id": "families.category",
-              "type": "items",
-              "format": "dropdown-list",
-              "source": "categories",
-              "label": "التصنيف",
-              "required": false,
-              "options": [],
-              "selected": [],
-              "searchable": true,
-              "multichoice": false
-            }
-          ],
-          "item_label": "العائلات العطرية",
-          "value": [
-            {
-              "families.name": "زهري",
-              "families.description": "بتلات مقطوفة فجراً، ندى خفيف، ودفء أنثوي هادئ.",
-              "families.color_from": "#F1ECFF",
-              "families.color_to": "#C9B8FF"
-            },
-            {
-              "families.name": "خشبي",
-              "families.description": "سيقان جافة وخشب أبيض وأرض دافئة بعد الغروب.",
-              "families.color_from": "#BACBB5",
-              "families.color_to": "#71836C"
-            },
-            {
-              "families.name": "شرقي",
-              "families.description": "راتنجات وتوابل ناعمة ودفء يزداد قرباً مع الوقت.",
-              "families.color_from": "#C9B8FF",
-              "families.color_to": "#7657E8"
-            },
-            {
-              "families.name": "منعش",
-              "families.description": "أوراق خضراء وهواء بارد وماء شفاف.",
-              "families.color_from": "#DCE6D8",
-              "families.color_to": "#BACBB5"
-            },
-            {
-              "families.name": "مسكي",
-              "families.description": "أثر مخملي نظيف يلتصق بالبشرة بهدوء.",
-              "families.color_from": "#FCFBFF",
-              "families.color_to": "#C9B8FF"
-            },
-            {
-              "families.name": "حمضي",
-              "families.description": "قشور مشرقة ومرارة رقيقة تفتح الحواس.",
-              "families.color_from": "#FFD9DE",
-              "families.color_to": "#FF7C8B"
-            }
-          ]
-        },
-        {
-          "id": "products_shown",
-          "type": "number",
-          "label": "عدد المنتجات",
-          "value": 2
-        },
-        {
-          "id": "light_theme",
-          "type": "boolean",
-          "format": "switch",
-          "label": "خلفية فاتحة",
-          "selected": false,
-          "value": false,
-          "required": false
-        }
-      ],
-      "key": "1252bfe7-e445-4fcb-8fb5-861a57689454",
-      "is_default": true
-    },
-    {
-      "name": "season-showcase",
-      "title": {
-        "ar": "مختارات الموسم المنحوتة",
-        "en": "Sculptural season picks"
-      },
-      "icon": "sicon-products",
-      "path": "home.velora-season-showcase",
-      "fields": [
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "subtitle",
-          "type": "string",
-          "format": "textarea",
-          "label": "الوصف",
-          "multilanguage": true
-        },
-        {
-          "id": "products",
-          "type": "items",
-          "format": "dropdown-list",
-          "source": "products",
-          "multichoice": true,
-          "minLength": 3,
-          "maxLength": 3,
-          "label": "ثلاثة منتجات",
-          "required": false,
-          "options": [],
-          "selected": [],
-          "searchable": true
-        }
-      ],
-      "key": "b7f52eb7-c913-45ef-af16-3b7842a17727",
-      "is_default": true
-    },
-    {
-      "name": "lavender-harvest-offer",
-      "title": {
-        "ar": "عرض حصاد اللافندر",
-        "en": "Lavender harvest offer"
-      },
-      "icon": "sicon-percentage",
-      "path": "home.velora-offer-landing",
-      "fields": [
-        {
-          "id": "badge",
-          "type": "string",
-          "label": "شارة العرض",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "title_line_1",
-          "type": "string",
-          "label": "العنوان — السطر الأول",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "title_line_2",
-          "type": "string",
-          "label": "العنوان — السطر الثاني",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "body",
-          "type": "string",
-          "format": "textarea",
-          "label": "وصف العرض",
-          "multilanguage": true
-        },
-        {
-          "id": "cta_label",
-          "type": "string",
-          "label": "نص زر العرض",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "cta_url",
-          "type": "string",
-          "format": "url",
-          "label": "رابط زر العرض"
-        },
-        {
-          "id": "tiles",
-          "type": "collection",
-          "format": "collection",
-          "label": "بطاقات فئات العرض",
-          "required": false,
-          "minLength": 4,
-          "maxLength": 4,
-          "fields": [
-            {
-              "id": "tiles.label",
-              "type": "string",
-              "label": "اسم الفئة",
-              "multilanguage": true,
-              "format": "text"
-            },
-            {
-              "id": "tiles.url",
-              "type": "string",
-              "format": "url",
-              "label": "رابط الفئة"
-            }
-          ],
-          "item_label": "فئة العرض",
-          "value": [
-            { "tiles.label": "٥٠ مل" },
-            { "tiles.label": "٧٥ مل" },
-            { "tiles.label": "عناية ليلية" },
-            { "tiles.label": "هدايا" }
-          ]
-        }
-      ],
-      "key": "3d7f4f6a-fc14-4cb3-8b12-7fe56cf6ef3f",
-      "is_default": true
-    },
-    {
-      "name": "botanical-categories",
-      "title": {
-        "ar": "التنقل النباتي بين الأقسام",
-        "en": "Botanical category navigation"
-      },
-      "icon": "sicon-layout-grid-rearrange",
-      "path": "home.velora-botanical-categories",
-      "fields": [
-        {
-          "id": "kicker",
-          "type": "string",
-          "label": "النص العلوي",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "categories",
-          "type": "collection",
-          "format": "collection",
-          "label": "الأقسام",
-          "minLength": 4,
-          "maxLength": 4,
-          "required": false,
-          "fields": [
-            {
-              "id": "categories.category",
-              "type": "items",
-              "format": "dropdown-list",
-              "source": "categories",
-              "label": "التصنيف",
-              "required": false,
-              "options": [],
-              "selected": [],
-              "searchable": true,
-              "multichoice": false
-            },
-            {
-              "id": "categories.title",
-              "type": "string",
-              "label": "الاسم المعروض",
-              "multilanguage": true,
-              "format": "text"
-            },
-            {
-              "id": "categories.count_label",
-              "type": "string",
-              "label": "نص عدد المنتجات",
-              "multilanguage": true,
-              "format": "text"
-            },
-            {
-              "id": "categories.image",
-              "type": "string",
-              "format": "image",
-              "label": "الصورة الاختيارية"
-            },
-            {
-              "id": "categories.color",
-              "type": "string",
-              "format": "color",
-              "label": "لون الخلفية"
-            }
-          ],
-          "item_label": "الأقسام"
-        }
-      ],
-      "key": "1d801151-05da-4010-988b-a6be758e8542",
-      "is_default": true
-    },
-    {
-      "name": "editorial-story",
-      "title": {
-        "ar": "قصة تحريرية",
-        "en": "Editorial Story"
-      },
-      "icon": "sicon-story",
-      "path": "home.velora-editorial-story",
-      "fields": [
-        {
-          "id": "kicker",
-          "type": "string",
-          "label": "النص العلوي",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "body",
-          "type": "string",
-          "format": "textarea",
-          "label": "القصة",
-          "multilanguage": true
-        },
-        {
-          "id": "image",
-          "type": "string",
-          "format": "image",
-          "label": "الصورة"
-        },
-        {
-          "id": "button_label",
-          "type": "string",
-          "label": "نص الزر",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "button_url",
-          "type": "string",
-          "format": "url",
-          "label": "رابط الزر"
-        },
-        {
-          "id": "image_alt",
-          "type": "string",
-          "label": "النص البديل للصورة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "tags",
-          "type": "collection",
-          "format": "collection",
-          "label": "وسوم القصة",
-          "maxLength": 3,
-          "fields": [
-            {
-              "id": "tags.label",
-              "type": "string",
-              "label": "الوسم",
-              "multilanguage": true,
-              "format": "text"
-            }
-          ],
-          "item_label": "وسوم القصة",
-          "required": false,
-          "value": [
-            {
-              "tags.label": "قطف يدوي"
-            },
-            {
-              "tags.label": "تقطير بارد"
-            },
-            {
-              "tags.label": "بدون كحول قاسٍ"
-            }
-          ]
-        }
-      ],
-      "key": "942586a6-fc8f-4a8a-84b7-11a09e88f5ba",
-      "is_default": true
-    },
-    {
-      "name": "lavender-routine-path",
-      "title": {
-        "ar": "مسار روتين الخزامى",
-        "en": "Lavender Routine Path"
-      },
-      "icon": "sicon-route",
-      "path": "home.velora-routine-path",
-      "fields": [
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "steps",
-          "type": "collection",
-          "format": "collection",
-          "label": "خطوات الروتين",
-          "minLength": 2,
-          "maxLength": 5,
-          "fields": [
-            {
-              "id": "steps.title",
-              "type": "string",
-              "label": "عنوان الخطوة",
-              "multilanguage": true,
-              "format": "text"
-            },
-            {
-              "id": "steps.body",
-              "type": "string",
-              "format": "textarea",
-              "label": "الوصف",
-              "multilanguage": true
-            },
-            {
-              "id": "steps.product",
-              "type": "items",
-              "format": "dropdown-list",
-              "source": "products",
-              "label": "المنتج",
-              "options": [],
-              "selected": [],
-              "searchable": true,
-              "multichoice": false,
-              "required": false
-            }
-          ],
-          "item_label": "خطوات الروتين",
-          "required": false,
-          "value": [
-            {
-              "steps.title": "تنظيف لطيف",
-              "steps.body": "رغوة خفيفة بماء اللافندر تزيل الأثر دون جفاف."
-            },
-            {
-              "steps.title": "موازنة",
-              "steps.body": "تونر بأوراق الميرمية يهدّئ ويعيد الحموضة الطبيعية."
-            },
-            {
-              "steps.title": "ترميم",
-              "steps.body": "زيت مركّز يُدفأ بين الكفين ثم يُطبّق بالضغط."
-            },
-            {
-              "steps.title": "ختم",
-              "steps.body": "كريم ليلي يحبس الرطوبة ويترك أثراً عطرياً خفيفاً."
-            }
-          ]
-        },
-        {
-          "id": "cta_label",
-          "type": "string",
-          "label": "نص الزر",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "cta_url",
-          "type": "string",
-          "format": "url",
-          "label": "رابط الزر"
-        }
-      ],
-      "key": "05761ec5-cee8-42fa-a5cb-4bb6582b0fdd",
-      "is_default": true
-    },
-    {
-      "name": "mood-shopping",
-      "title": {
-        "ar": "التسوق حسب المزاج",
-        "en": "Mood Shopping"
-      },
-      "icon": "sicon-heart",
-      "path": "home.velora-mood-shopping",
-      "fields": [
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "subtitle",
-          "type": "string",
-          "format": "textarea",
-          "label": "الوصف",
-          "multilanguage": true
-        },
-        {
-          "id": "moods",
-          "type": "collection",
-          "format": "collection",
-          "label": "الحالات",
-          "maxLength": 6,
-          "fields": [
-            {
-              "id": "moods.name",
-              "type": "string",
-              "label": "الاسم",
-              "multilanguage": true,
-              "format": "text"
-            },
-            {
-              "id": "moods.color",
-              "type": "string",
-              "format": "color",
-              "label": "اللون"
-            },
-            {
-              "id": "moods.products",
-              "type": "items",
-              "format": "dropdown-list",
-              "source": "products",
-              "multichoice": true,
-              "maxLength": 4,
-              "label": "المنتجات",
-              "options": [],
-              "selected": [],
-              "searchable": true,
-              "required": false
-            }
-          ],
-          "item_label": "الحالات",
-          "required": false,
-          "value": [
-            {
-              "moods.name": "هادئ",
-              "moods.color": "#BACBB5"
-            },
-            {
-              "moods.name": "دافئ",
-              "moods.color": "#FFCBD2"
-            },
-            {
-              "moods.name": "منعش",
-              "moods.color": "#C9B8FF"
-            },
-            {
-              "moods.name": "جريء",
-              "moods.color": "#7657E8"
-            },
-            {
-              "moods.name": "حالم",
-              "moods.color": "#EBD8FF"
-            },
-            {
-              "moods.name": "مسائي",
-              "moods.color": "#261838"
-            }
-          ]
-        }
-      ],
-      "key": "6c54bd72-f5c4-44da-a254-ab908695a96d",
-      "is_default": true
-    },
-    {
-      "name": "gift-composer",
-      "title": {
-        "ar": "مؤلف الهدايا",
-        "en": "Gift Composer"
-      },
-      "icon": "sicon-gift",
-      "path": "home.velora-gift-composer",
-      "fields": [
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "body",
-          "type": "string",
-          "format": "textarea",
-          "label": "الوصف",
-          "multilanguage": true
-        },
-        {
-          "id": "products",
-          "type": "items",
-          "format": "dropdown-list",
-          "source": "products",
-          "multichoice": true,
-          "maxLength": 8,
-          "label": "منتجات الهدية",
-          "options": [],
-          "selected": [],
-          "searchable": true,
-          "required": false
-        },
-        {
-          "id": "max_items",
-          "type": "number",
-          "label": "أقصى عدد للقطع",
-          "value": 3
-        },
-        {
-          "id": "wrap_price",
-          "type": "number",
-          "label": "سعر التغليف",
-          "value": 35
-        }
-      ],
-      "key": "f5120a23-c9b4-474a-9280-ae2efc111d3e",
-      "is_default": true
-    },
-    {
-      "name": "journal-grid",
-      "title": {
-        "ar": "من المجلة",
-        "en": "From the Journal"
-      },
-      "icon": "sicon-blog",
-      "path": "home.velora-journal",
-      "fields": [
-        {
-          "id": "title",
-          "type": "string",
-          "label": "العنوان",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "articles",
-          "type": "collection",
-          "format": "collection",
-          "label": "المقالات",
-          "maxLength": 6,
-          "fields": [
-            {
-              "id": "articles.title",
-              "type": "string",
-              "label": "عنوان المقال",
-              "multilanguage": true,
-              "required": false,
-              "format": "text"
-            },
-            {
-              "id": "articles.category",
-              "type": "string",
-              "label": "التصنيف",
-              "multilanguage": true,
-              "format": "text"
-            },
-            {
-              "id": "articles.image",
-              "type": "string",
-              "format": "image",
-              "label": "الصورة",
-              "required": false
-            },
-            {
-              "id": "articles.url",
-              "type": "string",
-              "format": "url",
-              "label": "الرابط",
-              "required": false
-            },
-            {
-              "id": "articles.reading_time",
-              "type": "number",
-              "label": "دقائق القراءة",
-              "value": 5
-            }
-          ],
-          "item_label": "المقالات",
-          "required": false,
-          "value": [
-            {
-              "articles.title": "كيف تختارين عطراً يهدأ مع بشرتك؟",
-              "articles.category": "دليل العطر",
-              "articles.reading_time": 5
-            },
-            {
-              "articles.title": "طقوس المساء: أربع خطوات بلا استعجال",
-              "articles.category": "العناية",
-              "articles.reading_time": 4
-            },
-            {
-              "articles.title": "من الحقل إلى الزجاجة في يوم واحد",
-              "articles.category": "حكاياتنا",
-              "articles.reading_time": 6
-            }
-          ]
-        }
-      ],
-      "key": "9e2ea983-406b-47c4-b653-f7ae60534fd5",
-      "is_default": true
-    },
-    {
-      "name": "fragrance-note-bloom",
-      "title": {
-        "ar": "تفتّح النوتات العطرية",
-        "en": "Fragrance Note Bloom"
-      },
-      "icon": "sicon-flower",
-      "path": "note-bloom",
-      "fields": [
-        {
-          "id": "top_notes",
-          "type": "string",
-          "label": "نوتات المقدمة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "top_text",
-          "type": "string",
-          "format": "textarea",
-          "label": "وصف المقدمة",
-          "multilanguage": true
-        },
-        {
-          "id": "heart_notes",
-          "type": "string",
-          "label": "نوتات القلب",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "heart_text",
-          "type": "string",
-          "format": "textarea",
-          "label": "وصف القلب",
-          "multilanguage": true
-        },
-        {
-          "id": "base_notes",
-          "type": "string",
-          "label": "نوتات القاعدة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "base_text",
-          "type": "string",
-          "format": "textarea",
-          "label": "وصف القاعدة",
-          "multilanguage": true
-        }
-      ],
-      "key": "9e5caeb0-09bd-4dd9-8471-8096c90f904f",
-      "is_default": false
-    }
-  ]
 }
