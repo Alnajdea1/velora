@@ -9,6 +9,7 @@
     </div>
   </section>
 
+  {% hook 'product.index.before_products_group_with_filter' %}
   <section style="padding:40px 0 90px">
     <div class="v-wrap v-collection {{ filters ? 'has-filters' : '' }}" data-collection>
       {% if filters %}<aside class="v-filters" style="position:sticky;top:100px;padding:26px;border-radius:32px;background:var(--porcelain);box-shadow:inset 0 0 0 1px var(--mist)">
@@ -55,6 +56,8 @@
       </div>
     </div>
   </section>
+  {% hook 'product.index.after_products_group_with_filter' %}
 
   {% if filters %}{% include 'components.filters-sheet' %}{% endif %}
+  {% hook 'product.index.after_testimonials' %}
 {% endblock %}

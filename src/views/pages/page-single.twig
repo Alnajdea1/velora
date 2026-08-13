@@ -1,7 +1,7 @@
 {% extends 'layouts.master' %}
 {% block title %}{{ page.title }}{% endblock %}
 {% block content %}
+  {% hook 'information_page.information_page' %}
   <section class="v-page-hero v-curve-bottom"><div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><h1>{{ page.title }}</h1></div></section>
   <section class="v-section"><article class="v-wrap v-prose v-static-page">{{ page.content|raw }}</article></section>
 {% endblock %}
-

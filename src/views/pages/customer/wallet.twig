@@ -1,0 +1,9 @@
+{% extends 'layouts.master' %}
+{% block title %}{{ page.title|default(trans('account.wallet')) }}{% endblock %}
+{% block content %}
+  <section class="v-page-hero v-curve-bottom"><div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><h1>{{ page.title|default(trans('account.wallet')) }}</h1></div></section>
+  <section class="v-section"><div class="v-wrap v-account-layout">
+    <aside class="v-account-nav"><salla-user-menu></salla-user-menu></aside>
+    <div class="v-account-card"><salla-wallet data-testid="store-wallet"></salla-wallet></div>
+  </div></section>
+{% endblock %}

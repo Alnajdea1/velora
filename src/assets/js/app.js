@@ -389,9 +389,6 @@
       if (event.target.value) window.location.assign(event.target.value);
     });
 
-    const addedMessage = () => document.documentElement.lang === 'ar' ? 'أُضيف إلى السلة' : 'Added to bag';
-    if (window.salla?.cart?.event?.onItemAdded) salla.cart.event.onItemAdded(() => showToast(addedMessage()));
-    else if (window.salla?.event) salla.event.on('cart::item.added', () => showToast(addedMessage()));
   };
 
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();

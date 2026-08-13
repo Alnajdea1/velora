@@ -5,12 +5,12 @@
   <section class="v-section"><div class="v-wrap v-account-layout">
     <aside class="v-account-nav"><salla-user-menu></salla-user-menu></aside>
     <div class="v-order-list">{% hook 'customer:orders.index.items.start' %}
-      {% for order in orders %}
-        <article class="v-order-card"><div><small>#{{ order.reference_id|default(order.id) }}</small><h2>{{ order.created_at|date('Y-m-d') }}</h2></div><span class="v-badge">{{ order.status.name }}</span><strong>{{ order.total|money }}</strong><a href="{{ order.url }}" class="v-btn v-btn--ghost">{{ trans('account.details') }}</a></article>
-      {% else %}<div class="v-empty"><h2>{{ trans('account.orders_empty') }}</h2></div>{% endfor %}
+      {% if orders|length %}
+        <salla-orders data-testid="store-orders-list"></salla-orders>
+      {% else %}
+        <div class="v-empty"><h2>{{ trans('account.orders_empty') }}</h2></div>
+      {% endif %}
       {% hook 'customer:orders.index.items.end' %}
-      <salla-pagination></salla-pagination>
     </div>
   </div></section>
 {% endblock %}
-
