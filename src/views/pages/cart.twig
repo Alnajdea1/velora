@@ -7,6 +7,7 @@
   <section class="v-section v-cart-page">
     <div class="v-wrap">
       {% hook 'cart:start' %}
+      <salla-conditional-offer data-testid="store-cart-conditional-offer"></salla-conditional-offer>
       {% if cart.items|length %}
         <div class="v-cart-layout">
           <div class="v-cart-items">
@@ -19,6 +20,12 @@
                   <a href="{{ item.url }}"><h2>{{ item.product_name }}</h2></a>
                   {% for option in item.options %}<small>{{ option.name }}: {{ option.value }}</small>{% endfor %}
                   <strong>{{ item.total|money }}</strong>
+                  <salla-cart-item-offers
+                    quantity="{{ item.quantity }}"
+                    item-id="{{ item.id }}"
+                    product-price="{{ item.product_price }}"
+                    offers="{{ item.detailed_offers|json_encode }}">
+                  </salla-cart-item-offers>
                   <div class="v-cart-item__actions">
                     {% if item.is_hidden_quantity or item.type == 'donating' %}<input type="hidden" name="quantity" value="{{ item.quantity }}"><span>{{ item.quantity }}</span>{% else %}<salla-quantity-input cart-item-id="{{ item.id }}" name="quantity" value="{{ item.quantity }}" max="{{ item.max_quantity }}"></salla-quantity-input>{% endif %}
                     <button type="button" class="v-link-danger" data-remove-cart="{{ item.id }}">{{ trans('cart.remove') }}</button>
@@ -35,8 +42,12 @@
           <aside class="v-cart-summary">{% hook 'cart:summary.start' %}
             <h2>{{ trans('cart.summary') }}</h2>
             {% if cart.free_shipping_bar %}<div class="v-shipping-progress"><p>{{ cart.free_shipping_bar.has_free_shipping ? trans('cart.free_shipping_unlocked') : trans('cart.free_shipping_remaining', {amount:cart.free_shipping_bar.remaining|money}) }}</p><span><i style="width:{{ cart.free_shipping_bar.percent }}%"></i></span></div>{% endif %}
+            {% if loyalty %}
+              <salla-loyalty-panel data-testid="store-cart-loyalty" prize-points="{{ loyalty.prize.points }}" prize-title="{{ loyalty.prize.title }}"></salla-loyalty-panel>
+            {% endif %}
             {% if store.settings.cart.apply_coupon_enabled %}{% hook 'cart:coupon.start' %}<salla-cart-coupons></salla-cart-coupons>{% hook 'cart:coupon.end' %}{% endif %}
             {% hook 'cart:summary-card.start' %}<salla-cart-summary-card></salla-cart-summary-card>{% hook 'cart:summary-card.end' %}
+            <salla-tiered-offer data-testid="store-cart-tiered-offer"></salla-tiered-offer>
             <p class="v-cart-secure">🔒 {{ trans('cart.checkout_note') }}</p>
             {% hook 'cart:summary.end' %}</aside>
         </div>

@@ -8,8 +8,8 @@
       {% hook 'customer:profile.form.start' %}
       <salla-user-profile></salla-user-profile>
       {% hook 'customer:profile.form.end' %}
+      <salla-user-settings data-testid="store-profile-settings" {{ user.is_notifiable ? 'is-notifiable' : '' }}></salla-user-settings>
     </div>
   </div></section>
   <salla-verify-modal></salla-verify-modal>
 {% endblock %}
-

@@ -30,7 +30,7 @@
 <body class="v-body">
   {% hook 'body:start' %}
   {% include 'components.announcement' %}
-  {% include 'components.header' %}
+  {% include 'header' %}
 
   <main id="main">{% block content %}{% endblock %}</main>
 
@@ -40,8 +40,24 @@
   {% include 'components.mobile-nav' %}
   {% if theme.settings.get('reviewer_panel', false) %}{% include 'components.reviewer-panel' %}{% endif %}
 
+  {% if theme.settings.get('enable_add_product_toast', true) %}
+    <salla-add-product-toast
+      data-testid="store-add-product-toast"
+      data-message="{{ trans('cart.added') }}"></salla-add-product-toast>
+  {% endif %}
+
+  <salla-offer-modal data-testid="store-offer-modal"></salla-offer-modal>
+  <salla-search data-testid="store-search-modal"></salla-search>
+  <salla-login-modal data-testid="store-login-modal"></salla-login-modal>
+  {% if store.scope %}
+    <salla-scopes data-testid="store-scopes" selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
+  {% endif %}
+
   <script src="{{ 'i18n.js'|asset }}" defer></script>
   <script src="{{ 'app.js'|asset }}" defer></script>
+  {% if theme.settings.get('enable_add_product_toast', true) %}
+    <script src="{{ 'add-product-toast.js'|asset }}" defer></script>
+  {% endif %}
   {% block scripts %}{% endblock %}
   {% hook 'body' %}
   {% hook 'body:end' %}

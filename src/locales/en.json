@@ -1,6 +1,7 @@
 {
   "common": {
     "brand_fallback": "Store",
+    "demo_brand": "VELORA",
     "search": "Search a scent or ingredient…",
     "search_short": "Search",
     "cart": "Bag",
@@ -228,7 +229,8 @@
     "details": "Details",
     "delivered": "Delivered",
     "shipping": "On the way",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "wallet": "Wallet"
   },
   "blog": {
     "title": "From the journal",
@@ -275,7 +277,8 @@
     "shipping": "Shipping",
     "returns": "Returns",
     "track": "Track order",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "tagline": "LAVENDER, REIMAGINED"
   },
   "offer": {
     "badge": "Ends this weekend",

@@ -1,10 +1,48 @@
 {% extends 'layouts.master' %}
 {% block title %}{{ trans('account.order') }} #{{ order.reference_id|default(order.id) }}{% endblock %}
 {% block content %}
-  <section class="v-page-hero v-curve-bottom"><div class="v-wrap"><salla-breadcrumb></salla-breadcrumb><h1>{{ trans('account.order') }} #{{ order.reference_id|default(order.id) }}</h1><p>{{ order.status.name }}</p></div></section>
-  <section class="v-section"><div class="v-wrap v-order-single">
-    <div class="v-order-items">{% for item in order.items %}<article class="v-cart-item"><div class="v-cart-item__image"><img src="{{ item.product.image.url|default(item.image) }}" alt="{{ item.name }}"></div><div class="v-cart-item__body"><h2>{{ item.name }}</h2><small>{{ trans('product.quantity') }}: {{ item.quantity }}</small><strong>{{ item.total|money }}</strong></div></article>{% endfor %}</div>
-    <aside class="v-cart-summary"><h2>{{ trans('account.details') }}</h2><dl><div><dt>{{ trans('cart.total') }}</dt><dd>{{ order.total|money }}</dd></div><div><dt>{{ trans('account.status') }}</dt><dd>{{ order.status.name }}</dd></div></dl>{% if order.tracking_url %}<a href="{{ order.tracking_url }}" class="v-btn v-btn--primary">{{ trans('account.track') }}</a>{% endif %}</aside>
-  </div></section>
-{% endblock %}
+  <section class="v-page-hero v-curve-bottom">
+    <div class="v-wrap">
+      <salla-breadcrumb></salla-breadcrumb>
+      <h1>{{ trans('account.order') }} #{{ order.reference_id|default(order.id) }}</h1>
+      <p>{{ order.status.name }}</p>
+      <salla-edit-order-button data-testid="store-order-edit-btn"></salla-edit-order-button>
+    </div>
+  </section>
 
+  <section class="v-section">
+    <div class="v-wrap v-order-single">
+      <div class="v-order-items">
+        {% if order.is_pickable %}
+          <salla-order-branch data-testid="store-order-branch" stack-cards></salla-order-branch>
+        {% endif %}
+
+        {% for item in order.items %}
+          <article class="v-cart-item">
+            <div class="v-cart-item__image"><img src="{{ item.product.image.url|default(item.image) }}" alt="{{ item.name }}"></div>
+            <div class="v-cart-item__body">
+              <h2>{{ item.name }}</h2>
+              <small>{{ trans('product.quantity') }}: {{ item.quantity }}</small>
+              <strong>{{ item.total|money }}</strong>
+              <salla-order-details order-details="{{ item|json_encode }}"></salla-order-details>
+              {% if item.rating %}
+                <salla-review-factors-tags
+                  order-id="{{ order.id }}"
+                  rating-id="{{ item.rating.id }}"
+                  item-id="{{ item.id }}"
+                  {% if item.product %}product-id="{{ item.product.id }}"{% endif %}>
+                </salla-review-factors-tags>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+
+      <aside class="v-cart-summary">
+        <h2>{{ trans('account.details') }}</h2>
+        <salla-order-totals-card data-testid="store-order-totals" order="{{ order }}"></salla-order-totals-card>
+        {% if order.tracking_url %}<a href="{{ order.tracking_url }}" class="v-btn v-btn--primary">{{ trans('account.track') }}</a>{% endif %}
+      </aside>
+    </div>
+  </section>
+{% endblock %}
