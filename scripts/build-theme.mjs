@@ -10,6 +10,7 @@ fs.mkdirSync(output, { recursive: true });
 
 const assets = [
   ['styles/app.css', 'app.css'],
+  ['styles/add-product-toast.css', 'add-product-toast.css'],
   ['js/i18n.js', 'i18n.js'],
   ['js/app.js', 'app.js'],
   ['js/add-product-toast.js', 'add-product-toast.js']

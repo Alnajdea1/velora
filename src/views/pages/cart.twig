@@ -47,9 +47,10 @@
             {% endif %}
             {% if store.settings.cart.apply_coupon_enabled %}{% hook 'cart:coupon.start' %}<salla-cart-coupons></salla-cart-coupons>{% hook 'cart:coupon.end' %}{% endif %}
             {% hook 'cart:summary-card.start' %}<salla-cart-summary-card></salla-cart-summary-card>{% hook 'cart:summary-card.end' %}
-            <salla-tiered-offer data-testid="store-cart-tiered-offer"></salla-tiered-offer>
             <p class="v-cart-secure">🔒 {{ trans('cart.checkout_note') }}</p>
-            {% hook 'cart:summary.end' %}</aside>
+            {% hook 'cart:summary.end' %}
+            <salla-tiered-offer data-testid="store-cart-tiered-offer"></salla-tiered-offer>
+          </aside>
         </div>
       {% else %}
         <div class="v-empty v-empty--large v-cart-empty"><span class="v-petal v-empty__petal"></span><h2>{{ trans('cart.empty_title') }}</h2><p>{{ trans('cart.empty_body') }}</p><a href="{{ link('products') }}" class="v-btn v-btn--primary">{{ trans('common.discover') }}</a></div>

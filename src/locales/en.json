@@ -19,6 +19,17 @@
     "prefix": "Free delivery",
     "text": "on orders above 250 SAR — use code"
   },
+  "header": {
+    "switch_to_english": "Switch to English",
+    "switch_to_arabic": "Switch to Arabic",
+    "english_code": "EN",
+    "arabic_code": "AR",
+    "new": "New",
+    "fragrance": "Fragrance",
+    "care": "Care",
+    "gifts": "Gifts",
+    "journal": "Journal"
+  },
   "hero": {
     "kicker": "New harvest collection",
     "line_1": "Lavender",
@@ -47,7 +58,11 @@
   "categories": {
     "kicker": "Stems & leaves",
     "title": "Move between categories like a hand moving through stems",
-    "count": "{n} products"
+    "count": "{n} products",
+    "fallback_fragrance": "Fragrance",
+    "fallback_skincare": "Skincare",
+    "fallback_haircare": "Haircare",
+    "fallback_gifts": "Gifts"
   },
   "aura": {
     "kicker": "Fragrance aura",

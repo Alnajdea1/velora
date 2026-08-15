@@ -5,5 +5,5 @@
 {% endif %}
 
 {% if product.has_bundle_products %}
-  <salla-multiple-bundle-product bundle-sections="{{ product|json_encode }}"></salla-multiple-bundle-product>
+  <salla-multiple-bundle-product bundle-sections='{{ product|json_encode }}'></salla-multiple-bundle-product>
 {% endif %}
