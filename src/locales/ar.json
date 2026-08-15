@@ -1,7 +1,7 @@
 {
   "common": {
     "brand_fallback": "المتجر",
-    "demo_brand": "فيلورا",
+    "demo_brand": "VELORA",
     "search": "ابحثي عن عطر أو مكوّن…",
     "search_short": "بحث",
     "cart": "السلة",
@@ -18,6 +18,17 @@
   "announcement": {
     "prefix": "توصيل مجاني",
     "text": "للطلبات فوق ٢٥٠ ر.س — استخدمي كود"
+  },
+  "header": {
+    "switch_to_english": "التبديل إلى الإنجليزية",
+    "switch_to_arabic": "التبديل إلى العربية",
+    "english_code": "EN",
+    "arabic_code": "AR",
+    "new": "الجديد",
+    "fragrance": "العطور",
+    "care": "العناية",
+    "gifts": "الهدايا",
+    "journal": "المجلة"
   },
   "hero": {
     "kicker": "مجموعة الحصاد الجديدة",
@@ -47,7 +58,11 @@
   "categories": {
     "kicker": "سيقان وأوراق",
     "title": "تنقّلي بين الأقسام كما تتنقّل اليد بين السيقان",
-    "count": "{n} منتجاً"
+    "count": "{n} منتجاً",
+    "fallback_fragrance": "العطور",
+    "fallback_skincare": "العناية بالبشرة",
+    "fallback_haircare": "العناية بالشعر",
+    "fallback_gifts": "الهدايا"
   },
   "aura": {
     "kicker": "هالة العطر",
@@ -278,7 +293,7 @@
     "returns": "الاستبدال والإرجاع",
     "track": "تتبّع الطلب",
     "faq": "الأسئلة الشائعة",
-    "tagline": "اللافندر، بتصوّر جديد"
+    "tagline": "LAVENDER, REIMAGINED"
   },
   "offer": {
     "badge": "حتى نهاية الأسبوع",

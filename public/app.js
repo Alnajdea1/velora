@@ -98,7 +98,10 @@
         const priceNode = $('[data-demo-price]', card);
         const notes = $('[data-demo-notes]', card);
 
-        if (brand) brand.textContent = product.brand?.name || product.category?.name || 'VELORA';
+        if (brand) {
+          const translatedFallbackBrand = brand.textContent.trim();
+          brand.textContent = product.brand?.name || product.category?.name || translatedFallbackBrand;
+        }
         if (ratingNode) ratingNode.textContent = `★ ${Number(rating).toFixed(1)}`;
         if (name) name.textContent = product.name || name.textContent;
         if (subtitle) subtitle.textContent = product.subtitle || subtitle.textContent;
@@ -389,6 +392,11 @@
       if (event.target.value) window.location.assign(event.target.value);
     });
 
+    if (!document.querySelector('salla-add-product-toast')) {
+      const addedMessage = () => document.documentElement.lang === 'ar' ? 'أُضيف إلى السلة' : 'Added to bag';
+      if (window.salla?.cart?.event?.onItemAdded) salla.cart.event.onItemAdded(() => showToast(addedMessage()));
+      else if (window.salla?.event) salla.event.on('cart::item.added', () => showToast(addedMessage()));
+    }
   };
 
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();

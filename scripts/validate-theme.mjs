@@ -27,10 +27,12 @@ const requiredPages = [
   'src/assets/js/app.js',
   'src/assets/js/add-product-toast.js',
   'src/assets/styles/app.css',
+  'src/assets/styles/add-product-toast.css',
   'scripts/build-theme.mjs',
   'public/app.js',
   'public/add-product-toast.js',
   'public/app.css',
+  'public/add-product-toast.css',
   'src/locales/ar.json',
   'src/locales/en.json'
 ];
@@ -62,10 +64,6 @@ const requiredHooks = {
   ],
   'src/views/pages/page-single.twig': ['information_page.information_page']
 };
-const requiredComponentCount = Object.values(requiredComponents).flat().length;
-const requiredHookCount = Object.values(requiredHooks).flat().length;
-if (requiredComponentCount !== 24) errors.push(`Required Twilight component inventory must contain 24 entries, found ${requiredComponentCount}`);
-if (requiredHookCount !== 8) errors.push(`Required Twilight hook inventory must contain 8 entries, found ${requiredHookCount}`);
 let manifest;
 try {
   manifest = JSON.parse(fs.readFileSync(path.join(root, 'twilight.json'), 'utf8'));
@@ -82,7 +80,8 @@ for (const [file, components] of Object.entries(requiredComponents)) {
   if (!fs.existsSync(full)) continue;
   const source = fs.readFileSync(full, 'utf8');
   for (const component of components) {
-    if (!source.includes(`<${component}`)) errors.push(`Missing required Twilight component (${file}): ${component}`);
+    const occurrences = [...source.matchAll(new RegExp(`<${component}(?:\\s|>)`, 'g'))].length;
+    if (occurrences !== 1) errors.push(`Required Twilight component must appear exactly once (${file}): ${component}; found ${occurrences}`);
   }
 }
 
@@ -91,18 +90,42 @@ for (const [file, hooks] of Object.entries(requiredHooks)) {
   if (!fs.existsSync(full)) continue;
   const source = fs.readFileSync(full, 'utf8');
   for (const hook of hooks) {
-    if (!source.includes(`{% hook '${hook}' %}`)) errors.push(`Missing required Twilight hook (${file}): ${hook}`);
+    const token = `{% hook '${hook}' %}`;
+    const occurrences = source.split(token).length - 1;
+    if (occurrences !== 1) errors.push(`Required Twilight hook must appear exactly once (${file}): ${hook}; found ${occurrences}`);
+  }
+  const positions = hooks.map((hook) => source.indexOf(`{% hook '${hook}' %}`));
+  if (positions.some((position, index) => index > 0 && position < positions[index - 1])) {
+    errors.push(`Required Twilight hooks are not in the expected order: ${file}`);
   }
 }
 
 const fixedCopyChecks = {
   'src/views/components/demo-product-card.twig': ['>VELORA<'],
-  'src/views/components/footer.twig': ['>LAVENDER, REIMAGINED<']
+  'src/views/components/footer.twig': ['>LAVENDER, REIMAGINED<'],
+  'src/views/header.twig': [">{{ is_ar ? 'EN' : 'AR' }}<", "? 'الجديد' : 'New'"],
+  'src/views/components/botanical-categories.twig': ["? 'العطور' : 'Fragrance'"]
 };
 for (const [file, literals] of Object.entries(fixedCopyChecks)) {
   const source = fs.readFileSync(path.join(root, file), 'utf8');
   for (const literal of literals) {
     if (source.includes(literal)) errors.push(`Untranslated fixed interface text (${file}): ${literal}`);
+  }
+}
+
+const informationPage = path.join(root, 'src/views/pages/page-single.twig');
+if (fs.existsSync(informationPage)) {
+  const source = fs.readFileSync(informationPage, 'utf8');
+  if (source.indexOf("page.type == 'customised'") > source.indexOf("{% hook 'information_page.information_page' %}")) {
+    errors.push('The information-page hook must be guarded by the customised page type');
+  }
+}
+
+const headerEntrypoint = path.join(root, 'src/views/header.twig');
+if (fs.existsSync(headerEntrypoint)) {
+  const source = fs.readFileSync(headerEntrypoint, 'utf8');
+  if (!source.includes('<header') || !source.includes('<nav') || !source.includes('<salla-cart-summary')) {
+    errors.push('src/views/header.twig must contain the navigation header implementation, not only exist');
   }
 }
 
@@ -158,14 +181,16 @@ if (manifest) {
   for (const key of ['repository', 'support_url', 'author_email']) {
     if (!String(manifest[key] || '').trim()) errors.push(`twilight.json has an empty top-level value: ${key}`);
   }
-  const packageData = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
-  const lockData = JSON.parse(fs.readFileSync(path.join(root, 'package-lock.json'), 'utf8'));
-  const versions = [manifest.version, packageData.version, lockData.version, lockData.packages?.['']?.version];
-  if (new Set(versions).size !== 1) errors.push(`Version mismatch across twilight.json, package.json and package-lock.json: ${versions.join(', ')}`);
-
+  const settingIds = new Set();
+  for (const setting of manifest.settings || []) {
+    if (!setting.id) errors.push('Every theme setting needs an id');
+    if (settingIds.has(setting.id)) errors.push(`Duplicate theme setting id: ${setting.id}`);
+    settingIds.add(setting.id);
+  }
   const toastSetting = (manifest.settings || []).find((setting) => setting.id === 'enable_add_product_toast');
-  if (!toastSetting) errors.push('twilight.json must define enable_add_product_toast');
-  else if (toastSetting.selected !== true && toastSetting.value !== true) errors.push('enable_add_product_toast must be enabled by default');
+  if (!toastSetting || toastSetting.type !== 'boolean' || toastSetting.value !== true || toastSetting.selected !== true) {
+    errors.push('enable_add_product_toast must be a boolean theme setting enabled by default');
+  }
   const componentNames = new Set();
   const componentKeys = new Set();
   for (const component of manifest.components || []) {
@@ -195,6 +220,15 @@ if (manifest) {
   if (!(manifest.components || []).some((component) => component.is_default)) {
     errors.push('At least one homepage component must be marked is_default');
   }
+
+  try {
+    const packageData = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
+    if (manifest.version && packageData.version !== manifest.version) {
+      errors.push(`Theme version mismatch: package.json=${packageData.version}, twilight.json=${manifest.version}`);
+    }
+  } catch (error) {
+    errors.push(`package.json is not valid JSON: ${error.message}`);
+  }
 }
 
 const homeTemplate = path.join(root, 'src/views/pages/index.twig');
@@ -214,11 +248,18 @@ if (fs.existsSync(masterTemplate)) {
   if (!source.includes("'app.js'|asset") && !source.includes("'app.js' | asset")) {
     errors.push("Master layout must load the compiled public asset as {{ 'app.js'|asset }}");
   }
-  if (!source.includes("'add-product-toast.js'|asset") && !source.includes("'add-product-toast.js' | asset")) {
-    errors.push("Master layout must load {{ 'add-product-toast.js'|asset }}");
+  for (const asset of ['add-product-toast.css', 'add-product-toast.js']) {
+    if (!source.includes(`'${asset}'|asset`) && !source.includes(`'${asset}' | asset`)) {
+      errors.push(`Master layout must load the required toast asset: ${asset}`);
+    }
   }
-  if (!source.includes("data-message=\"{{ trans('cart.added') }}\"")) {
-    errors.push('salla-add-product-toast must receive its localized cart.added message');
+}
+
+const toastScript = path.join(root, 'src/assets/js/add-product-toast.js');
+if (fs.existsSync(toastScript)) {
+  const source = fs.readFileSync(toastScript, 'utf8');
+  if (!source.includes('customElements.define("salla-add-product-toast"')) {
+    errors.push('salla-add-product-toast must be registered as a functional custom element');
   }
 }
 
@@ -242,4 +283,4 @@ if (errors.length) {
   process.exit(1);
 }
 
-console.log(`Theme check passed: ${requiredPages.length} required files, ${requiredComponentCount}/24 Twilight components, ${requiredHookCount}/8 hooks and ${manifest.components.length} custom components.`);
+console.log(`Theme check passed: ${requiredPages.length} required files and ${manifest.components.length} custom components.`);

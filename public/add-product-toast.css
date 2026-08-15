@@ -1,0 +1,209 @@
+.s-add-product-toast {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 9999;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  overflow: hidden;
+  background: var(--porcelain, #fcfbff);
+  color: var(--aubergine, #261838);
+  box-shadow: 0 18px 55px rgba(38, 24, 56, .2);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: opacity .3s ease-out, transform .3s ease-out;
+}
+
+.s-add-product-toast.s-add-product-toast--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.s-add-product-toast__progress {
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--mist, #f1ecff);
+}
+
+.s-add-product-toast__progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--iris, #7657e8);
+  transition: width 50ms linear;
+}
+
+.s-add-product-toast__header,
+.s-add-product-toast__header-content,
+.s-add-product-toast__body,
+.s-add-product-toast__actions {
+  display: flex;
+  align-items: center;
+}
+
+.s-add-product-toast__header {
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.s-add-product-toast__header-content {
+  gap: 10px;
+}
+
+.s-add-product-toast__icon {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sage, #bacbb5);
+  color: var(--aubergine, #261838);
+  font-weight: 800;
+}
+
+.s-add-product-toast__title,
+.s-add-product-toast__name,
+.s-add-product-toast__price {
+  font-weight: 700;
+}
+
+.s-add-product-toast__title,
+.s-add-product-toast__name {
+  font-size: 14px;
+}
+
+.s-add-product-toast__close {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  cursor: pointer;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--leaf, #71836c);
+}
+
+.s-add-product-toast__close:hover {
+  background: var(--mist, #f1ecff);
+  color: var(--aubergine, #261838);
+}
+
+.s-add-product-toast__divider {
+  height: 1px;
+  background: var(--mist, #f1ecff);
+}
+
+.s-add-product-toast__body {
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.s-add-product-toast__image {
+  width: 80px;
+  height: 80px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border: 1px solid var(--mist, #f1ecff);
+  border-radius: 18px;
+  background: #fff;
+}
+
+.s-add-product-toast__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.s-add-product-toast__details {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.s-add-product-toast__name {
+  line-height: 1.5;
+}
+
+.s-add-product-toast__options {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: var(--leaf, #71836c);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.s-add-product-toast__show-more {
+  color: var(--iris, #7657e8);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.s-add-product-toast__price {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.s-add-product-toast__price-sale {
+  color: #a8324a;
+}
+
+.s-add-product-toast__price-original {
+  color: var(--leaf, #71836c);
+  font-size: 12px;
+  font-weight: 400;
+  text-decoration: line-through;
+}
+
+.s-add-product-toast__actions {
+  gap: 12px;
+}
+
+.s-add-product-toast__actions salla-button {
+  flex: 1;
+}
+
+.s-add-product-toast__actions svg {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 768px) {
+  .s-add-product-toast {
+    inset-block-start: 16px;
+    inset-inline: auto 16px;
+    width: 400px;
+    border-radius: 24px;
+    transform: translateX(calc(100% + 24px));
+  }
+
+  [dir="rtl"] .s-add-product-toast {
+    inset-inline: 16px auto;
+    transform: translateX(calc(-100% - 24px));
+  }
+
+  .s-add-product-toast.s-add-product-toast--visible,
+  [dir="rtl"] .s-add-product-toast.s-add-product-toast--visible {
+    transform: translateX(0);
+  }
+
+  .s-add-product-toast__image {
+    width: 88px;
+    height: 88px;
+  }
+}
