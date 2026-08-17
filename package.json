@@ -17,7 +17,7 @@
     "publish": "salla theme publish"
   },
   "dependencies": {
-    "@salla.sa/twilight": "^2.14.543",
+    "@salla.sa/twilight": "^2.14.544",
     "@salla.sa/twilight-components": "^2.14.543"
   },
   "devDependencies": {
