@@ -13,6 +13,7 @@
     "dev": "salla theme preview --with-editor",
     "preview": "salla theme preview --with-editor",
     "check": "npm run production && node scripts/validate-theme.mjs",
+    "watch": "node scripts/watch-theme.mjs",
     "publish": "salla theme publish"
   },
   "dependencies": {
@@ -20,7 +21,9 @@
     "@salla.sa/twilight-components": "^2.14.543"
   },
   "devDependencies": {
-    "@salla.sa/cli": "^3.2.52"
+    "@salla.sa/cli": "^3.2.52",
+    "copy-webpack-plugin": "^14.0.0",
+    "webpack": "^5.109.2"
   },
   "browserslist": [
     "> 0.5%",
