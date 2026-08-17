@@ -21,7 +21,7 @@
     "@salla.sa/twilight-components": "^2.14.543"
   },
   "devDependencies": {
-    "@salla.sa/cli": "^3.2.52",
+    "@salla.sa/cli": "^3.2.53",
     "copy-webpack-plugin": "^14.0.0",
     "webpack": "^5.109.2"
   },
