@@ -21,6 +21,12 @@ const root = process.cwd();
 const assetsSource = path.join(root, 'src', 'assets');
 const assetsOutput = path.join(root, 'public');
 
+// WatcherPlugin shells out to a bare `salla` command (no path). If some
+// other @salla.sa/cli install earlier on PATH is broken (seen here: a
+// global install whose shim resolves to a nonexistent module path), every
+// sync fails. Force resolution to this project's pinned, known-good copy.
+process.env.PATH = `${path.join(root, 'node_modules', '.bin')}${path.delimiter}${process.env.PATH}`;
+
 const assets = [
   ['styles/app.css', 'app.css'],
   ['styles/add-product-toast.css', 'add-product-toast.css'],
