@@ -9,6 +9,14 @@ const require = createRequire(import.meta.url);
 // node_modules/.salla-cli before spawning this script.
 const WatcherPlugin = require('@salla.sa/twilight/watcher.js');
 
+// WatcherPlugin.addToQ() runs `salla theme sync` inside a setTimeout with no
+// try/catch, so a failed sync (rejected path, network error, expired draft,
+// etc.) throws as an uncaught exception and would otherwise kill this whole
+// watch process. Log it and keep watching instead of dying.
+process.on('uncaughtException', (err) => {
+  console.error(`[watch] a Salla draft sync failed, still watching: ${err.message}`);
+});
+
 const root = process.cwd();
 const assetsSource = path.join(root, 'src', 'assets');
 const assetsOutput = path.join(root, 'public');
