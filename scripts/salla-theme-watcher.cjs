@@ -11,12 +11,15 @@ class SallaThemeWatcher extends ThemeWatcher {
 
   addToQ(file) {
     const absoluteFile = path.isAbsolute(file) ? file : path.resolve(file);
-    const relativeFile = path.relative(process.cwd(), absoluteFile);
+    const nativeRelativeFile = path.relative(process.cwd(), absoluteFile);
 
-    if (!relativeFile || relativeFile.startsWith('..') || path.isAbsolute(relativeFile)) {
+    if (!nativeRelativeFile || nativeRelativeFile.startsWith('..') || path.isAbsolute(nativeRelativeFile)) {
       console.error(`[Velora sync] Refusing file outside the theme root: ${file}`);
       return;
     }
+
+    // Salla theme sync expects a theme-root-relative POSIX path on every OS.
+    const relativeFile = nativeRelativeFile.split(path.sep).join('/');
 
     const existingTimer = this.syncTimers.get(relativeFile);
     if (existingTimer) clearTimeout(existingTimer);
@@ -53,7 +56,7 @@ class SallaThemeWatcher extends ThemeWatcher {
     const running = this.syncProcesses.get(relativeFile);
     if (running) running.kill();
 
-    console.log(`[Velora sync] Uploading ${relativeFile.split(path.sep).join('/')}...`);
+    console.log(`[Velora sync] Uploading ${relativeFile}...`);
     const child = spawn(process.execPath, args, {
       cwd: process.cwd(),
       env: process.env,
