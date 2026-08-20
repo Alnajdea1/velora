@@ -29,6 +29,8 @@ const requiredPages = [
   'src/assets/styles/app.css',
   'src/assets/styles/add-product-toast.css',
   'scripts/build-theme.mjs',
+  'scripts/salla-theme-watcher.cjs',
+  'webpack.config.cjs',
   'public/app.js',
   'public/add-product-toast.js',
   'public/app.css',
@@ -225,6 +227,9 @@ if (manifest) {
     const packageData = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
     if (manifest.version && packageData.version !== manifest.version) {
       errors.push(`Theme version mismatch: package.json=${packageData.version}, twilight.json=${manifest.version}`);
+    }
+    if (!String(packageData.scripts?.watch || '').includes('webpack.config.cjs')) {
+      errors.push('package.json must provide the Salla-compatible webpack watch command');
     }
   } catch (error) {
     errors.push(`package.json is not valid JSON: ${error.message}`);

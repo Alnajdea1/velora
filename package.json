@@ -10,6 +10,7 @@
     "build": "node scripts/build-theme.mjs",
     "production": "node scripts/build-theme.mjs",
     "development": "node scripts/build-theme.mjs",
+    "watch": "webpack --config webpack.config.cjs --mode development --watch",
     "dev": "salla theme preview --with-editor",
     "preview": "salla theme preview --with-editor",
     "check": "npm run production && node scripts/validate-theme.mjs",
@@ -20,7 +21,10 @@
     "@salla.sa/twilight-components": "^2.14.543"
   },
   "devDependencies": {
-    "@salla.sa/cli": "^3.2.52"
+    "@salla.sa/cli": "^3.2.53",
+    "copy-webpack-plugin": "^14.0.0",
+    "webpack": "^5.108.4",
+    "webpack-cli": "^7.2.1"
   },
   "browserslist": [
     "> 0.5%",
