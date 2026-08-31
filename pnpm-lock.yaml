@@ -12,8 +12,8 @@ importers:
         specifier: ^2.14.543
         version: 2.14.544(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))
       '@salla.sa/twilight-components':
-        specifier: ^2.14.543
-        version: 2.14.547(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))
+        specifier: ^2.14.564
+        version: 2.14.564(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))
     devDependencies:
       '@salla.sa/cli':
         specifier: ^3.2.52
@@ -282,37 +282,40 @@ packages:
     resolution: {integrity: sha512-leBRl6F5F0TvWut8m1/aZcMTUHi2vXjKeMJ/Ik1lW7Q7Yy16Dhtkklu+cEqQww1p1NeLnUNzV3+uwpzqRcy9vw==}
     engines: {node: ^22.22.2 || ^24.15.0 || >=26.0.0}
 
+  '@salla.sa/analytics@2.14.564':
+    resolution: {integrity: sha512-lEWraE8oOoHj5HYBoIP3f7zfPmPW1kzX5i7AkMlkubPs+guQ2rhTdNZ/5Ttw83zxdvRV01hpfJf6rkiHX2ABxQ==}
+
   '@salla.sa/app-functions-guard@0.1.0':
     resolution: {integrity: sha512-RG2911n/+PN2+tBZGGG7jTlw8izegso/rFlZ3MEN7LmdkMs6O+hhmst1uQy/85lJFt4ucoD6HHmx+UyRFHhyYQ==}
     engines: {node: '>=18'}
 
-  '@salla.sa/applepay@2.14.547':
-    resolution: {integrity: sha512-O+WxfDaPxnqf6+e4knxllVskKK53ElXaTgku50MGKw/LCK1pT7/+VfalOcAFxbelIgOgh0o4nLP93liD6J9JdQ==}
+  '@salla.sa/applepay@2.14.564':
+    resolution: {integrity: sha512-2UWiyxzT82AOLVI6Aa90oQRgOJFMdf5OaXIxFskPIPvTDeQn7PDtLpqF5RYwGwHEFmz6OnYKXNtqEZrYvQqkjg==}
 
   '@salla.sa/base@2.14.544':
     resolution: {integrity: sha512-zto2lbhivSiJgo90JxC+wsdVOUwSFo4PKIPs4Vqwa1cYFVxwGvyjXHnkiML4V4acZQD/C50xzOYwuODZbGQ8RA==}
 
-  '@salla.sa/base@2.14.547':
-    resolution: {integrity: sha512-XJfZ22yQmGo2KT2LFXcVUaYHJi4b7Kc8Or2pESUlb4V008oMdR4j5yt3GWzZfSxOMuUjF/I3TPU8OUMaiOkh7A==}
+  '@salla.sa/base@2.14.564':
+    resolution: {integrity: sha512-guFwDFdGO0bj/hQufbNMIgNAusOuh8CFhDIWSH674rCBpBKa/3U1yOTzXhMNa/OHScIb7aD/DinsBLnFN68cyw==}
 
   '@salla.sa/cli@3.2.53':
     resolution: {integrity: sha512-lmtmQY2BJCwyh2wBSIfL8e9mjGQJgigsOj3XHom8kh/dN1cKlymzQuXusja91EQ0tAS5pA2pL/YH57n06yhLEw==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
-  '@salla.sa/twilight-components@2.14.547':
-    resolution: {integrity: sha512-+qm7xjAvYS1Tf4cjrNmxjlbxcSAG4hDG+FOZtADOFw5gKX9qM8qqvWp1wnQUx1O8zS67CUEtwpH8kljnBcaUdw==}
+  '@salla.sa/twilight-components@2.14.564':
+    resolution: {integrity: sha512-OWQDTHm1HwxeorWvHJgSOjuU0bGMw6pA62LIcHZmPpVukg0M39umVotK+r7mb2lcvgc4ujr0Yij9osw14dcPYw==}
 
-  '@salla.sa/twilight-tailwind-theme@2.14.547':
-    resolution: {integrity: sha512-8UkNDLO0P9BxYQb+3QXXG6NDZwpSDV5TA94yy8+aG1m8/y6SxBvPrhm+1BhcoquYTeXO0W3nWFL0nEkyFTBy6A==}
+  '@salla.sa/twilight-tailwind-theme@2.14.564':
+    resolution: {integrity: sha512-OjNodnTuu7eiv6V2+v1+rVJPaS5AWAESOUbhIl4AmZsmrc7OwQ5xlcCizgpOPmdr2jKBqHDyXf6SXm078aRz/Q==}
 
   '@salla.sa/twilight@2.14.544':
     resolution: {integrity: sha512-OlZicNRy70swS84lOue5DMuZjctHbrSP1IK7Y1ZCVUU7Iuo+W+iqfMQ6RHkyUJH25QWwzdqHYRht37Qb3QxRmQ==}
     peerDependencies:
       webpack: ^4 || ^5
 
-  '@salla.sa/twilight@2.14.547':
-    resolution: {integrity: sha512-1uWmNWmWR5ATP05e9vuVtuNisPzYjJLcYJlxDxqfg/6q1m4BlQkwGVVue4montHtt/SAhAq8JwdfZJvQLKzuEA==}
+  '@salla.sa/twilight@2.14.564':
+    resolution: {integrity: sha512-l1bVxkpDyk3NVZW27ECmJHsGOwHiAA4jVwV3TDLi4hbhJtEihnubkNJe28NI4ia7kV9t928MHj7jTcG3vsw/OA==}
     peerDependencies:
       webpack: ^4 || ^5
 
@@ -505,6 +508,9 @@ packages:
 
   axios@1.19.0:
     resolution: {integrity: sha512-ht/iuYZXEjFxLH/Hkezgd7m6JKlHHXEUSneaDz8uZe1Gj5QZtCnpyDsckvAiEnT89OEbCLmnte4R4sn7P0EKFw==}
+
+  axios@1.20.0:
+    resolution: {integrity: sha512-r8aOh8j9cGKpgQAqpzrUHnSIc6a59Y3Xf/cv8sy1DrHCkZHzQGEuoq1tARk6qSyDdtQGSDgpb9kFlruzPvrgwg==}
 
   balanced-match@4.0.4:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
@@ -1576,14 +1582,21 @@ snapshots:
       node-gyp: 13.0.1
       proc-log: 7.0.0
 
+  '@salla.sa/analytics@2.14.564(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)':
+    dependencies:
+      '@jitsu/js': 1.11.0(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
+    transitivePeerDependencies:
+      - '@jitsu/protocols'
+      - '@types/dlv'
+
   '@salla.sa/app-functions-guard@0.1.0':
     dependencies:
       acorn: 8.18.0
       acorn-walk: 8.3.5
 
-  '@salla.sa/applepay@2.14.547(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)':
+  '@salla.sa/applepay@2.14.564(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)':
     dependencies:
-      axios: 1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      axios: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
     transitivePeerDependencies:
       - debug
       - supports-color
@@ -1595,7 +1608,7 @@ snapshots:
       lodash: 4.18.1
       store: 2.0.12
 
-  '@salla.sa/base@2.14.547':
+  '@salla.sa/base@2.14.564':
     dependencies:
       '@types/applepayjs': 14.0.9
       eventemitter2: 6.4.9
@@ -1614,12 +1627,12 @@ snapshots:
       - kerberos
       - supports-color
 
-  '@salla.sa/twilight-components@2.14.547(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))':
+  '@salla.sa/twilight-components@2.14.564(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))':
     dependencies:
       '@googlemaps/markerclusterer': 2.6.2
-      '@salla.sa/applepay': 2.14.547(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
-      '@salla.sa/twilight': 2.14.547(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))
-      '@salla.sa/twilight-tailwind-theme': 2.14.547
+      '@salla.sa/applepay': 2.14.564(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      '@salla.sa/twilight': 2.14.564(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))
+      '@salla.sa/twilight-tailwind-theme': 2.14.564
       '@salla.sa/ui-address-autocomplete-widget': 1.2.1
       '@salla.sa/ui-google-map-render': 1.2.1(@googlemaps/markerclusterer@2.6.2)(@salla.sa/ui-address-autocomplete-widget@1.2.1)(lit@3.3.3)
       '@types/node': 20.19.43
@@ -1647,7 +1660,7 @@ snapshots:
       - supports-color
       - webpack
 
-  '@salla.sa/twilight-tailwind-theme@2.14.547': {}
+  '@salla.sa/twilight-tailwind-theme@2.14.564': {}
 
   '@salla.sa/twilight@2.14.544(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))':
     dependencies:
@@ -1665,11 +1678,12 @@ snapshots:
       - debug
       - supports-color
 
-  '@salla.sa/twilight@2.14.547(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))':
+  '@salla.sa/twilight@2.14.564(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))':
     dependencies:
       '@jitsu/js': 1.11.0(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
-      '@salla.sa/base': 2.14.547
-      axios: 1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      '@salla.sa/analytics': 2.14.564(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
+      '@salla.sa/base': 2.14.564
+      axios: 1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       infinite-scroll: 4.0.1
       jwt-decode: 4.0.0
       lang.js: 1.1.14
@@ -1894,6 +1908,16 @@ snapshots:
   asynckit@0.4.0: {}
 
   axios@1.19.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
+    dependencies:
+      follow-redirects: 1.16.0(debug@4.4.3(supports-color@8.1.1))
+      form-data: 4.0.6
+      https-proxy-agent: 5.0.1(supports-color@8.1.1)
+      proxy-from-env: 2.1.0
+    transitivePeerDependencies:
+      - debug
+      - supports-color
+
+  axios@1.20.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1):
     dependencies:
       follow-redirects: 1.16.0(debug@4.4.3(supports-color@8.1.1))
       form-data: 4.0.6
