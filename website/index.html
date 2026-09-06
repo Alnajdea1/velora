@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>رمـز — اسأل شركتك على الواتساب</title>
+<meta name="description" content="رمز يربط أنظمة شركتك بالواتساب، تسأل بلغتك ويجيك الجواب مباشرة — عقود، طلبات، مبيعات، ومشاريع.">
+<meta name="theme-color" content="#F5F1EA">
+<meta property="og:title" content="رمـز — اسأل شركتك على الواتساب">
+<meta property="og:description" content="نربط أنظمة شركتك، فتسأل بلغتك ويجيك الجواب مباشرة.">
+<meta property="og:locale" content="ar_SA">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@dawod/thmanyah-font-web/index.css">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237B3FA0'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='34' font-weight='700' fill='white' font-family='sans-serif'%3E%D8%B1%3C/text%3E%3C/svg%3E">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('ramz-theme'); } catch (e) {}
+    var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    document.documentElement.classList.add('js');
+  })();
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">تخطَّ للمحتوى</a>
+
+<header class="nav-wrap">
+  <nav class="nav" aria-label="التنقل الرئيسي">
+    <a class="nav__brand" href="#top">رمـز</a>
+    <a class="nav__link" href="#services">الخدمات</a>
+    <a class="nav__link" href="#demo">الديمو</a>
+    <a class="nav__cta" href="#contact">تواصل معنا</a>
+    <button class="theme-toggle" type="button" aria-label="تبديل الوضع الليلي" aria-pressed="false">
+      <span class="theme-toggle__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="icon-sun"><circle cx="12" cy="12" r="4.6"/><g stroke-linecap="round"><path d="M12 2.6v2.4M12 19v2.4M21.4 12H19M5 12H2.6M18.6 5.4 17 7M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4"/></g></svg>
+        <svg viewBox="0 0 24 24" class="icon-moon"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1Z"/></svg>
+      </span>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ═══ Hero ═══ -->
+  <section class="hero" id="top">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <span class="hero__mark" aria-hidden="true">رمز</span>
+    <div class="wrap hero__inner">
+      <p class="eyebrow reveal">RAMZ — أتمتة الأعمال</p>
+      <h1 class="hero__title reveal" data-reveal-delay="1">
+        اسأل شركتك على الواتساب،<br>
+        ورمز يعطيك <span class="grad">الزبدة</span>.
+      </h1>
+      <div class="hero__row reveal" data-reveal-delay="2">
+        <p class="hero__lede">نربط أنظمة شركتك، فتسأل بلغتك ويجيك الجواب مباشرة — بدون تقارير ولا انتظار أحد.</p>
+        <a class="btn btn--primary" href="#demo">جرّب الديمو</a>
+      </div>
+      <ul class="hero__facts reveal" data-reveal-delay="3">
+        <li><strong>ثوانٍ</strong><span>بدل تقارير تاخذ أيام</span></li>
+        <li><strong>على واتساب</strong><span>بدون تطبيق جديد يتعلمونه</span></li>
+        <li><strong>من أنظمتك</strong><span>الجواب من بياناتك، مو تخمين</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══ Live demo ═══ -->
+  <section class="demo" id="demo">
+    <div class="wrap demo__grid">
+
+      <div class="phone reveal" aria-label="محادثة تجريبية مع رمز">
+        <div class="phone__bar">
+          <span class="avatar">رمز</span>
+          <span class="phone__id">
+            <b>رمز</b>
+            <em><i class="dot"></i> متصل ببيانات الشركة</em>
+          </span>
+        </div>
+        <div class="phone__thread" id="thread" role="log" aria-live="polite"></div>
+        <div class="phone__compose">
+          <span class="phone__input" id="composer">اكتب سؤالك…</span>
+          <button class="send" type="button" id="send" aria-label="إرسال">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.6 11.3 15.8-6.6c.9-.4 1.9.6 1.5 1.5l-6.6 15.8c-.4 1-1.8.9-2.1-.1l-1.8-5.7-5.7-1.8c-1-.3-1.1-1.7-.1-2.1Z"/></svg>
+          </button>
+        </div>
+        <div class="chips" id="chips" role="group" aria-label="أسئلة جاهزة"></div>
+        <a class="btn btn--primary btn--block" href="#contact">اطلب الخدمة وجرّب</a>
+      </div>
+
+      <div class="board reveal" data-reveal-delay="1">
+        <p class="board__eyebrow">من بياناتك <i class="live"></i></p>
+        <h2 class="board__title">نفس الجواب، محدَّث لحظة بلحظة.</h2>
+        <div class="tiles" id="tiles">
+          <article class="tile" data-key="contracts">
+            <p class="tile__label">عقود موقّعة هذا الشهر</p>
+            <p class="tile__value" data-count="12" data-arabic>٠</p>
+            <p class="tile__meta up">+٣ عن الشهر الماضي</p>
+          </article>
+          <article class="tile" data-key="value">
+            <p class="tile__label">قيمة العقود</p>
+            <p class="tile__value" data-count="4.8" data-suffix="م" data-arabic>٠م</p>
+            <p class="tile__meta">ريال سعودي</p>
+          </article>
+          <article class="tile" data-key="orders">
+            <p class="tile__label">طلبات مفتوحة</p>
+            <p class="tile__value" data-count="7" data-arabic>٠</p>
+            <p class="tile__meta down">٢ منها متأخرة</p>
+          </article>
+          <article class="tile" data-key="sales">
+            <p class="tile__label">مبيعات الأسبوع</p>
+            <p class="tile__value" data-count="1.9" data-suffix="م" data-arabic>٠م</p>
+            <p class="tile__meta up">+١٤٪ عن الأسبوع اللي راح</p>
+          </article>
+        </div>
+        <article class="bar" data-key="pending">
+          <div class="bar__head">
+            <p class="tile__label">عقود بانتظار التوقيع</p>
+            <p class="bar__pct">٢٥٪</p>
+          </div>
+          <div class="bar__track"><span class="bar__fill" style="--pct:25%"></span></div>
+          <p class="tile__meta">٣ من ١٢ عقد لسه ما اكتملت</p>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ Services ═══ -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <h2 class="section-title reveal">وراء السؤال، <span class="grad">شغل كثير</span>.</h2>
+      <p class="section-lede reveal" data-reveal-delay="1">أربع طبقات تشتغل ورا الكواليس، عشان السؤال يطلع جواب.</p>
+
+      <div class="acc" id="acc">
+        <article class="acc__item reveal">
+          <button class="acc__head" type="button" aria-expanded="true">
+            <span class="acc__num">٠١</span>
+            <span class="acc__name">وكيل ذكي على واتساب</span>
+            <span class="acc__sign" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body"><div class="acc__inner">
+            <p>ما فيه تطبيق جديد ولا تدريب. فريقك يسأل من نفس الواتساب اللي يستخدمه كل يوم، بالعامية، ويجيه الجواب من أنظمتكم مباشرة — مع مصدر الجواب عشان تتأكد.</p>
+            <ul class="ticks">
+              <li>يفهم اللهجة والاختصارات الداخلية</li>
+              <li>صلاحيات لكل موظف حسب دوره</li>
+              <li>يرجّع المصدر مع كل رقم</li>
+            </ul>
+          </div></div>
+        </article>
+
+        <article class="acc__item reveal">
+          <button class="acc__head" type="button" aria-expanded="false">
+            <span class="acc__num">٠٢</span>
+            <span class="acc__name">أتمتة الإجراءات</span>
+            <span class="acc__sign" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body"><div class="acc__inner">
+            <p>الشغل المكرر اللي ياخذ من فريقك ساعات — إنشاء عقد، تذكير بتوقيع، متابعة طلب، تحديث حالة — يصير يمشي لحاله وينبّهك بس لما يحتاجك.</p>
+            <ul class="ticks">
+              <li>مسارات موافقة بخطوات واضحة</li>
+              <li>تنبيهات قبل ما يفوت الموعد</li>
+              <li>سجل كامل لكل إجراء صار</li>
+            </ul>
+          </div></div>
+        </article>
+
+        <article class="acc__item reveal">
+          <button class="acc__head" type="button" aria-expanded="false">
+            <span class="acc__num">٠٣</span>
+            <span class="acc__name">لوحات وتحليلات</span>
+            <span class="acc__sign" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body"><div class="acc__inner">
+            <p>لوحة وحدة تجمع أرقامك كلها، بنفس المصدر اللي يجاوب منه رمز. تفتحها تلقى الصورة كاملة، وتسأل عن أي رقم فيها بالتفصيل.</p>
+            <ul class="ticks">
+              <li>مؤشرات تختارها أنت، مو قوالب جاهزة</li>
+              <li>تقرير يوصلك على واتساب كل صباح</li>
+              <li>تصدير للإكسل بضغطة</li>
+            </ul>
+          </div></div>
+        </article>
+
+        <article class="acc__item reveal">
+          <button class="acc__head" type="button" aria-expanded="false">
+            <span class="acc__num">٠٤</span>
+            <span class="acc__name">حلول ذكاء مخصصة</span>
+            <span class="acc__sign" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body"><div class="acc__inner">
+            <p>عندك حالة ما تشبه أحد؟ نجلس معك، نفهم شغلك، ونبني لك حل على مقاسك — من ربط نظام قديم، لين نموذج يقرأ مستنداتكم ويطلّع منها الزبدة.</p>
+            <ul class="ticks">
+              <li>ربط مع أنظمتكم الحالية</li>
+              <li>قراءة المستندات والعقود آليًا</li>
+              <li>بياناتكم تبقى عندكم</li>
+            </ul>
+          </div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Sectors ═══ -->
+  <section class="sectors">
+    <div class="wrap">
+      <p class="sectors__note reveal">بدينا من العقار. ونفس الطريقة تنفع لأي قطاع.</p>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>العقار</span><i>◆</i><span>المقاولات</span><i>◆</i><span>التجزئة</span><i>◆</i><span>اللوجستيات</span><i>◆</i><span>الخدمات المالية</span><i>◆</i><span>الرعاية الصحية</span><i>◆</i><span>التعليم</span><i>◆</i>
+        <span>العقار</span><i>◆</i><span>المقاولات</span><i>◆</i><span>التجزئة</span><i>◆</i><span>اللوجستيات</span><i>◆</i><span>الخدمات المالية</span><i>◆</i><span>الرعاية الصحية</span><i>◆</i><span>التعليم</span><i>◆</i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta" id="contact">
+    <div class="wrap cta__inner">
+      <h2 class="cta__title reveal">ورّنا شغلك،<br>ونقولك وش ينفع يتأتمت.</h2>
+      <p class="cta__lede reveal" data-reveal-delay="1">جلسة قصيرة، نسمع منك ونوريك الديمو على بياناتك أنت — بدون التزام.</p>
+      <div class="cta__actions reveal" data-reveal-delay="2">
+        <a class="btn btn--light" href="mailto:contact@ramz.net.sa?subject=%D8%B7%D9%84%D8%A8%20%D8%AF%D9%8A%D9%85%D9%88%20%D8%B1%D9%85%D8%B2">احجز الديمو</a>
+        <a class="cta__mail" href="mailto:contact@ramz.net.sa">contact@ramz.net.sa</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span class="footer__brand">رمـز</span>
+    <nav class="footer__links" aria-label="روابط الفوتر">
+      <a href="#services">الخدمات</a>
+      <a href="#demo">الديمو</a>
+      <a href="#contact">تواصل</a>
+    </nav>
+    <p class="footer__copy">© ٢٠٢٦ رمز — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+
+<script src="assets/app.js" defer></script>
+</body>
+</html>
