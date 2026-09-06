@@ -58,18 +58,26 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: "Readex Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   transition: background .4s var(--ease), color .4s var(--ease);
 }
 
-h1, h2, h3, .nav__brand, .footer__brand, .hero__mark, .tile__value, .marquee__track span {
+h1, h2, h3, .nav__brand, .footer__brand, .hero__mark, .tile__value,
+.marquee__track span, .acc__name, .hero__facts strong {
   font-family: "Rubik", "Readex Pro", system-ui, sans-serif;
-  font-weight: 900;
+  font-weight: 800;
 }
-h1, h2, h3 { line-height: 1.22; letter-spacing: -.01em; }
+h1, h2, h3 { line-height: 1.22; letter-spacing: -.035em; }
+
+/* Micro labels borrow the mono face for their Latin and figures; Arabic
+   falls through to Readex, which is how the original comps read. */
+.eyebrow, .msg__src, .board__eyebrow, .acc__num, .phone__id em, .tile__label {
+  font-family: "IBM Plex Mono", "Readex Pro", ui-monospace, monospace;
+  font-weight: 300;
+}
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 :focus-visible { outline: none; box-shadow: var(--ring); border-radius: var(--r-s); }
@@ -113,7 +121,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 
 .nav__cta {
   padding: .5rem 1.1rem; border-radius: var(--r-full);
-  background: var(--brand); color: #fff; font-weight: 700; font-size: .95rem;
+  background: var(--brand); color: #fff; font-weight: 500; font-size: .95rem;
   transition: transform .25s var(--ease), filter .25s;
 }
 .nav__cta:hover { transform: translateY(-1px); filter: brightness(1.08); }
@@ -157,11 +165,11 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 .hero__inner { position: relative; }
 
 .eyebrow {
-  font-size: .85rem; letter-spacing: .22em; color: var(--ink-3);
+  font-size: .78rem; letter-spacing: .18em; color: var(--ink-3);
   text-transform: uppercase; margin-bottom: 1.4rem;
 }
 
-.hero__title { font-size: clamp(2.5rem, 6.8vw, 5.2rem); max-width: 20ch; }
+.hero__title { font-size: clamp(2.5rem, 6.8vw, 5.2rem); max-width: 20ch; font-weight: 900; letter-spacing: -.045em; }
 
 .hero__row {
   display: flex; flex-wrap: wrap; align-items: center; gap: 1.6rem;
@@ -176,14 +184,14 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
   border-top: 1px solid var(--line); padding-top: 1.8rem;
 }
 .hero__facts li { display: flex; flex-direction: column; gap: .1rem; }
-.hero__facts strong { font-size: 1.25rem; font-weight: 700; }
+.hero__facts strong { font-size: 1.25rem; font-weight: 700; letter-spacing: -.02em; }
 .hero__facts span { color: var(--ink-3); font-size: .95rem; }
 
 /* ── Buttons ─────────────────────────────────────── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
   padding: .85rem 1.9rem; border-radius: var(--r-full);
-  font-weight: 700; white-space: nowrap;
+  font-weight: 500; white-space: nowrap;
   transition: transform .25s var(--ease), box-shadow .3s var(--ease), filter .25s;
 }
 .btn--primary { background: var(--brand); color: #fff; box-shadow: 0 10px 26px -12px var(--brand); }
@@ -243,7 +251,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
   padding: .12rem .5rem; border-radius: var(--r-full); margin-bottom: .45rem;
 }
 .msg__text { display: block; }
-.msg__text b { color: var(--brand); font-weight: 700; }
+.msg__text b { color: var(--brand); font-weight: 500; }
 
 .typing { display: flex; gap: 4px; align-items: center; padding: .95rem 1rem; }
 .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-3); animation: blink 1.2s infinite; }
@@ -296,7 +304,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
   box-shadow: 0 14px 34px -18px var(--brand);
 }
 .tile__label { font-size: .88rem; color: var(--ink-3); }
-.tile__value { font-size: clamp(1.9rem, 4vw, 2.5rem); font-weight: 900; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.tile__value { font-size: clamp(1.9rem, 4vw, 2.5rem); letter-spacing: -.03em; line-height: 1.25; font-variant-numeric: tabular-nums; }
 .tile__meta { font-size: .82rem; color: var(--ink-3); }
 .tile__meta.up { color: #2E9E5B; }
 .tile__meta.down { color: #C9603F; }
@@ -315,6 +323,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 /* ── Services ────────────────────────────────────── */
 .services { padding: clamp(3.5rem, 9vh, 6.5rem) 0; background: var(--bg-2); transition: background .4s var(--ease); }
 .section-title { font-size: clamp(2rem, 5vw, 3.4rem); }
+.cta__title { letter-spacing: -.045em; }
 .section-lede { color: var(--ink-2); margin: .8rem 0 2.6rem; max-width: 52ch; }
 
 .acc { display: flex; flex-direction: column; gap: .7rem; }
@@ -327,7 +336,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 
 .acc__head { display: flex; align-items: center; gap: 1rem; width: 100%; padding: 1.3rem 1.5rem; text-align: start; }
 .acc__num { font-size: .8rem; color: var(--ink-3); letter-spacing: .1em; min-width: 2ch; }
-.acc__name { font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 700; flex: 1; }
+.acc__name { font-size: clamp(1.05rem, 2.2vw, 1.35rem); font-weight: 700; letter-spacing: -.025em; flex: 1; }
 .acc__sign { position: relative; width: 20px; height: 20px; flex: none; }
 .acc__sign::before, .acc__sign::after {
   content: ""; position: absolute; inset-block-start: 50%; inset-inline-start: 0;
@@ -359,7 +368,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
   display: flex; align-items: center; gap: 2.4rem; width: max-content;
   animation: slide 42s linear infinite;
 }
-.marquee__track span { font-size: clamp(1.6rem, 4vw, 3rem); font-weight: 900; color: color-mix(in srgb, var(--ink) 16%, transparent); white-space: nowrap; }
+.marquee__track span { font-size: clamp(1.6rem, 4vw, 3rem); font-weight: 900; letter-spacing: -.03em; color: color-mix(in srgb, var(--ink) 16%, transparent); white-space: nowrap; }
 .marquee__track i { color: var(--brand); font-size: .8rem; font-style: normal; }
 @keyframes slide { to { transform: translateX(50%); } }
 
