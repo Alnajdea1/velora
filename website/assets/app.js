@@ -14,7 +14,8 @@
   function syncToggle() {
     var dark = document.documentElement.dataset.theme === 'dark';
     toggle.setAttribute('aria-pressed', String(dark));
-    document.querySelector('meta[name="theme-color"]').content = dark ? '#0C0A0E' : '#F5F1EA';
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = dark ? '#0C0A0E' : '#F5F1EA';
   }
   toggle.addEventListener('click', function () {
     var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
@@ -28,6 +29,13 @@
   addEventListener('scroll', function () {
     document.body.classList.toggle('scrolled', scrollY > 20);
   }, { passive: true });
+
+  // Armed only once the observer below is about to run, so a failure
+  // anywhere else can never leave the page hidden.
+  document.documentElement.classList.add('reveals-armed');
+  setTimeout(function () {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+  }, 2500);
 
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
