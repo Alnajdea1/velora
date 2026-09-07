@@ -23,7 +23,7 @@
   "devDependencies": {
     "@salla.sa/cli": "^3.2.52",
     "copy-webpack-plugin": "^14.0.0",
-    "webpack": "^5.109.2"
+    "webpack": "^5.110.3"
   },
   "browserslist": [
     "> 0.5%",
