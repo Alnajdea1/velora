@@ -608,3 +608,15 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 .cta__inner { position: relative; z-index: 1; will-change: transform, opacity; }
 .is-still .cta__panel { width: 100%; border-radius: 0; }
 .is-still .cta__inner { opacity: 1 !important; transform: none !important; }
+
+/* ── Embedded in a host that expands the frame ─────
+   Nothing can pin, so the sections stand at their own height and play as they
+   cross the reader's screen instead. */
+.is-embed .demo__stage,
+.is-embed .services__stage { position: static; min-height: 0; }
+.is-embed .demo__track,
+.is-embed .services__track { height: auto !important; }
+.is-embed .services__stage { padding-block: clamp(3rem, 8vh, 5rem); }
+.is-embed .demo__stage { padding-block: clamp(3rem, 8vh, 5rem); }
+.is-embed .deck { min-height: clamp(300px, 46vh, 380px); }
+.is-embed .progress { display: none; }

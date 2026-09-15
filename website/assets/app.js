@@ -40,45 +40,131 @@
      Scenes register a measure hook and a frame(progress). Measuring happens on
      resize only; the loop itself never reads layout. */
   var scenes = [];
+  var statics = [];      // each section's "show it all, no motion" presentation
+  var embeds = [];       // sections that cannot animate inside an expanded frame
   var ticking = false;
+  var staticApplied = false;
+  var embedApplied = false;
+
+  function onStatic(fn) {
+    statics.push(fn);
+    if (still) fn();
+  }
+
+  // The page can only drive motion from scroll if it is the thing that
+  // scrolls. Embedded in a host that expands the frame to full height, it is
+  // not — so present the complete page instead of a dead one.
+  function pageScrolls() {
+    return root.scrollHeight - window.innerHeight > 80;
+  }
+
+  // No real viewport is this tall. A frame expanded to its content height is,
+  // and sizing tracks against it would grow the content, which grows the
+  // frame — so treat it as an embed and stop driving motion from scroll.
+  function embedded() { return window.innerHeight > 1600; }
+
+  // Tracks are sized against a sane viewport, never a runaway one.
+  function viewport() { return Math.min(window.innerHeight, 1400); }
+
+  // Embedded in a host that expands the frame to its content height, the page
+  // never scrolls itself: sticky cannot pin and element coordinates never
+  // change, so scroll-linked motion is impossible. IntersectionObserver still
+  // reports when a section reaches the reader's screen, so each one plays its
+  // own timeline once instead — the same choreography, triggered rather than
+  // scrubbed. The deployed site, which does scroll, keeps the pinned version.
+  function goEmbedded() {
+    if (staticApplied || embedApplied) return;
+    embedApplied = true;
+    root.classList.add('is-embed');
+    for (var e = 0; e < embeds.length; e++) embeds[e]();
+    measure();                       // tracks collapse to content height
+
+    scenes.forEach(function (sc) {
+      if (sc.played) return;
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[entries.length - 1].isIntersecting || sc.played) return;
+        sc.played = true;
+        io.disconnect();
+        play(sc);
+      }, { threshold: 0.3 });
+      io.observe(sc.el);
+    });
+  }
+
+  function play(sc) {
+    var dur = sc.mode === 'enter' ? 900 : 3200;
+    var t0 = performance.now();
+    (function step(now) {
+      var t = clamp((now - t0) / dur);
+      sc.frame(t * t * (3 - 2 * t));
+      if (t < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+
+  function goStatic() {
+    if (staticApplied) return;
+    staticApplied = true;
+    still = true;
+    root.classList.add('is-still');
+    for (var i = 0; i < statics.length; i++) statics[i]();
+    measure();   // collapses the pinned tracks back to their content height
+  }
+
+  function checkMode() {
+    if (still || embedApplied) return;
+    if (embedded()) return goEmbedded();   // frame expanded to content height
+    if (!pageScrolls()) goStatic();        // nothing to scroll at all
+  }
 
   function scene(el, opts) {
     if (!el) return null;
     var s = {
       el: el,
-      span: opts.span || function (m) { return m.height; },
-      offset: opts.offset,
+      mode: opts.mode || 'pin',   // 'pin' plays while stuck, 'enter' while arriving
       frame: opts.frame,
       onMeasure: opts.onMeasure,
-      top: 0, start: 0, length: 1, last: -1
+      last: -1
     };
     scenes.push(s);
     return s;
   }
 
   function measure() {
-    var vh = window.innerHeight;
+    var vh = viewport();
     for (var i = 0; i < scenes.length; i++) {
       var s = scenes[i];
-      var rect = s.el.getBoundingClientRect();
-      var m = { top: rect.top + window.scrollY, height: rect.height, vh: vh, width: window.innerWidth };
-      if (s.onMeasure) s.onMeasure(m);
-      s.top = m.top;
-      // Scenes that play as they arrive start one screen earlier.
-      s.start = m.top + (s.offset ? s.offset(m) : 0);
-      s.length = Math.max(s.span(m), 1);
+      if (!s.onMeasure) continue;
+      s.onMeasure({ height: s.el.getBoundingClientRect().height, vh: vh, width: window.innerWidth });
     }
   }
 
+  // Progress comes from where the section sits in the viewport right now, so it
+  // does not matter whether the window, a wrapper element or an embedding frame
+  // is the thing being scrolled.
   function frame() {
     ticking = false;
-    var y = window.scrollY;
+    if (document.hidden) return;
     var vh = window.innerHeight;
-    for (var i = 0; i < scenes.length; i++) {
-      var s = scenes[i];
-      var p = clamp((y - s.start) / s.length);
-      var near = s.start - vh * 1.4 < y && y < s.start + s.length + vh * 1.4;
-      if (!near && s.last === p) continue;   // still settle the edges, then idle
+    var i, s, rect;
+    var reads = [];
+
+    for (i = 0; i < scenes.length; i++) {           // read first…
+      s = scenes[i];
+      rect = s.el.getBoundingClientRect();
+      if (rect.bottom < -vh || rect.top > vh * 2) { reads.push(-1); continue; }
+      reads.push(
+        s.mode === 'enter' ? clamp((vh - rect.top) / Math.max(rect.height + vh, 1)) :
+        s.mode === 'hero' ? clamp(-rect.top / Math.max(rect.height, 1)) :
+        clamp(-rect.top / Math.max(rect.height - vh, 1)));
+    }
+    for (i = 0; i < scenes.length; i++) {           // …then write
+      s = scenes[i];
+      var p = reads[i];
+      if (p < 0) {                                   // off screen: settle the edge once
+        p = s.last > 0.5 ? 1 : 0;
+        if (p === s.last) continue;
+      }
+      if (p === s.last) continue;
       s.last = p;
       s.frame(p);
     }
@@ -93,8 +179,9 @@
   /* ── Chrome: progress rail + nav state ───────────── */
   var rail = document.querySelector('.progress__bar');
   function chrome() {
-    var max = root.scrollHeight - window.innerHeight;
-    var p = max > 0 ? clamp(window.scrollY / max) : 0;
+    var body = document.body.getBoundingClientRect();
+    var max = body.height - window.innerHeight;
+    var p = max > 0 ? clamp(-body.top / max) : 0;
     if (rail) rail.style.transform = 'scaleX(' + p.toFixed(4) + ')';
     document.body.classList.toggle('scrolled', window.scrollY > 20);
   }
@@ -125,7 +212,7 @@
     var cue = hero.querySelector('.hero__cue');
 
     scene(hero, {
-      span: function (m) { return m.height; },
+      mode: 'hero',
       frame: function (p) {
         // Headline settles back and dims while the watermark drifts the other
         // way, so the two layers separate as the page moves.
@@ -184,7 +271,7 @@
 
     scene(section, {
       onMeasure: function (m) {
-        if (dead || still) { track.style.height = ''; return; }
+        if (dead || still || embedApplied) { track.style.height = ''; return; }
         // Scroll distance comes from the clip's own length — roughly a third of
         // a second of footage per 100px — bounded so it never drags.
         var duration = ready && isFinite(video.duration) ? video.duration : 8;
@@ -193,7 +280,6 @@
         track.style.height = Math.round(span + m.vh) + 'px';
         m.height = span + m.vh;
       },
-      span: function (m) { return Math.max(m.height - m.vh, 1); },
       frame: function (p) {
         if (dead) return;
         if (ready && !document.hidden) {
@@ -223,7 +309,9 @@
       }
     });
 
-    if (still) return fallback();
+    onStatic(fallback);
+    embeds.push(fallback);
+    if (still) return;
 
     video.addEventListener('loadedmetadata', function () {
       if (!isFinite(video.duration) || !video.duration) return fallback();
@@ -356,16 +444,15 @@
 
     scene(section, {
       onMeasure: function (m) {
-        if (still) { track.style.height = ''; return; }
+        if (still || embedApplied) { track.style.height = ''; return; }
         var span = Math.min(Math.max(m.vh * 2.6, 1400), m.vh * 3.4);
         track.style.height = Math.round(span + m.vh) + 'px';
         m.height = span + m.vh;
       },
-      span: function (m) { return Math.max(m.height - m.vh, 1); },
       frame: paint
     });
 
-    if (still) fillStatic();
+    onStatic(fillStatic);
   })();
 
   /* ── Services: four layers dealt out ─────────────── */
@@ -431,14 +518,15 @@
 
     scene(section, {
       onMeasure: function (m) {
-        if (still) { track.style.height = ''; return; }
+        if (still || embedApplied) { track.style.height = ''; return; }
         var span = Math.min(Math.max(m.vh * 2.2, 1200), m.vh * 3);
         track.style.height = Math.round(span + m.vh) + 'px';
         m.height = span + m.vh;
       },
-      span: function (m) { return Math.max(m.height - m.vh, 1); },
       frame: paint
     });
+
+    onStatic(function () { paint(0); });
   })();
 
   /* ── Sectors: the strip tracks the scroll ────────── */
@@ -455,8 +543,7 @@
     RAMZ.onChange(build);
 
     scene(section, {
-      offset: function (m) { return -m.vh; },
-      span: function (m) { return m.height + m.vh; },
+      mode: 'enter',
       frame: function (p) {
         var dir = root.dir === 'rtl' ? 1 : -1;
         strip.style.transform = 'translate3d(' + (dir * (p - 0.5) * 42).toFixed(2) + '%,0,0)';
@@ -472,10 +559,9 @@
     var inner = section.querySelector('.cta__inner');
 
     scene(section, {
-      offset: function (m) { return -m.vh; },
-      span: function (m) { return m.height * 0.6 + m.vh; },
+      mode: 'enter',
       frame: function (p) {
-        var open = smoothstep(0.12, 0.55, p);
+        var open = smoothstep(0.1, 0.42, p);
         panel.style.setProperty('--open', open.toFixed(3));
         inner.style.transform = 'translate3d(0,' + ((1 - open) * 26).toFixed(1) + 'px,0)';
         inner.style.opacity = open.toFixed(3);
@@ -494,9 +580,23 @@
 
   measure();
   chrome();
+  checkMode();
   request();
+  setTimeout(function () { measure(); checkMode(); request(); }, 400);
 
-  addEventListener('scroll', function () { chrome(); request(); }, { passive: true });
+  // capture: catches scrolling in the window, in a wrapper element, or inside
+  // an embedding frame — whichever one actually moves.
+  addEventListener('scroll', function () { chrome(); request(); }, { passive: true, capture: true });
+  addEventListener('wheel', request, { passive: true });
+  addEventListener('touchmove', request, { passive: true });
+  addEventListener('pointermove', request, { passive: true });
+
+  // A heartbeat so the page still tracks scrolls no listener reported (smooth
+  // scrolling inside a host container, momentum, programmatic jumps).
+  (function beat() {
+    if (!still) { chrome(); frame(); }
+    setTimeout(function () { requestAnimationFrame(beat); }, 60);
+  })();
 
   var last = { w: window.innerWidth, h: window.innerHeight };
   addEventListener('resize', function () {
@@ -506,10 +606,11 @@
     last = { w: window.innerWidth, h: window.innerHeight };
     measure();
     chrome();
+    checkMode();
     request();
   }, { passive: true });
 
-  addEventListener('load', function () { measure(); chrome(); request(); });
+  addEventListener('load', function () { measure(); chrome(); checkMode(); request(); });
   if (document.fonts) document.fonts.ready.then(function () { measure(); request(); });
   if (motion.addEventListener) motion.addEventListener('change', function () { location.reload(); });
 })();
