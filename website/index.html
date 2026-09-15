@@ -27,6 +27,7 @@
 
 <a class="skip-link" href="#main" data-i18n="skip">تخطَّ للمحتوى</a>
 <div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+<nav class="rail" aria-hidden="true"></nav>
 
 <header class="nav-wrap">
   <nav class="nav" data-i18n-aria="nav.cta" aria-label="التنقل الرئيسي">
@@ -53,6 +54,7 @@
     <div class="hero__glow" aria-hidden="true"></div>
     <span class="hero__mark" aria-hidden="true">رمز</span>
     <div class="wrap hero__inner">
+      <p class="chapter__index" data-chapter="0"></p>
       <p class="eyebrow" data-i18n="hero.eyebrow">RAMZ — أتمتة الأعمال</p>
       <h1 class="hero__title" data-i18n-html="hero.title">
         اسأل شركتك على الواتساب،<br>
@@ -76,6 +78,7 @@
   <section class="reel" id="reel">
     <div class="reel__track">
       <div class="reel__stage">
+        <p class="chapter__index chapter__index--over" data-chapter="1"></p>
         <div class="reel__frame">
           <!-- src on the element, not a <source> child: a child's decode failure
                never reaches the video's error handler, and the fallback needs it. -->
@@ -94,6 +97,7 @@
   <section class="demo" id="demo">
     <div class="demo__track">
       <div class="demo__stage wrap">
+        <p class="chapter__index" data-chapter="2"></p>
         <div class="demo__grid">
 
           <div class="phone">
@@ -158,6 +162,7 @@
   <section class="services" id="services">
     <div class="services__track">
       <div class="services__stage wrap">
+        <p class="chapter__index" data-chapter="3"></p>
         <header class="services__head">
           <h2 class="section-title" data-i18n-html="services.title">وراء السؤال، <span class="grad">شغل كثير</span>.</h2>
           <p class="section-lede" data-i18n="services.lede">أربع طبقات تشتغل ورا الكواليس، عشان السؤال يطلع جواب.</p>
@@ -169,16 +174,23 @@
 
   <!-- ═══ Sectors — the strip tracks the scroll instead of looping on its own ═══ -->
   <section class="sectors">
-    <div class="wrap">
-      <p class="sectors__note" data-i18n="sectors.note">بدينا من العقار. ونفس الطريقة تنفع لأي قطاع.</p>
+    <div class="sectors__track">
+      <div class="sectors__stage">
+        <div class="wrap">
+          <p class="chapter__index" data-chapter="4"></p>
+          <p class="sectors__note" data-i18n="sectors.note">بدينا من العقار. ونفس الطريقة تنفع لأي قطاع.</p>
+        </div>
+        <div class="marquee" aria-hidden="true"><div class="marquee__track"></div></div>
+      </div>
     </div>
-    <div class="marquee" aria-hidden="true"><div class="marquee__track"></div></div>
   </section>
 
   <!-- ═══ Closing — the panel opens out as it arrives ═══ -->
   <section class="cta" id="contact">
+    <div class="cta__track"><div class="cta__stage">
     <div class="cta__panel">
       <div class="wrap cta__inner">
+        <p class="chapter__index chapter__index--over" data-chapter="5"></p>
         <h2 class="cta__title" data-i18n-html="cta.title">ورّنا شغلك،<br>ونقولك وش ينفع يتأتمت.</h2>
         <p class="cta__lede" data-i18n="cta.lede">جلسة قصيرة، نسمع منك ونوريك الديمو على بياناتك أنت — بدون التزام.</p>
         <div class="cta__actions">
@@ -187,6 +199,7 @@
         </div>
       </div>
     </div>
+    </div></div>
   </section>
 
 </main>

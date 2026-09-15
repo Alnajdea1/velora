@@ -30,6 +30,15 @@ window.RAMZ = (function () {
       'hero.f3': 'من أنظمتك', 'hero.f3s': 'الجواب من بياناتك، مو تخمين',
       'hero.cue': 'مرّر',
 
+      chapters: [
+        { n: '٠١', label: 'السؤال' },
+        { n: '٠٢', label: 'الفكرة' },
+        { n: '٠٣', label: 'المحادثة' },
+        { n: '٠٤', label: 'الطبقات' },
+        { n: '٠٥', label: 'القطاعات' },
+        { n: '٠٦', label: 'البداية' }
+      ],
+
       reel: [
         { text: 'مو مجرد واتساب.', pos: 'start' },
         { text: 'اسأل شركتك.', pos: 'start' },
@@ -121,6 +130,15 @@ window.RAMZ = (function () {
       'hero.f2': 'On WhatsApp', 'hero.f2s': 'no new app for your team to learn',
       'hero.f3': 'From your systems', 'hero.f3s': 'answers from your data, not guesses',
       'hero.cue': 'scroll',
+
+      chapters: [
+        { n: '01', label: 'The question' },
+        { n: '02', label: 'The idea' },
+        { n: '03', label: 'The conversation' },
+        { n: '04', label: 'The layers' },
+        { n: '05', label: 'The sectors' },
+        { n: '06', label: 'The start' }
+      ],
 
       reel: [
         { text: 'Not just WhatsApp.', pos: 'start' },

@@ -121,6 +121,7 @@
     var s = {
       el: el,
       mode: opts.mode || 'pin',   // 'pin' plays while stuck, 'enter' while arriving
+      chapter: opts.chapter,
       frame: opts.frame,
       onMeasure: opts.onMeasure,
       last: -1
@@ -166,6 +167,7 @@
       }
       if (p === s.last) continue;
       s.last = p;
+      if (s.chapter !== undefined && p > 0 && p < 1) markChapter(s.chapter);
       s.frame(p);
     }
   }
@@ -203,6 +205,35 @@
   }
   syncTheme();
 
+  /* ── Chapter labels and rail ─────────────────────
+     Every stage carries the same index, and the rail says which one holds the
+     screen. Both read from the same table, so a language switch renumbers. */
+  var railEl = document.querySelector('.rail');
+  var indices = Array.prototype.slice.call(document.querySelectorAll('.chapter__index'));
+  var ticks = [];
+  var activeChapter = -1;
+
+  function buildChapters(d) {
+    indices.forEach(function (el) {
+      var c = d.chapters[+el.dataset.chapter];
+      if (c) el.innerHTML = '<b>' + c.n + '</b><i>' + c.label + '</i>';
+    });
+    if (railEl && !ticks.length) {
+      d.chapters.forEach(function () { ticks.push(railEl.appendChild(document.createElement('span'))); });
+    }
+  }
+  buildChapters(RAMZ.dict());
+  RAMZ.onChange(buildChapters);
+
+  function markChapter(i) {
+    if (i === activeChapter) return;
+    activeChapter = i;
+    ticks.forEach(function (t, n) {
+      t.classList.toggle('is-on', n === i);
+      t.classList.toggle('is-done', n < i);
+    });
+  }
+
   /* ── Hero ────────────────────────────────────────── */
   (function () {
     var hero = document.querySelector('.hero');
@@ -212,7 +243,7 @@
     var cue = hero.querySelector('.hero__cue');
 
     scene(hero, {
-      mode: 'hero',
+      mode: 'hero', chapter: 0,
       frame: function (p) {
         // Headline settles back and dims while the watermark drifts the other
         // way, so the two layers separate as the page moves.
@@ -271,6 +302,7 @@
     RAMZ.onChange(build);
 
     scene(section, {
+      chapter: 1,
       onMeasure: function (m) {
         if (dead || still || embedApplied) { track.style.height = ''; return; }
         // Scroll distance comes from the clip's own length — roughly a third of
@@ -445,6 +477,7 @@
     });
 
     scene(section, {
+      chapter: 2,
       onMeasure: function (m) {
         if (still || embedApplied) { track.style.height = ''; return; }
         var span = Math.min(Math.max(m.vh * 2.6, 1400), m.vh * 3.4);
@@ -501,7 +534,7 @@
           // legible at once.
           y = d * 90;
           scale = 1 + d * 0.02;
-          opacity = clamp(1 + d * 2.6);
+          opacity = clamp(1 + d * 4);
           z = n + i;
         }
         c.el.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0) scale(' + clamp(scale, 0.8, 1).toFixed(3) + ')';
@@ -519,6 +552,7 @@
     });
 
     scene(section, {
+      chapter: 3,
       onMeasure: function (m) {
         if (still || embedApplied) { track.style.height = ''; return; }
         var span = Math.min(Math.max(m.vh * 2.2, 1200), m.vh * 3);
@@ -544,11 +578,23 @@
     build(RAMZ.dict());
     RAMZ.onChange(build);
 
+    var track = section.querySelector('.sectors__track');
+    var note = section.querySelector('.sectors__note');
+
     scene(section, {
-      mode: 'enter',
+      chapter: 4,
+      onMeasure: function (m) {
+        if (still || embedApplied) { track.style.height = ''; return; }
+        track.style.height = Math.round(Math.min(Math.max(m.vh * 1.6, 900), m.vh * 2.2) + m.vh) + 'px';
+      },
       frame: function (p) {
         var dir = root.dir === 'rtl' ? 1 : -1;
-        strip.style.transform = 'translate3d(' + (dir * (p - 0.5) * 42).toFixed(2) + '%,0,0)';
+        strip.style.transform = 'translate3d(' + (dir * (p - 0.5) * 46).toFixed(2) + '%,0,0)';
+        if (note) {
+          var a = Math.min(smoothstep(0.01, 0.12, p), 1 - smoothstep(0.93, 1, p));
+          note.style.opacity = a.toFixed(3);
+          note.style.transform = 'translate3d(0,' + ((1 - a) * 14).toFixed(1) + 'px,0)';
+        }
       }
     });
   })();
@@ -560,13 +606,19 @@
     if (!panel) return;
     var inner = section.querySelector('.cta__inner');
 
+    var track = section.querySelector('.cta__track');
+
     scene(section, {
-      mode: 'enter',
+      chapter: 5,
+      onMeasure: function (m) {
+        if (still || embedApplied) { track.style.height = ''; return; }
+        track.style.height = Math.round(Math.min(Math.max(m.vh * 1.2, 700), m.vh * 1.8) + m.vh) + 'px';
+      },
       frame: function (p) {
-        var open = smoothstep(0.1, 0.42, p);
-        panel.style.setProperty('--open', open.toFixed(3));
+        var open = smoothstep(0.02, 0.28, p);
+        section.style.setProperty('--open', open.toFixed(3));
         inner.style.transform = 'translate3d(0,' + ((1 - open) * 26).toFixed(1) + 'px,0)';
-        inner.style.opacity = open.toFixed(3);
+        inner.style.opacity = Math.max(open, 0.001).toFixed(3);
       }
     });
   })();
