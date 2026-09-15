@@ -694,3 +694,14 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 .is-still .cta__track, .is-embed .cta__track { height: auto !important; }
 .is-still .cta__stage, .is-embed .cta__stage { position: static; height: auto; padding: 0; }
 .is-still .cta__panel, .is-embed .cta__panel { height: auto; border-radius: 0; }
+
+/* ── Framed: the page makes its own scroller ───────
+   Inside a host that sizes the frame to the content, the document cannot
+   scroll and nothing can pin. Given the real viewport height, the page pins
+   itself to that height and scrolls its own wrapper instead, so the chapters
+   play exactly as they do on the deployed site. */
+.is-framed, .is-framed body { height: 100%; overflow: hidden; }
+.is-framed .page {
+  height: 100%; overflow-y: auto; overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}

@@ -45,6 +45,10 @@
   var ticking = false;
   var staticApplied = false;
   var embedApplied = false;
+  var framed = false, asking = false;
+  var body = document.body;
+  var page = document.querySelector('.page') || body;
+  var scroller = null;
 
   function onStatic(fn) {
     statics.push(fn);
@@ -110,10 +114,41 @@
     measure();   // collapses the pinned tracks back to their content height
   }
 
+  // Ask the top-level viewport how tall it is. IntersectionObserver reports
+  // rootBounds in the reader's own screen coordinates, even from inside a
+  // frame — the one measurement an expanded frame cannot give us directly.
+  function askViewport(done) {
+    var io = new IntersectionObserver(function (entries) {
+      io.disconnect();
+      var b = entries[0].rootBounds;
+      done(b && b.height > 200 ? b.height : 0);
+    });
+    io.observe(document.body);
+    setTimeout(function () { io.disconnect(); }, 1500);
+  }
+
+  // Pin the document to the real viewport and hand the scrolling to .page, so
+  // sticky works again and every chapter plays as it does when deployed.
+  function goFramed(h) {
+    framed = true;
+    root.classList.add('is-framed');
+    root.style.height = body.style.height = h + 'px';
+    page.style.height = h + 'px';
+    scroller = page;
+    requestAnimationFrame(function () { measure(); chrome(); request(); });
+  }
+
   function checkMode() {
-    if (still || embedApplied) return;
-    if (embedded()) return goEmbedded();   // frame expanded to content height
-    if (!pageScrolls()) goStatic();        // nothing to scroll at all
+    if (still || embedApplied || framed || asking) return;
+    if (embedded()) {
+      asking = true;
+      return askViewport(function (h) {
+        asking = false;
+        if (h) goFramed(h);
+        else goEmbedded();        // coordinates withheld: play on arrival
+      });
+    }
+    if (!pageScrolls()) goStatic();
   }
 
   function scene(el, opts) {
@@ -181,11 +216,18 @@
   /* ── Chrome: progress rail + nav state ───────────── */
   var rail = document.querySelector('.progress__bar');
   function chrome() {
-    var body = document.body.getBoundingClientRect();
-    var max = body.height - window.innerHeight;
-    var p = max > 0 ? clamp(-body.top / max) : 0;
+    var p, past;
+    if (scroller) {
+      var max = scroller.scrollHeight - scroller.clientHeight;
+      past = scroller.scrollTop;
+      p = max > 0 ? clamp(past / max) : 0;
+    } else {
+      var r = body.getBoundingClientRect();
+      past = -r.top;
+      p = r.height - window.innerHeight > 0 ? clamp(past / (r.height - window.innerHeight)) : 0;
+    }
     if (rail) rail.style.transform = 'scaleX(' + p.toFixed(4) + ')';
-    document.body.classList.toggle('scrolled', window.scrollY > 20);
+    body.classList.toggle('scrolled', past > 20);
   }
 
   /* ── Theme ───────────────────────────────────────── */
