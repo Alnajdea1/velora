@@ -201,6 +201,113 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 .btn--light:hover { transform: translateY(-2px); }
 .btn--block { display: flex; width: 100%; margin-top: .9rem; }
 
+/* ── Scroll-scrubbed reel ────────────────────────── */
+.reel { background: #0C0A0E; }
+
+/* Track height is set by JS from the clip's duration; this is the pre-script
+   value so the page never reflows when the script arrives. */
+.reel__track { position: relative; height: 240vh; }
+
+.reel__stage {
+  position: sticky; top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  display: grid;
+  background: #0C0A0E;
+}
+
+.reel__video {
+  grid-area: 1 / 1;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Weighted under the caption only — the rest of the frame stays untouched. */
+.reel__scrim {
+  grid-area: 1 / 1;
+  background:
+    linear-gradient(to top, rgba(8, 6, 10, .74), rgba(8, 6, 10, .12) 42%, transparent 62%),
+    linear-gradient(to left, rgba(8, 6, 10, .42), transparent 55%);
+  transition: opacity .6s var(--ease), background .6s var(--ease);
+}
+.reel__stage[data-pos="end"] .reel__scrim {
+  background:
+    linear-gradient(to top, rgba(8, 6, 10, .74), rgba(8, 6, 10, .12) 42%, transparent 62%),
+    linear-gradient(to right, rgba(8, 6, 10, .42), transparent 55%);
+}
+.reel__stage[data-pos="center"] .reel__scrim {
+  background: linear-gradient(to top, rgba(8, 6, 10, .74), rgba(8, 6, 10, .14) 46%, transparent 68%);
+}
+.reel__stage[data-pos="none"] .reel__scrim { opacity: 0; }
+
+/* Lower third: the subject of a clip normally sits centre-frame, so the
+   captions stay clear of it instead of landing on top. */
+.reel__captions {
+  grid-area: 1 / 1; position: relative;
+  display: grid; align-content: end;
+  padding-inline: clamp(1.5rem, 7vw, 6rem);
+  padding-block-end: max(14vh, 5rem + env(safe-area-inset-bottom));
+  padding-block-start: 6rem;
+}
+
+.reel__line {
+  grid-area: 1 / 1;
+  margin: 0; opacity: 0;
+  font-family: "Rubik", "Readex Pro", system-ui, sans-serif;
+  font-weight: 900; letter-spacing: -.045em; line-height: 1.18;
+  font-size: clamp(2rem, 5.4vw, 4.2rem);
+  color: #F7F3F9;
+  text-wrap: balance;
+  max-width: 16ch;
+  will-change: opacity, transform;
+}
+.reel__line[data-pos="start"] { justify-self: start; text-align: start; }
+.reel__line[data-pos="end"] { justify-self: end; text-align: end; }
+.reel__line[data-pos="center"] { justify-self: center; text-align: center; max-width: 20ch; }
+
+.reel__sub {
+  display: block; margin-top: .6rem;
+  font-family: "Readex Pro", system-ui, sans-serif;
+  font-weight: 300; letter-spacing: normal;
+  font-size: clamp(1rem, 2vw, 1.45rem);
+  color: rgba(247, 243, 249, .82);
+}
+
+.reel__cue {
+  grid-area: 1 / 1; justify-self: center; align-self: end;
+  margin-block-end: max(1.6rem, env(safe-area-inset-bottom));
+  font-family: "IBM Plex Mono", "Readex Pro", monospace;
+  font-size: .72rem; letter-spacing: .3em; color: rgba(247, 243, 249, .5);
+  transition: opacity .5s var(--ease);
+}
+
+/* A landscape clip inside a portrait screen: letterbox it rather than crop
+   the subject out of frame, and let the captions sit in the free space. */
+@media (max-width: 900px) and (orientation: portrait) {
+  .reel__video { object-fit: contain; }
+  .reel__captions { padding-block-end: max(9vh, 4rem + env(safe-area-inset-bottom)); }
+  .reel__line { max-width: 13ch; }
+}
+
+/* Fallback: no scrubbing (reduced motion, missing or unseekable video).
+   Same story, told as one still frame with the lines stacked under it. */
+.reel--static .reel__track { height: auto; }
+.reel--static .reel__stage { position: relative; height: auto; min-height: 0; }
+.reel--static .reel__video { height: clamp(320px, 56vh, 640px); }
+.reel--static .reel__scrim { background: linear-gradient(to top, rgba(8, 6, 10, .8), transparent 60%); }
+.reel--static .reel__captions {
+  grid-area: auto; align-content: start; gap: 1.6rem;
+  padding-block: clamp(2.5rem, 6vh, 4rem);
+}
+.reel--static .reel__line {
+  grid-area: auto; opacity: 1; transform: none;
+  justify-self: start; text-align: start;
+  font-size: clamp(1.6rem, 3.6vw, 2.6rem);
+}
+.reel--static .reel__cue { display: none; }
+
 /* ── Demo ────────────────────────────────────────── */
 .demo { padding: clamp(3rem, 8vh, 6rem) 0 clamp(4rem, 10vh, 7rem); }
 

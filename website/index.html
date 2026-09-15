@@ -66,6 +66,37 @@
     </div>
   </section>
 
+  <!-- ═══ Scroll-scrubbed reel ═══
+       Swap the clip by replacing assets/media/reel-placeholder.mp4 (and its
+       poster). Each caption's data-from/data-to are scroll-progress fractions
+       0-1, so stages realign to the footage by editing two numbers. -->
+  <section class="reel" id="reel">
+    <div class="reel__track">
+      <div class="reel__stage">
+        <!-- src lives on the element, not a <source> child: a child's decode
+             failure never reaches the video's error handler, and the fallback
+             depends on hearing it. -->
+        <video class="reel__video" src="assets/media/reel-placeholder.mp4"
+               playsinline muted preload="auto" disablepictureinpicture
+               poster="assets/media/reel-poster.jpg" aria-hidden="true" tabindex="-1"></video>
+        <div class="reel__scrim" aria-hidden="true"></div>
+
+        <div class="reel__captions">
+          <p class="reel__line" data-from="0" data-to=".16" data-pos="start">مو مجرد واتساب.</p>
+          <p class="reel__line" data-from=".2" data-to=".38" data-pos="start">اسأل شركتك.</p>
+          <p class="reel__line" data-from=".42" data-to=".6" data-pos="end">ورمز يعطيك <span class="grad">الزبدة</span>.</p>
+          <p class="reel__line" data-from=".64" data-to=".82" data-pos="start">
+            معلومة. ملف. تقرير. طلب.
+            <span class="reel__sub">كلها من نفس المحادثة.</span>
+          </p>
+          <p class="reel__line" data-from=".86" data-to="1" data-pos="center">هذا رمز.</p>
+        </div>
+
+        <span class="reel__cue" aria-hidden="true">مرّر</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ Live demo ═══ -->
   <section class="demo" id="demo">
     <div class="wrap demo__grid">

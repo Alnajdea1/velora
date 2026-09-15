@@ -219,3 +219,180 @@
     else if (autoplay && started) later(next, 800);
   });
 })();
+
+/* ═══ Scroll-scrubbed reel ═══
+   Scroll position drives video.currentTime directly: a sticky stage inside a
+   tall track, one rAF loop while the section is on screen, and no layout reads
+   outside measure(). Falls back to a still frame with stacked captions
+   whenever scrubbing is unavailable, so the story survives either way. */
+(function () {
+  'use strict';
+
+  var section = document.getElementById('reel');
+  if (!section) return;
+
+  var track = section.querySelector('.reel__track');
+  var stage = section.querySelector('.reel__stage');
+  var video = section.querySelector('.reel__video');
+  var cue = section.querySelector('.reel__cue');
+  var motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
+
+  var bands = Array.prototype.map.call(section.querySelectorAll('.reel__line'), function (el) {
+    var from = parseFloat(el.dataset.from) || 0;
+    var to = parseFloat(el.dataset.to) || 1;
+    return {
+      el: el, from: from, to: to, pos: el.dataset.pos,
+      fade: Math.max((to - from) * 0.3, 0.03),
+      hold: to >= 0.999,  // closing line stays up through the end of the pin
+      a: -1
+    };
+  });
+
+  var metrics = { top: 0, span: 1, width: 0, height: 0 };
+  var target = 0, eased = 0, lastSeek = -1, activePos = '', cueShown = true;
+  var ready = false, running = false, onScreen = false, dead = false;
+
+  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function smoothstep(a, b, v) {
+    if (b === a) return v < a ? 0 : 1;
+    var t = clamp((v - a) / (b - a));
+    return t * t * (3 - 2 * t);
+  }
+
+  // Scroll distance comes from the clip's own length, not a magic number:
+  // about a third of a second of footage per 100px of scroll, kept between
+  // 1.6 and 3.4 screens so short clips still breathe and long ones never drag.
+  function layout() {
+    var vh = window.innerHeight;
+    var duration = ready && isFinite(video.duration) ? video.duration : 8;
+    var perSecond = window.innerWidth < 720 ? 210 : 300;
+    var span = Math.min(Math.max(duration * perSecond, vh * 1.6), vh * 3.4);
+    track.style.height = Math.round(span + vh) + 'px';
+    measure();
+  }
+
+  function measure() {
+    var rect = track.getBoundingClientRect();
+    metrics.top = rect.top + window.scrollY;
+    metrics.span = Math.max(track.offsetHeight - stage.offsetHeight, 1);
+    metrics.width = window.innerWidth;
+    metrics.height = window.innerHeight;
+  }
+
+  function paint(p) {
+    if (ready && !document.hidden) {
+      var t = p * Math.max(video.duration - 0.05, 0);
+      // Skip while a seek is in flight unless we have drifted far enough that
+      // the picture would visibly lag the scroll.
+      if (!video.seeking || Math.abs(t - video.currentTime) > 0.25) {
+        if (Math.abs(t - lastSeek) > 1 / 60) {
+          lastSeek = t;
+          try { video.currentTime = t; } catch (e) { /* not seekable yet */ }
+        }
+      }
+    }
+
+    var pos = 'none';
+    for (var i = 0; i < bands.length; i++) {
+      var b = bands[i];
+      var into = smoothstep(b.from, b.from + b.fade, p);
+      var outOf = b.hold ? 1 : 1 - smoothstep(b.to - b.fade, b.to, p);
+      var a = Math.min(into, outOf);
+      if (a < 0.01) a = 0;
+      if (Math.abs(a - b.a) > 0.008 || (a === 0 && b.a !== 0)) {
+        b.a = a;
+        b.el.style.opacity = a;
+        b.el.style.transform = 'translate3d(0,' + ((1 - into) * 18 - (1 - outOf) * 12).toFixed(2) + 'px,0)';
+      }
+      if (a > 0.35) pos = b.pos;
+    }
+    if (pos !== activePos) { activePos = pos; stage.dataset.pos = pos; }
+
+    var showCue = p < 0.04;
+    if (showCue !== cueShown) { cueShown = showCue; if (cue) cue.style.opacity = showCue ? '1' : '0'; }
+  }
+
+  function tick() {
+    target = clamp((window.scrollY - metrics.top) / metrics.span);
+    var delta = target - eased;
+    // Light smoothing only: enough to absorb wheel steps, not enough to feel
+    // like the picture is catching up behind the scroll.
+    eased += delta * 0.24;
+    if (Math.abs(delta) < 0.0004) eased = target;
+    paint(eased);
+
+    if (onScreen || Math.abs(target - eased) > 0.0004) requestAnimationFrame(tick);
+    else running = false;
+  }
+
+  function start() {
+    if (running || dead) return;
+    running = true;
+    requestAnimationFrame(tick);
+  }
+
+  function fallback() {
+    if (dead) return;
+    dead = true;
+    running = false;
+    section.classList.add('reel--static');
+    track.style.height = '';
+    stage.removeAttribute('data-pos');
+    bands.forEach(function (b) { b.el.style.opacity = ''; b.el.style.transform = ''; });
+    if (!motionQuery.matches && video.readyState > 0) {
+      video.loop = true;
+      video.play().catch(function () { /* poster carries it */ });
+    }
+  }
+
+  if (motionQuery.matches) {
+    fallback();
+  } else {
+    video.addEventListener('loadedmetadata', function () {
+      if (!isFinite(video.duration) || !video.duration) return fallback();
+      ready = true;
+      layout();
+      start();
+    });
+    video.addEventListener('error', fallback);
+    // Nothing decoded at all after 8s: keep the story, drop the scrubbing.
+    setTimeout(function () { if (!ready && video.readyState === 0) fallback(); }, 8000);
+
+    // iOS keeps a video undecoded until it has been played once; a muted
+    // play/pause on the first interaction unlocks seeking.
+    var unlock = function () {
+      video.play().then(function () { video.pause(); }).catch(function () {});
+      removeEventListener('touchstart', unlock);
+      removeEventListener('pointerdown', unlock);
+    };
+    addEventListener('touchstart', unlock, { passive: true, once: true });
+    addEventListener('pointerdown', unlock, { passive: true, once: true });
+
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[0].isIntersecting;
+      if (onScreen) start();
+    }, { rootMargin: '25% 0px' }).observe(track);
+
+    addEventListener('scroll', start, { passive: true });
+
+    // Relayout on real size changes only — ignoring the small height deltas a
+    // mobile address bar produces keeps the pinned stage from jumping.
+    var pending = false;
+    addEventListener('resize', function () {
+      if (pending || dead) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        if (window.innerWidth !== metrics.width || Math.abs(window.innerHeight - metrics.height) > 120) layout();
+        else measure();
+        start();
+      });
+    }, { passive: true });
+
+    if (motionQuery.addEventListener) {
+      motionQuery.addEventListener('change', function (e) { if (e.matches) fallback(); });
+    }
+
+    measure();
+  }
+})();
