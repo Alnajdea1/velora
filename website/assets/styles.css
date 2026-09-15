@@ -1,6 +1,7 @@
 /* ═══ Ramz — official site ═══ */
 
 :root {
+  --film: #0B090D;
   --brand: #7B3FA0;
   --brand-soft: #A46FC4;
   --brand-ink: #4E2168;
@@ -30,6 +31,7 @@
 }
 
 [data-theme="dark"] {
+  --film: #0B090D;
   --brand: #A970D0;
   --brand-soft: #C9A2E4;
   --brand-ink: #E4D2F2;
@@ -144,9 +146,65 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 [data-theme="dark"] .icon-moon { opacity: 1; transform: none; }
 
 /* ── Hero ────────────────────────────────────────── */
-.hero { position: relative; padding: clamp(9.5rem, 20vh, 13rem) 0 clamp(5rem, 11vh, 7.5rem); overflow: hidden; }
+.hero {
+  position: relative; overflow: hidden;
+  min-height: 100vh; min-height: 100svh;
+  display: grid; align-content: start;
+  padding-block: clamp(7rem, 16vh, 10rem) clamp(3rem, 8vh, 5rem);
+  background: var(--film);
+  --on-film: #F7F3F9;
+}
+.hero__film { position: absolute; inset: 0; }
+.hero__video { width: 100%; height: 100%; object-fit: cover; object-position: center 60%; }
 
-.hero__glow {
+/* Only enough veil to hold the type — the footage keeps its own light. */
+.hero__veil {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(8, 6, 10, .66) 0%, rgba(8, 6, 10, .44) 45%, rgba(8, 6, 10, .62) 100%),
+    linear-gradient(to left, rgba(8, 6, 10, .58), transparent 66%);
+}
+[dir="ltr"] .hero__veil {
+  background:
+    linear-gradient(to bottom, rgba(8, 6, 10, .66) 0%, rgba(8, 6, 10, .44) 45%, rgba(8, 6, 10, .62) 100%),
+    linear-gradient(to right, rgba(8, 6, 10, .58), transparent 66%);
+}
+
+.hero .chapter__index { color: rgba(247, 243, 249, .6); }
+.hero .chapter__index b { color: var(--brand-soft); }
+.hero__title, .hero__facts strong { color: var(--on-film); }
+.hero__lede { color: rgba(247, 243, 249, .82); }
+.hero .eyebrow, .hero__facts span, .hero__cue { color: rgba(247, 243, 249, .58); }
+.hero__facts { border-top-color: rgba(247, 243, 249, .18); }
+
+/* A frosted note sitting on the footage, not a banner across it. */
+.hero__pill {
+  align-self: start; justify-self: start;
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .5rem 1rem; margin-bottom: 1.4rem;
+  border-radius: var(--r-full);
+  border: 1px solid rgba(247, 243, 249, .22);
+  background: rgba(247, 243, 249, .12);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  color: var(--on-film); font-size: .88rem;
+  transition: background .25s, border-color .25s;
+}
+.hero__pill:hover { background: rgba(247, 243, 249, .2); border-color: rgba(247, 243, 249, .38); }
+.hero__pill svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+[dir="rtl"] .hero__pill svg { transform: scaleX(-1); }
+
+/* Entrance: the page arrives in order, once, and then holds still. */
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } }
+.rise { animation: rise .8s cubic-bezier(.16, 1, .3, 1) both; }
+.rise--1 { animation-delay: 0ms; }
+.rise--2 { animation-delay: 110ms; }
+.rise--3 { animation-delay: 220ms; }
+.rise--4 { animation-delay: 340ms; }
+.rise--5 { animation-delay: 460ms; }
+.nav { animation: rise .7s cubic-bezier(.16, 1, .3, 1) both; }
+
+.hero__glow { display: none;
   position: absolute; inset-block-start: -32%; inset-inline-end: -10%;
   width: min(760px, 90vw); aspect-ratio: 1;
   background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--brand) 34%, transparent), transparent 68%);
@@ -155,15 +213,15 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 }
 @keyframes float { to { transform: translate3d(-4%, 5%, 0) scale(1.12); } }
 
-.hero__mark {
+.hero__mark { display: none;
   position: absolute; inset-block-start: -4%; inset-inline-start: -3%;
   font-size: clamp(18rem, 42vw, 40rem); font-weight: 900; line-height: .8;
   color: color-mix(in srgb, var(--ink) 4%, transparent);
   pointer-events: none; user-select: none; white-space: nowrap;
 }
-[data-theme="dark"] .hero__mark { color: color-mix(in srgb, #fff 3.5%, transparent); }
+[data-theme="dark"] .hero__mark { display: none; color: color-mix(in srgb, #fff 3.5%, transparent); }
 
-.hero__inner { position: relative; }
+.hero__inner { position: relative; z-index: 1; }
 
 .eyebrow {
   font-size: .78rem; letter-spacing: .18em; color: var(--ink-3);
@@ -198,6 +256,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 .btn--primary { background: var(--brand); color: #fff; box-shadow: 0 10px 26px -12px var(--brand); }
 .btn--primary:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 18px 34px -14px var(--brand); }
 .btn--light { background: var(--surface); color: var(--brand-ink); }
+.hero .btn--primary { box-shadow: 0 14px 34px -14px rgba(0,0,0,.8); }
 [data-theme="dark"] .btn--light { background: #fff; color: #2B1338; }
 .btn--light:hover { transform: translateY(-2px); }
 .btn--block { display: flex; width: 100%; margin-top: .9rem; }
@@ -525,7 +584,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 
 /* ── Hero motion ─────────────────────────────────── */
 .hero__inner { will-change: transform, opacity; }
-.hero__mark { will-change: transform; }
+.hero__mark { display: none; will-change: transform; }
 .hero__cue {
   position: absolute; inset-inline: 0; bottom: clamp(1.5rem, 4vh, 2.5rem);
   text-align: center;
@@ -704,4 +763,9 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 .is-framed .page {
   height: 100%; overflow-y: auto; overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .nav { animation: none !important; }
+  .hero__video { display: none; }
 }

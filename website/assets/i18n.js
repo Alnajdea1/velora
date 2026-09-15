@@ -29,6 +29,7 @@ window.RAMZ = (function () {
       'hero.f2': 'على واتساب', 'hero.f2s': 'بدون تطبيق جديد يتعلمونه',
       'hero.f3': 'من أنظمتك', 'hero.f3s': 'الجواب من بياناتك، مو تخمين',
       'hero.cue': 'مرّر',
+      'hero.pill': 'الديمو يشتغل على بياناتك أنت',
 
       chapters: [
         { n: '٠١', label: 'السؤال' },
@@ -130,6 +131,7 @@ window.RAMZ = (function () {
       'hero.f2': 'On WhatsApp', 'hero.f2s': 'no new app for your team to learn',
       'hero.f3': 'From your systems', 'hero.f3s': 'answers from your data, not guesses',
       'hero.cue': 'scroll',
+      'hero.pill': 'The demo runs on your own data',
 
       chapters: [
         { n: '01', label: 'The question' },

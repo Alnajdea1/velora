@@ -52,20 +52,28 @@
 
   <!-- ═══ Hero — headline drifts and dims as the page moves under it ═══ -->
   <section class="hero" id="top" data-scene="hero">
-    <div class="hero__glow" aria-hidden="true"></div>
-    <span class="hero__mark" aria-hidden="true">رمز</span>
+    <div class="hero__film" aria-hidden="true">
+      <video class="hero__video" src="assets/media/reel-placeholder.mp4"
+             autoplay muted loop playsinline preload="auto" disablepictureinpicture
+             poster="assets/media/reel-poster.jpg" tabindex="-1"></video>
+      <div class="hero__veil"></div>
+    </div>
     <div class="wrap hero__inner">
-      <p class="chapter__index" data-chapter="0"></p>
-      <p class="eyebrow" data-i18n="hero.eyebrow">RAMZ — أتمتة الأعمال</p>
-      <h1 class="hero__title" data-i18n-html="hero.title">
+      <p class="chapter__index rise rise--1" data-chapter="0"></p>
+      <a class="hero__pill rise rise--2" href="#contact">
+        <span data-i18n="hero.pill">الديمو يشتغل على بياناتك أنت</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+      <p class="eyebrow rise rise--2" data-i18n="hero.eyebrow">RAMZ — أتمتة الأعمال</p>
+      <h1 class="hero__title rise rise--3" data-i18n-html="hero.title">
         اسأل شركتك على الواتساب،<br>
         ورمز يعطيك <span class="grad">الزبدة</span>.
       </h1>
-      <div class="hero__row">
+      <div class="hero__row rise rise--4">
         <p class="hero__lede" data-i18n="hero.lede">نربط أنظمة شركتك، فتسأل بلغتك ويجيك الجواب مباشرة — بدون تقارير ولا انتظار أحد.</p>
         <a class="btn btn--primary" href="#demo" data-i18n="hero.cta">جرّب الديمو</a>
       </div>
-      <ul class="hero__facts">
+      <ul class="hero__facts rise rise--5">
         <li><strong data-i18n="hero.f1">ثوانٍ</strong><span data-i18n="hero.f1s">بدل تقارير تاخذ أيام</span></li>
         <li><strong data-i18n="hero.f2">على واتساب</strong><span data-i18n="hero.f2s">بدون تطبيق جديد يتعلمونه</span></li>
         <li><strong data-i18n="hero.f3">من أنظمتك</strong><span data-i18n="hero.f3s">الجواب من بياناتك، مو تخمين</span></li>
