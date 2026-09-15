@@ -232,8 +232,9 @@
     var stage = section.querySelector('.reel__stage');
     var video = section.querySelector('.reel__video');
     var box = section.querySelector('.reel__captions');
+    var meter = section.querySelector('.reel__meter span');
     var lines = [];
-    var ready = false, dead = false, lastSeek = -1, activePos = '';
+    var ready = false, dead = false, lastSeek = -1;
 
     function build(d) {
       box.innerHTML = '';
@@ -242,7 +243,7 @@
       lines = d.reel.map(function (item, i) {
         var el = document.createElement('p');
         el.className = 'reel__line';
-        el.dataset.pos = item.pos;
+        el.dataset.index = digits('0' + (i + 1)) + ' / ' + digits('0' + total);
         el.innerHTML = item.text + (item.sub ? '<span class="reel__sub">' + item.sub + '</span>' : '');
         box.appendChild(el);
         return {
@@ -258,7 +259,7 @@
       dead = true;
       section.classList.add('reel--static');
       track.style.height = '';
-      stage.removeAttribute('data-pos');
+      section.style.removeProperty('--open');
       lines.forEach(function (l) { l.el.style.opacity = ''; l.el.style.transform = ''; });
       if (!still && video.readyState > 0) {
         video.loop = true;
@@ -293,7 +294,10 @@
             }
           }
         }
-        var pos = 'none';
+        section.style.setProperty('--open',
+          Math.min(smoothstep(0, 0.07, p), 1 - smoothstep(0.94, 1, p)).toFixed(3));
+        if (meter) meter.style.transform = 'scaleX(' + p.toFixed(3) + ')';
+
         for (var i = 0; i < lines.length; i++) {
           var l = lines[i];
           var b = band(p, l.from, l.to);
@@ -303,9 +307,7 @@
             l.el.style.opacity = a;
             l.el.style.transform = 'translate3d(0,' + ((1 - b.into) * 18 - (1 - b.out) * 12).toFixed(1) + 'px,0)';
           }
-          if (a > 0.35) pos = l.pos;
         }
-        if (pos !== activePos) { activePos = pos; stage.dataset.pos = pos; }
       }
     });
 

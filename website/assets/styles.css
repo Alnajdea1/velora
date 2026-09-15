@@ -144,7 +144,7 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 [data-theme="dark"] .icon-moon { opacity: 1; transform: none; }
 
 /* ── Hero ────────────────────────────────────────── */
-.hero { position: relative; padding: clamp(8rem, 16vh, 11rem) 0 clamp(3rem, 7vh, 5rem); overflow: hidden; }
+.hero { position: relative; padding: clamp(9.5rem, 20vh, 13rem) 0 clamp(5rem, 11vh, 7.5rem); overflow: hidden; }
 
 .hero__glow {
   position: absolute; inset-block-start: -32%; inset-inline-end: -10%;
@@ -202,112 +202,102 @@ body.scrolled .nav { box-shadow: var(--shadow-l); }
 .btn--light:hover { transform: translateY(-2px); }
 .btn--block { display: flex; width: 100%; margin-top: .9rem; }
 
-/* ── Scroll-scrubbed reel ────────────────────────── */
-.reel { background: #0C0A0E; }
-
-/* Track height is set by JS from the clip's duration; this is the pre-script
-   value so the page never reflows when the script arrives. */
+/* ── Reel ────────────────────────────────────────
+   The clip sits in a card that opens out to full bleed as it takes the
+   screen, and closes again on the way out — so the section arrives and
+   leaves instead of cutting hard against the page. */
+.reel { background: var(--bg); --open: 0; }
 .reel__track { position: relative; height: 240vh; }
 
 .reel__stage {
   position: sticky; top: 0;
-  height: 100vh;
-  height: 100svh;
-  overflow: hidden;
+  height: 100vh; height: 100svh;
+  padding: calc((1 - var(--open)) * 4.5vh) calc((1 - var(--open)) * 4vw);
+  transition: padding .1s linear;
+}
+
+.reel__frame {
+  position: relative; height: 100%; overflow: hidden;
+  border-radius: calc((1 - var(--open)) * var(--r-l));
+  background: #0B090D;
   display: grid;
-  background: #0C0A0E;
+  box-shadow: 0 40px 90px -40px rgba(20, 8, 30, .55);
 }
 
 .reel__video {
   grid-area: 1 / 1;
   width: 100%; height: 100%;
-  object-fit: cover;
+  object-fit: cover;          /* the frame is the crop; nothing letterboxes */
   object-position: center;
 }
 
-/* Weighted under the caption only — the rest of the frame stays untouched. */
+/* Depth, not darkness: a vignette plus a foot gradient only where type sits. */
 .reel__scrim {
   grid-area: 1 / 1;
   background:
-    linear-gradient(to top, rgba(8, 6, 10, .74), rgba(8, 6, 10, .12) 42%, transparent 62%),
-    linear-gradient(to left, rgba(8, 6, 10, .42), transparent 55%);
-  transition: opacity .6s var(--ease), background .6s var(--ease);
+    linear-gradient(to top, rgba(8, 6, 10, .82) 0%, rgba(8, 6, 10, .3) 28%, transparent 52%),
+    radial-gradient(120% 90% at 50% 40%, transparent 45%, rgba(8, 6, 10, .45) 100%);
 }
-.reel__stage[data-pos="end"] .reel__scrim {
-  background:
-    linear-gradient(to top, rgba(8, 6, 10, .74), rgba(8, 6, 10, .12) 42%, transparent 62%),
-    linear-gradient(to right, rgba(8, 6, 10, .42), transparent 55%);
-}
-.reel__stage[data-pos="center"] .reel__scrim {
-  background: linear-gradient(to top, rgba(8, 6, 10, .74), rgba(8, 6, 10, .14) 46%, transparent 68%);
-}
-.reel__stage[data-pos="none"] .reel__scrim { opacity: 0; }
 
-/* Lower third: the subject of a clip normally sits centre-frame, so the
-   captions stay clear of it instead of landing on top. */
+/* Captions sit on the page's own margin, always on the same edge, so the
+   type lines up with every other section instead of floating. */
 .reel__captions {
   grid-area: 1 / 1; position: relative;
+  width: min(100% - 2.5rem, var(--wrap)); margin-inline: auto;
   display: grid; align-content: end;
-  padding-inline: clamp(1.5rem, 7vw, 6rem);
-  padding-block-end: max(14vh, 5rem + env(safe-area-inset-bottom));
-  padding-block-start: 6rem;
+  padding-block-end: clamp(2.5rem, 9vh, 6rem);
+  padding-block-start: 30vh;
 }
 
 .reel__line {
   grid-area: 1 / 1;
+  justify-self: start; text-align: start;
   margin: 0; opacity: 0;
   font-family: "Rubik", "Readex Pro", system-ui, sans-serif;
-  font-weight: 900; letter-spacing: -.045em; line-height: 1.18;
-  font-size: clamp(2rem, 5.4vw, 4.2rem);
+  font-weight: 900; letter-spacing: -.045em; line-height: 1.1;
+  font-size: clamp(2rem, 5.2vw, 4rem);
   color: #F7F3F9;
   text-wrap: balance;
-  max-width: 16ch;
+  max-width: 15ch;
   will-change: opacity, transform;
 }
-.reel__line[data-pos="start"] { justify-self: start; text-align: start; }
-.reel__line[data-pos="end"] { justify-self: end; text-align: end; }
-.reel__line[data-pos="center"] { justify-self: center; text-align: center; max-width: 20ch; }
+.reel__line::before {
+  content: attr(data-index);
+  display: block; margin-bottom: .9rem;
+  font-family: "IBM Plex Mono", "Readex Pro", monospace;
+  font-weight: 300; font-size: .72rem; letter-spacing: .3em;
+  color: rgba(247, 243, 249, .55);
+}
 
 .reel__sub {
-  display: block; margin-top: .6rem;
+  display: block; margin-top: .7rem;
   font-family: "Readex Pro", system-ui, sans-serif;
-  font-weight: 300; letter-spacing: normal;
-  font-size: clamp(1rem, 2vw, 1.45rem);
-  color: rgba(247, 243, 249, .82);
+  font-weight: 300; letter-spacing: normal; line-height: 1.6;
+  font-size: clamp(.95rem, 1.7vw, 1.3rem);
+  color: rgba(247, 243, 249, .8);
+  max-width: 34ch;
 }
 
-.reel__cue {
-  grid-area: 1 / 1; justify-self: center; align-self: end;
-  margin-block-end: max(1.6rem, env(safe-area-inset-bottom));
-  font-family: "IBM Plex Mono", "Readex Pro", monospace;
-  font-size: .72rem; letter-spacing: .3em; color: rgba(247, 243, 249, .5);
-  transition: opacity .5s var(--ease);
+/* A hairline that fills across the foot of the frame as the clip advances. */
+.reel__meter {
+  position: absolute; inset-inline: 0; bottom: 0; height: 2px;
+  background: rgba(247, 243, 249, .14);
 }
-
-/* A landscape clip inside a portrait screen: letterbox it rather than crop
-   the subject out of frame, and let the captions sit in the free space. */
-@media (max-width: 900px) and (orientation: portrait) {
-  .reel__video { object-fit: contain; }
-  .reel__captions { padding-block-end: max(9vh, 4rem + env(safe-area-inset-bottom)); }
-  .reel__line { max-width: 13ch; }
+.reel__meter span {
+  display: block; height: 100%; width: 100%;
+  transform: scaleX(0); transform-origin: left center;
+  background: linear-gradient(90deg, var(--brand-soft), #F7F3F9);
 }
+[dir="rtl"] .reel__meter span { transform-origin: right center; }
 
-/* Fallback: no scrubbing (reduced motion, missing or unseekable video).
-   Same story, told as one still frame with the lines stacked under it. */
+/* Unpinned (reduced motion, no decoder, embedded host). */
 .reel--static .reel__track { height: auto; }
-.reel--static .reel__stage { position: relative; height: auto; min-height: 0; }
-.reel--static .reel__video { height: clamp(320px, 56vh, 640px); }
-.reel--static .reel__scrim { background: linear-gradient(to top, rgba(8, 6, 10, .8), transparent 60%); }
-.reel--static .reel__captions {
-  grid-area: auto; align-content: start; gap: 1.6rem;
-  padding-block: clamp(2.5rem, 6vh, 4rem);
-}
-.reel--static .reel__line {
-  grid-area: auto; opacity: 1; transform: none;
-  justify-self: start; text-align: start;
-  font-size: clamp(1.6rem, 3.6vw, 2.6rem);
-}
-.reel--static .reel__cue { display: none; }
+.reel--static .reel__stage { position: relative; height: auto; padding: clamp(1rem, 4vh, 2rem) 0; }
+.reel--static .reel__frame { border-radius: var(--r-l); min-height: clamp(360px, 62vh, 620px); }
+.reel--static .reel__captions { padding-block: 24vh clamp(2rem, 6vh, 3rem); }
+.reel--static .reel__line { grid-area: auto; opacity: 1; transform: none; }
+.reel--static .reel__line + .reel__line { margin-top: 1.4rem; }
+.reel--static .reel__captions { align-content: end; gap: 0; }
 
 /* ── Demo ────────────────────────────────────────── */
 .demo { background: var(--bg); }

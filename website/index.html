@@ -76,13 +76,16 @@
   <section class="reel" id="reel">
     <div class="reel__track">
       <div class="reel__stage">
-        <!-- src on the element, not a <source> child: a child's decode failure
-             never reaches the video's error handler, and the fallback needs it. -->
-        <video class="reel__video" src="assets/media/reel-placeholder.mp4"
-               playsinline muted preload="auto" disablepictureinpicture
-               poster="assets/media/reel-poster.jpg" aria-hidden="true" tabindex="-1"></video>
-        <div class="reel__scrim" aria-hidden="true"></div>
-        <div class="reel__captions"></div>
+        <div class="reel__frame">
+          <!-- src on the element, not a <source> child: a child's decode failure
+               never reaches the video's error handler, and the fallback needs it. -->
+          <video class="reel__video" src="assets/media/reel-placeholder.mp4"
+                 playsinline muted preload="auto" disablepictureinpicture
+                 poster="assets/media/reel-poster.jpg" aria-hidden="true" tabindex="-1"></video>
+          <div class="reel__scrim" aria-hidden="true"></div>
+          <div class="reel__captions"></div>
+          <div class="reel__meter" aria-hidden="true"><span></span></div>
+        </div>
       </div>
     </div>
   </section>
