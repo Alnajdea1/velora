@@ -16,8 +16,8 @@ importers:
         version: 2.14.547(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.109.2(esbuild@0.28.2))
     devDependencies:
       '@salla.sa/cli':
-        specifier: ^3.2.52
-        version: 3.2.53(supports-color@8.1.1)
+        specifier: ^3.2.57
+        version: 3.2.57(supports-color@8.1.1)
       copy-webpack-plugin:
         specifier: ^14.0.0
         version: 14.0.0(webpack@5.109.2(esbuild@0.28.2))
@@ -295,8 +295,8 @@ packages:
   '@salla.sa/base@2.14.547':
     resolution: {integrity: sha512-XJfZ22yQmGo2KT2LFXcVUaYHJi4b7Kc8Or2pESUlb4V008oMdR4j5yt3GWzZfSxOMuUjF/I3TPU8OUMaiOkh7A==}
 
-  '@salla.sa/cli@3.2.53':
-    resolution: {integrity: sha512-lmtmQY2BJCwyh2wBSIfL8e9mjGQJgigsOj3XHom8kh/dN1cKlymzQuXusja91EQ0tAS5pA2pL/YH57n06yhLEw==}
+  '@salla.sa/cli@3.2.57':
+    resolution: {integrity: sha512-K39kKbQ6JKX8FtCvIKqg8ftrrMDtA31yuxuQ85HU+xBsfuQmBdhgguRe8q6o96CgHL5i8kgrLPqIfLTb58kVxg==}
     engines: {node: '>=22.12.0'}
     hasBin: true
 
@@ -1602,7 +1602,7 @@ snapshots:
       lodash: 4.18.1
       store: 2.0.12
 
-  '@salla.sa/cli@3.2.53(supports-color@8.1.1)':
+  '@salla.sa/cli@3.2.57(supports-color@8.1.1)':
     dependencies:
       '@salla.sa/app-functions-guard': 0.1.0
       cloudflared: 0.4.0
