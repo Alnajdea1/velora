@@ -2,7 +2,7 @@
 {% set current_locale = store.language.code|default('ar') %}
 {% set is_arabic = (current_locale|slice(0, 2)) == 'ar' %}
 <html lang="{{ current_locale }}" dir="{{ (store.language.is_rtl or is_arabic) ? 'rtl' : 'ltr' }}"
-      data-reduce-motion="{{ theme.settings.get('reduce_motion', false) ? 'true' : 'false' }}">
+      data-reduce-motion="{{ (theme.settings.get('velora_reduce_motion', false) or theme.settings.get('reduce_motion', false)) ? 'true' : 'false' }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -28,7 +28,7 @@
   {% hook 'head' %}
   {% hook 'head:end' %}
 </head>
-<body class="v-body">
+<body class="v-body" data-card-quick-add="{{ trans('product.quick_add')|e('html_attr') }}" data-card-notify="{{ trans('product.notify')|e('html_attr') }}" data-card-sale="{{ trans('product.sale')|e('html_attr') }}" data-card-new="{{ trans('product.new')|e('html_attr') }}" data-card-sold-out="{{ trans('product.sold_out')|e('html_attr') }}" data-card-notes="{{ trans('product.notes')|e('html_attr') }}" data-card-wishlist="{{ trans('common.wishlist')|e('html_attr') }}">
   {% hook 'body:start' %}
   {% include 'components.announcement' %}
   {% include 'header' %}
@@ -42,6 +42,7 @@
   {% if theme.settings.get('reviewer_panel', false) %}{% include 'components.reviewer-panel' %}{% endif %}
 
   <script src="{{ 'i18n.js'|asset }}" defer></script>
+  <script src="{{ 'product-card.js'|asset }}" defer></script>
   <script src="{{ 'app.js'|asset }}" defer></script>
   {% if theme.settings.get('enable_add_product_toast', true) %}
     <script src="{{ 'add-product-toast.js'|asset }}" defer></script>
@@ -61,3 +62,4 @@
   {% endif %}
 </body>
 </html>
+

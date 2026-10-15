@@ -1,7 +1,6 @@
 {
   "common": {
     "brand_fallback": "Store",
-    "demo_brand": "VELORA",
     "search": "Search a scent or ingredient…",
     "search_short": "Search",
     "cart": "Bag",
@@ -13,11 +12,13 @@
     "discover": "Discover",
     "back_home": "Back home",
     "currency": "SAR",
-    "numerals": "latin"
+    "numerals": "latin",
+    "configure_products": "Choose store products in this section’s settings to show them here."
   },
   "announcement": {
-    "prefix": "Free delivery",
-    "text": "on orders above 250 SAR — use code"
+    "prefix": "Velora",
+    "text": "Fragrance and care inspired by lavender",
+    "code_prefix": "Use code"
   },
   "header": {
     "switch_to_english": "Switch to English",
@@ -31,7 +32,7 @@
     "journal": "Journal"
   },
   "hero": {
-    "kicker": "New harvest collection",
+    "kicker": "Fragrance and care",
     "line_1": "Lavender",
     "line_2": "always in",
     "line_3": "motion",
@@ -39,21 +40,11 @@
     "cta": "Explore the collection",
     "cta_secondary": "Find your scent family",
     "editor_pick": "Editor's pick",
-    "product_name": "Violet Veil 50ml",
-    "art_alt": "A translucent perfume bottle layered with lavender forms",
-    "note_top": "Bright bergamot",
-    "note_heart": "Hand-picked lavender",
-    "note_base": "Velvet musk",
-    "stat_1_value": "48",
-    "stat_1_label": "scent formulas",
-    "stat_2_value": "96%",
-    "stat_2_label": "repurchase",
-    "stat_3_value": "24h",
-    "stat_3_label": "fast delivery"
+    "art_alt": "A translucent perfume bottle layered with lavender forms"
   },
   "showcase": {
     "title": "Sculpted pieces from this season's harvest",
-    "subtitle": "Three formulas selected after 200 distillation trials."
+    "subtitle": "Explore the store selection"
   },
   "categories": {
     "kicker": "Stems & leaves",
@@ -127,12 +118,12 @@
   },
   "gift": {
     "kicker": "Gift composer",
-    "title": "Compose a box that opens twice",
-    "body": "Choose a box shape, then up to three pieces. We add a handwritten card and a coral ribbon.",
-    "step_shape": "1 — Box shape",
+    "title": "Choose gift products",
+    "body": "Choose the products you want to add to your bag and review them before checkout.",
+    "step_shape": "Preview the box shape",
     "step_items": "2 — Pieces (up to 3)",
-    "total": "Box total",
-    "cta": "Add the box"
+    "total": "Selected products total",
+    "cta": "Add selected products"
   },
   "story": {
     "kicker": "From field to bottle",
@@ -158,26 +149,17 @@
     "related": "Completes with",
     "ingredients": "Ingredients",
     "installments": "Split into 4 interest-free payments",
-    "delivery": "24h delivery",
-    "authentic": "100% authentic",
-    "returns": "14-day returns",
-    "sample": "Free sample",
     "low_stock": "Only {n} left",
     "variants": "Available variants",
     "ingredients_kicker": "Inside the formula",
     "ingredients_title": "Ingredients felt before they are read",
-    "ingredient_lavender": "Dawn lavender",
-    "ingredient_lavender_body": "Hand-picked before sunrise when its oil reaches peak concentration.",
-    "ingredient_violet": "Violet petals",
-    "ingredient_violet_body": "A translucent floral layer bringing a cool softness to the heart.",
-    "ingredient_musk": "Velvet musk",
-    "ingredient_musk_body": "A skin-close base that extends the trail without heaviness.",
-    "sensory": "Sensory qualities",
-    "sensory_soft": "Soft",
-    "sensory_clean": "Clean",
-    "sensory_warm": "Warm",
-    "sensory_long": "Long-lasting",
-    "reviews_title": "How the scent reached them"
+    "reviews_title": "How the scent reached them",
+    "sale": "Sale",
+    "new": "New",
+    "tax_included": "Tax included in the price",
+    "media_unavailable": "This media could not be played on your device.",
+    "starting_price": "Starting at",
+    "unavailable": "This option is unavailable. Choose another option."
   },
   "collection": {
     "title": "All fragrance & care",
@@ -199,27 +181,29 @@
   },
   "cart": {
     "title": "Your bag",
-    "subtitle": "Every piece is wrapped in silk paper with a free scent sample.",
+    "subtitle": "Review the products and quantities before checkout.",
     "remove": "Remove",
-    "note": "Packaging note",
-    "note_placeholder": "e.g. write “To Dana” on the card",
+    "note": "Order note",
+    "note_placeholder": "Add order instructions if needed",
     "summary": "Order summary",
     "subtotal": "Subtotal",
     "shipping": "Shipping",
     "free": "Free",
     "discount": "Discount",
-    "total": "Total",
     "coupon": "Discount code",
     "apply": "Apply",
     "coupon_ok": "Discount applied",
     "coupon_bad": "That code is not valid",
     "checkout": "Checkout",
-    "checkout_note": "Secure payment with mada, Apple Pay, Tabby and Tamara.",
+    "checkout_note": "Complete payment using the methods available in this store.",
     "free_shipping_unlocked": "Your order now ships free 🎉",
     "free_shipping_remaining": "Add {amount} for free shipping",
     "empty_title": "The bag is still empty",
     "empty_body": "Start from the fragrance aura and pick the family that reads as you.",
-    "added": "Added to bag"
+    "added": "Added to bag",
+    "total": "Total",
+    "unit_price": "Unit price",
+    "taxes_included": "Prices include tax"
   },
   "wishlist": {
     "title": "Wishlist",
@@ -265,7 +249,7 @@
   },
   "thanks": {
     "title": "Your order is with us",
-    "body": "We wrap it today and send the tracking number to your phone within two hours.",
+    "body": "Your order has been received. Review its details and status here.",
     "order_number": "Order number",
     "payment": "Payment",
     "expected": "Expected delivery",
@@ -296,21 +280,9 @@
     "tagline": "LAVENDER, REIMAGINED"
   },
   "offer": {
-    "badge": "Ends this weekend",
-    "title_line_1": "30% off",
-    "title_line_2": "the lavender harvest",
-    "body": "Covers 50ml and 75ml parfums and the night care sets. The discount applies automatically at checkout.",
     "countdown_label": "Time remaining on the offer",
-    "days": "Days",
-    "hours": "Hours",
-    "minutes": "Min",
-    "seconds": "Sec",
     "cta": "Shop the offer",
-    "categories_label": "Offer categories",
-    "tile_50": "50ml",
-    "tile_75": "75ml",
-    "tile_night": "Night care",
-    "tile_gifts": "Gifts"
+    "categories_label": "Offer categories"
   },
   "reviewer": {
     "label": "Screen review panel",

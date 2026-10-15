@@ -1,5 +1,5 @@
 {# @param product #}
-<article class="v-product" data-product-id="{{ product.id }}" data-card-url="{{ product.url }}" data-product-state="{{ product.is_available ? (product.is_on_sale ? 'sale' : 'regular') : 'sold-out' }}" role="link" tabindex="0">
+<article class="v-product" data-product-id="{{ product.id }}" data-product-state="{{ product.is_available ? (product.is_on_sale ? 'sale' : 'regular') : 'sold-out' }}">
   <div class="v-product__media">
     {% if product.image.url %}
       <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy" width="640" height="800">
@@ -10,12 +10,14 @@
 
     <div class="v-product__badges">
       {% if product.promotion_title %}<span class="v-badge">{{ product.promotion_title }}</span>{% endif %}
+      {% if product.is_on_sale and not product.promotion_title %}<span class="v-badge v-badge--off">{{ trans('product.sale') }}</span>{% endif %}
+      {% if product.tags and ('new' in (product.tags|json_encode|lower) or 'new arrival' in (product.tags|json_encode|lower) or 'جديد' in (product.tags|json_encode|lower) or 'وصل حديثاً' in (product.tags|json_encode|lower)) %}<span class="v-badge v-badge--new">{{ trans('product.new') }}</span>{% endif %}
       {% if not product.is_available %}<span class="v-badge v-badge--soldout">{{ trans('product.sold_out') }}</span>{% endif %}
       {% if product.can_show_remained_quantity and product.quantity <= 5 and product.is_available %}<span class="v-badge v-badge--low">{{ trans('product.low_stock', { n: product.quantity }) }}</span>{% endif %}
     </div>
 
     <div class="v-product__quickadd">
-      <salla-add-product-button product-id="{{ product.id }}" class="v-btn v-btn--primary" style="width:100%">
+      <salla-add-product-button product-id="{{ product.id }}" product-status="{{ product.is_available ? 'sale' : 'out-and-notify' }}" product-type="{{ product.type }}" {% if product.notify_availability.channels %}channels="{{ product.notify_availability.channels|join(',') }}"{% endif %} class="v-btn v-btn--primary" style="width:100%">
         {{ product.is_available ? trans('product.quick_add') : trans('product.notify') }}
       </salla-add-product-button>
     </div>

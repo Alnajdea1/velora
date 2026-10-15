@@ -23,112 +23,13 @@
     window.setTimeout(() => toast.remove(), 3200);
   };
 
-  const waitForProductsApi = async () => {
-    for (let attempt = 0; attempt < 30; attempt += 1) {
-      if (window.salla?.product?.fetch) return true;
-      await new Promise((resolve) => window.setTimeout(resolve, 100));
-    }
-    return false;
-  };
-
-  const formatMoney = (value, currency = 'SAR') => {
-    const locale = document.documentElement.lang || 'ar';
-    return new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency,
-      maximumFractionDigits: 2,
-    }).format(Number(value || 0));
-  };
-
-  const hydrateDemoCards = async () => {
-    const cards = $$('[data-demo-card]');
-    if (!cards.length || !(await waitForProductsApi())) return;
-
-    try {
-      const response = await salla.product.fetch({
-        source: 'latest',
-        source_value: '',
-        limit: Math.min(cards.length, 50),
-        includes: ['brand', 'rating'],
-        with: ['images'],
-      });
-      const products = response?.data || [];
-      if (!products.length) return;
-
-      cards.forEach((card, index) => {
-        const product = products[index % products.length];
-        const imageUrl = product.image?.url || product.images?.[0]?.url;
-        const price = product.is_on_sale && product.sale_price ? product.sale_price : product.price;
-        const rating = product.rating?.starts ?? product.rating?.rate ?? 0;
-        const media = $('.v-product__media', card);
-        const wishlist = $('[data-demo-wishlist]', card);
-        const quickAdd = $('[data-demo-quickadd]', card);
-        const oldPrice = $('[data-demo-old]', card);
-
-        card.dataset.cardUrl = product.url || card.dataset.cardUrl;
-        card.dataset.productId = String(product.id);
-
-        if (wishlist) {
-          wishlist.dataset.productId = String(product.id);
-          wishlist.setAttribute('aria-pressed', String(Boolean(product.is_in_wishlist)));
-          wishlist.textContent = product.is_in_wishlist ? '♥' : '♡';
-        }
-
-        if (quickAdd) {
-          quickAdd.dataset.productId = String(product.id);
-          quickAdd.disabled = product.is_available === false;
-        }
-
-        if (imageUrl && media) {
-          let image = $('.v-demo-real-image', media);
-          if (!image) {
-            image = document.createElement('img');
-            image.className = 'v-demo-real-image';
-            media.prepend(image);
-          }
-          image.src = imageUrl;
-          image.alt = product.image?.alt || product.name || '';
-          $('.v-bottle--card', media)?.setAttribute('hidden', '');
-        }
-
-        const brand = $('[data-demo-brand]', card);
-        const ratingNode = $('[data-demo-rating]', card);
-        const name = $('[data-demo-name]', card);
-        const subtitle = $('[data-demo-subtitle]', card);
-        const priceNode = $('[data-demo-price]', card);
-        const notes = $('[data-demo-notes]', card);
-
-        if (brand) {
-          const translatedFallbackBrand = brand.textContent.trim();
-          brand.textContent = product.brand?.name || product.category?.name || translatedFallbackBrand;
-        }
-        if (ratingNode) ratingNode.textContent = `★ ${Number(rating).toFixed(1)}`;
-        if (name) name.textContent = product.name || name.textContent;
-        if (subtitle) subtitle.textContent = product.subtitle || subtitle.textContent;
-        if (priceNode) priceNode.textContent = formatMoney(price, product.currency || 'SAR');
-        if (notes && product.description) {
-          const plainDescription = product.description.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-          if (plainDescription) notes.textContent = plainDescription.slice(0, 90);
-        }
-
-        if (oldPrice) {
-          const showOldPrice = product.is_on_sale && product.regular_price > price;
-          oldPrice.hidden = !showOldPrice;
-          if (showOldPrice) oldPrice.textContent = formatMoney(product.regular_price, product.currency || 'SAR');
-        }
-      });
-    } catch {
-      // Keep the approved visual demo cards if live products are unavailable in the editor.
-    }
-  };
-
   const init = () => {
     const header = $('[data-component="header"]');
     const syncHeader = () => header?.setAttribute('data-scrolled', String(window.scrollY > 18));
     syncHeader();
     window.addEventListener('scroll', syncHeader, { passive: true });
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.reduceMotion === 'true';
     if (!reducedMotion) {
       const movingSections = $$('[data-component]').filter((section) => section.querySelector(':scope > .v-wrap'));
       movingSections.forEach((section) => section.classList.add('v-motion-ready'));
@@ -169,46 +70,6 @@
     if (guaranteedGift && editorGift) guaranteedGift.remove();
 
     document.addEventListener('click', async (event) => {
-      const demoQuickAdd = event.target.closest('[data-demo-quickadd]');
-      if (demoQuickAdd) {
-        event.preventDefault();
-        event.stopPropagation();
-        const productId = Number(demoQuickAdd.dataset.productId || 0);
-        if (!productId || !window.salla?.cart?.quickAdd) {
-          window.location.assign(demoQuickAdd.dataset.fallbackUrl);
-          return;
-        }
-        demoQuickAdd.disabled = true;
-        try {
-          await salla.cart.quickAdd(productId);
-          showToast(demoQuickAdd.textContent.trim());
-        } finally { demoQuickAdd.disabled = false; }
-        return;
-      }
-
-      const demoWishlist = event.target.closest('[data-demo-wishlist]');
-      if (demoWishlist) {
-        event.preventDefault();
-        event.stopPropagation();
-        const productId = Number(demoWishlist.dataset.productId || 0);
-
-        if (!productId || !window.salla?.wishlist?.toggle) {
-          window.location.assign(demoWishlist.dataset.fallbackUrl);
-          return;
-        }
-
-        demoWishlist.disabled = true;
-        try {
-          await salla.wishlist.toggle(productId);
-          const selected = demoWishlist.getAttribute('aria-pressed') !== 'true';
-          demoWishlist.setAttribute('aria-pressed', String(selected));
-          demoWishlist.textContent = selected ? '♥' : '♡';
-        } finally {
-          demoWishlist.disabled = false;
-        }
-        return;
-      }
-
       const opener = event.target.closest('[data-open]');
       if (opener) setOverlay(opener.dataset.open, true);
 
@@ -244,7 +105,7 @@
       const remove = event.target.closest('[data-remove-cart]');
       if (remove && window.salla?.cart) {
         remove.disabled = true;
-        try { await salla.cart.deleteItem(remove.dataset.removeCart); }
+        try { await salla.cart.deleteItem(Number(remove.dataset.removeCart)); }
         catch { remove.disabled = false; }
       }
 
@@ -262,108 +123,6 @@
       }
     });
 
-    hydrateDemoCards();
-
-    $$('[data-offer-countdown]').forEach((section) => {
-      let remaining = (2 * 24 * 60 * 60) + (11 * 60 * 60) + (48 * 60) + 20;
-      const units = {
-        days: $('[data-countdown-unit="days"]', section),
-        hours: $('[data-countdown-unit="hours"]', section),
-        minutes: $('[data-countdown-unit="minutes"]', section),
-        seconds: $('[data-countdown-unit="seconds"]', section),
-      };
-      const localize = (value) => new Intl.NumberFormat(document.documentElement.lang || 'ar', { minimumIntegerDigits: 2, useGrouping: false }).format(value);
-      const render = () => {
-        const days = Math.floor(remaining / 86400);
-        const hours = Math.floor((remaining % 86400) / 3600);
-        const minutes = Math.floor((remaining % 3600) / 60);
-        const seconds = remaining % 60;
-        if (units.days) units.days.textContent = localize(days);
-        if (units.hours) units.hours.textContent = localize(hours);
-        if (units.minutes) units.minutes.textContent = localize(minutes);
-        if (units.seconds) units.seconds.textContent = localize(seconds);
-      };
-      render();
-      window.setInterval(() => { remaining = Math.max(0, remaining - 1); render(); }, 1000);
-    });
-
-    $$('[data-component="aura-explorer"]').forEach((root) => {
-      $$('[data-aura]', root).forEach((tab) => tab.addEventListener('click', () => {
-        $$('[data-aura]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));
-        $$('[data-aura-panel]', root).forEach((panel) => { panel.hidden = panel.dataset.auraPanel !== tab.dataset.aura; });
-        tab.setAttribute('aria-selected', 'true');
-      }));
-    });
-
-    $$('[data-component="note-bloom"]').forEach((root) => {
-      $$('[data-bloom]', root).forEach((tab, index) => tab.addEventListener('click', () => {
-        $$('[data-bloom]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));
-        $$('[data-bloom-panel]', root).forEach((panel) => { panel.hidden = panel.dataset.bloomPanel !== tab.dataset.bloom; });
-        $$('[data-bloom-ring]', root).forEach((ring, ringIndex) => ring.dataset.active = String(ringIndex === index));
-        tab.setAttribute('aria-selected', 'true');
-      }));
-    });
-
-    $$('[data-component="mood-shopping"]').forEach((root) => {
-      $$('[data-mood]', root).forEach((tab) => tab.addEventListener('click', () => {
-        $$('[data-mood]', root).forEach((item) => item.setAttribute('aria-pressed', 'false'));
-        $$('[data-mood-panel]', root).forEach((panel) => { panel.hidden = panel.dataset.moodPanel !== tab.dataset.mood; });
-        tab.setAttribute('aria-pressed', 'true');
-      }));
-    });
-
-    $$('[data-component="routine-path"]').forEach((root) => {
-      $$('[data-step]', root).forEach((step) => $('button', step)?.addEventListener('click', () => {
-        $$('.v-path__node', root).forEach((node) => node.setAttribute('aria-current', 'false'));
-        $('button', step).setAttribute('aria-current', 'true');
-      }));
-    });
-
-    $$('[data-component="gift-composer"]').forEach((root) => {
-      const chosen = new Map();
-      const max = Number(root.dataset.maxItems || 3);
-      const wrap = Number(root.dataset.wrapPrice || 0);
-      const total = $('[data-gift-total]', root);
-      const list = $('[data-gift-chosen]', root);
-      const add = $('[data-gift-add]', root);
-      const render = () => {
-        list.innerHTML = [...chosen.values()].map((item) => `<span>${item.label}</span>`).join('');
-        total.textContent = chosen.size ? new Intl.NumberFormat(document.documentElement.lang, { style:'currency', currency:'SAR' }).format([...chosen.values()].reduce((sum, item) => sum + item.price, wrap)) : '—';
-        add.disabled = !chosen.size;
-      };
-      $$('[data-gift-item]', root).forEach((button) => button.addEventListener('click', () => {
-        const id = button.dataset.giftItem;
-        if (chosen.has(id)) chosen.delete(id);
-        else if (chosen.size < max) chosen.set(id, { label:button.textContent.trim(), price:Number(button.dataset.price || 0), demo:button.dataset.demoGift === 'true' });
-        button.setAttribute('aria-pressed', String(chosen.has(id)));
-        render();
-      }));
-      $$('[data-gift-shape]', root).forEach((button) => button.addEventListener('click', () => {
-        $$('[data-gift-shape]', root).forEach((item) => item.setAttribute('aria-pressed', 'false'));
-        button.setAttribute('aria-pressed', 'true');
-        $('[data-gift-box]', root).dataset.shape = button.dataset.giftShape;
-      }));
-      add?.addEventListener('click', async () => {
-        if ([...chosen.values()].some((item) => item.demo)) {
-          window.location.assign(root.dataset.fallbackUrl);
-          return;
-        }
-        if (!window.salla?.cart) return;
-        add.disabled = true;
-        try {
-          for (const id of chosen.keys()) await salla.cart.quickAdd(id);
-          showToast(add.textContent.trim());
-        } finally { add.disabled = false; }
-      });
-    });
-
-    $$('[data-gallery]').forEach((root) => {
-      $$('[data-gallery-thumb]', root).forEach((thumb) => thumb.addEventListener('click', () => {
-        $$('[data-gallery-thumb]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));
-        $$('[data-gallery-slide]', root).forEach((slide) => { slide.hidden = slide.dataset.gallerySlide !== thumb.dataset.galleryThumb; });
-        thumb.setAttribute('aria-selected', 'true');
-      }));
-    });
 
     const viewRoot = $('[data-products]');
     $$('[data-view]').forEach((button) => button.addEventListener('click', () => {
@@ -378,16 +137,86 @@
       window.location.assign(url.toString());
     });
 
-    $('salla-product-options')?.addEventListener('changed', (event) => {
-      const detail = event.detail?.detail || event.detail || {};
-      const image = detail.image?.url || detail.image;
-      const activeImage = $('[data-gallery-slide]:not([hidden]) img, .v-gallery__main > img');
-      if (image && activeImage) activeImage.src = image;
-      const addButton = $('salla-add-product-button[product-id]');
-      const unavailable = detail.is_available === false || detail.is_out_of_stock === true || detail.out_of_stock === true;
-      if (addButton) addButton.toggleAttribute('disabled', unavailable);
+    const optionPicker = $('salla-product-options');
+    const productForm = $('#product-form');
+    const productButton = $('salla-add-product-button[product-id]');
+    const syncOptionPrice = () => {
+      if (!productForm || !window.salla?.product?.getPrice) return;
+      const isComplete = Array.from(productForm.elements).every((element) => !element.willValidate || element.validity.valid);
+      if (isComplete) salla.product.getPrice(new FormData(productForm)).catch(() => {});
+    };
+    optionPicker?.addEventListener('changed', (event) => {
+      const payload = event.detail?.detail || event.detail || {};
+      const selectedDetail = payload.detail || payload;
+      const image = selectedDetail.image?.url || selectedDetail.image;
+      const gallery = $('[data-gallery]');
+      if (image && gallery) {
+        const slides = $$('[data-gallery-slide]', gallery);
+        const primarySlide = slides[0];
+        if (primarySlide) {
+          let variantImage = $('img[data-variant-image]', primarySlide);
+          if (!variantImage) {
+            primarySlide.replaceChildren();
+            variantImage = document.createElement('img');
+            variantImage.dataset.variantImage = 'true';
+            variantImage.alt = document.querySelector('.v-product-title')?.textContent?.trim() || '';
+            variantImage.loading = 'eager';
+            primarySlide.append(variantImage);
+          }
+          variantImage.src = image;
+          slides.forEach((slide, index) => { slide.hidden = index !== 0; });
+          $$('[data-gallery-thumb]', gallery).forEach((thumb, index) => thumb.setAttribute('aria-selected', index === 0 ? 'true' : 'false'));
+        }
+      }
+      optionPicker?.hasOutOfStockOption?.().then((unavailable) => {
+        if (productButton) productButton.hasOutOfStockOption = Boolean(unavailable);
+      });
+      syncOptionPrice();
     });
 
+    if (window.salla?.product?.event?.onPriceUpdated) {
+      salla.product.event.onPriceUpdated((response, productId) => {
+        const expectedId = $('#product-form input[name="id"]')?.value;
+        if (productId && expectedId && String(productId) !== String(expectedId)) return;
+        const data = response?.data;
+        const price = Number(data?.price);
+        const regularPrice = Number(data?.regular_price);
+        if (!Number.isFinite(price)) return;
+        const hasSalePrice = Boolean(data.has_sale_price) && Number.isFinite(regularPrice) && regularPrice > price;
+        const currentPrice = $('[data-current-price]');
+        const comparePrice = $('[data-regular-price]');
+        const discountBadge = $('[data-discount-badge]');
+        const startingLabel = $('[data-starting-price]');
+        const priceRoot = $('[data-product-price]');
+        const unavailableMessage = $('[data-product-unavailable]');
+        if (currentPrice) currentPrice.textContent = salla.money(price);
+        if (comparePrice) {
+          comparePrice.textContent = salla.money(regularPrice);
+          comparePrice.hidden = !hasSalePrice;
+        }
+        if (discountBadge) {
+          const percentage = hasSalePrice ? Math.round((1 - price / regularPrice) * 100) : 0;
+          discountBadge.textContent = percentage ? `−${new Intl.NumberFormat(document.documentElement.lang).format(percentage)}%` : '';
+          discountBadge.hidden = !percentage;
+        }
+        if (startingLabel) startingLabel.hidden = true;
+        if (priceRoot) priceRoot.hidden = false;
+        if (unavailableMessage) unavailableMessage.hidden = true;
+        if (productButton) {
+          productButton.setAttribute('amount', String(price));
+          productButton.hasOutOfStockOption = false;
+        }
+      });
+    }
+    if (window.salla?.event) {
+      salla.event.on('product::price.updated.failed', () => {
+        const priceRoot = $('[data-product-price]');
+        const unavailableMessage = $('[data-product-unavailable]');
+        if (priceRoot) priceRoot.hidden = true;
+        if (unavailableMessage) unavailableMessage.hidden = false;
+        if (productButton) productButton.hasOutOfStockOption = true;
+      });
+    }
     $('[data-page-index]')?.addEventListener('change', (event) => {
       if (event.target.value) window.location.assign(event.target.value);
     });
@@ -401,3 +230,8 @@
 
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
 })();
+
+
+
+
+

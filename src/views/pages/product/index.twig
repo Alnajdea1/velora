@@ -5,6 +5,7 @@
     <div class="v-wrap">
       <salla-breadcrumb></salla-breadcrumb>
       <h1 style="margin-top:16px;font-size:clamp(34px,3.6vw,52px)">{{ page.title|raw }}</h1>
+      {% if category.image %}<img class="v-collection__image" src="{{ category.image }}" alt="{{ category.name|default(page.title|striptags) }}" width="1200" height="420" fetchpriority="high">{% endif %}
       <p style="margin-top:12px;max-width:620px;font-size:14px;line-height:1.85;color:var(--leaf)">{{ page.description }}</p>
     </div>
   </section>
@@ -28,7 +29,7 @@
           </div>
         </div>
 
-        <div data-active-filters style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px"></div>
+        <salla-applied-filters style="display:flex;flex-wrap:wrap;gap:8px;margin-top:14px"></salla-applied-filters>
 
         {% hook 'product:index.items.start' %}
         {% if products|length %}
@@ -61,3 +62,6 @@
   {% if filters %}{% include 'components.filters-sheet' %}{% endif %}
   <div class="s-blocks-wrapper s-after-testimonials">{% hook 'product.index.after_testimonials' %}</div>
 {% endblock %}
+
+
+

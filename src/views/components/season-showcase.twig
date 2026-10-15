@@ -1,4 +1,4 @@
-{# Approved prototype section: three sculptural seasonal products. #}
+{# Seasonal products come only from the merchant's selected products or category. #}
 <section class="v-section v-showcase v-curve-top" data-component="season-showcase">
   <div class="v-wrap">
     <div class="v-section-heading">
@@ -9,22 +9,10 @@
     <div class="v-showcase__grid">
       {% for product in products|slice(0, 3) %}
         <div class="v-showcase__item v-showcase__item--{{ loop.index }}">
-          <div class="v-showcase__index"><span>0{{ loop.index }}</span><i></i></div>
+          <div class="v-showcase__index"><span>{{ loop.index|localize_number }}</span><i></i></div>
           {% include 'components.product-card' with { product: product } %}
         </div>
-      {% else %}
-        {% set demo_products = [
-          {'ar':'عبير البنفسج','en':'Violet Veil','sar':'أو دو بارفان ٥٠ مل','sen':'Eau de parfum 50ml','price':320,'old':395,'rating':'4.9','nar':'برغموت، لافندر، مسك','nen':'Bergamot, Lavender, Musk','t1':'#F1ECFF','t2':'#C9B8FF','badge':'الأكثر طلباً'},
-          {'ar':'ليل اللافندر','en':'Lavender Nocturne','sar':'أو دو بارفان ٧٥ مل','sen':'Eau de parfum 75ml','price':460,'rating':'4.8','nar':'عنبر، بنفسج، فانيلا','nen':'Amber, Violet, Vanilla','t1':'#C9B8FF','t2':'#261838','badge':'جديد'},
-          {'ar':'جذور الميرمية','en':'Sage Roots','sar':'عطر خشبي ٥٠ مل','sen':'Woody parfum 50ml','price':380,'rating':'4.7','nar':'ميرمية، أرز، فيتيفر','nen':'Sage, Cedar, Vetiver','t1':'#DCE6D8','t2':'#71836C'}
-        ] %}
-        {% for demo in demo_products %}
-          <div class="v-showcase__item v-showcase__item--{{ loop.index }}">
-            <div class="v-showcase__index"><span>0{{ loop.index }}</span><i></i></div>
-            {% include 'components.demo-product-card' with { demo: demo } %}
-          </div>
-        {% endfor %}
-      {% endfor %}
+      {% else %}<p class="v-empty">{{ trans('common.configure_products') }}</p>{% endfor %}
     </div>
   </div>
 </section>

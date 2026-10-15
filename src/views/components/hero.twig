@@ -20,11 +20,13 @@
         </a>
         <a href="{{ component.secondary_url ?: '#aura' }}" class="v-hero__secondary">{{ component.secondary_label ?: trans('hero.cta_secondary') }}</a>
       </div>
-      <dl class="v-hero__stats">
-        <div><dt>{{ component.stat_1_value ?: trans('hero.stat_1_value') }}</dt><dd>{{ component.stat_1_label ?: trans('hero.stat_1_label') }}</dd></div>
-        <div><dt>{{ component.stat_2_value ?: trans('hero.stat_2_value') }}</dt><dd>{{ component.stat_2_label ?: trans('hero.stat_2_label') }}</dd></div>
-        <div><dt>{{ component.stat_3_value ?: trans('hero.stat_3_value') }}</dt><dd>{{ component.stat_3_label ?: trans('hero.stat_3_label') }}</dd></div>
-      </dl>
+      {% if component.stat_1_value or component.stat_2_value or component.stat_3_value %}
+        <dl class="v-hero__stats">
+          {% if component.stat_1_value and component.stat_1_label %}<div><dt>{{ component.stat_1_value }}</dt><dd>{{ component.stat_1_label }}</dd></div>{% endif %}
+          {% if component.stat_2_value and component.stat_2_label %}<div><dt>{{ component.stat_2_value }}</dt><dd>{{ component.stat_2_label }}</dd></div>{% endif %}
+          {% if component.stat_3_value and component.stat_3_label %}<div><dt>{{ component.stat_3_value }}</dt><dd>{{ component.stat_3_label }}</dd></div>{% endif %}
+        </dl>
+      {% endif %}
     </div>
 
     <div class="v-hero__art" data-hero-motion aria-label="{{ component.image_alt ?: trans('hero.art_alt') }}">
@@ -35,25 +37,29 @@
         {% else %}
           <span class="v-bottle v-bottle--hero" aria-hidden="true"><i></i><b></b><em></em></span>
         {% endif %}
+        {% if component.product_name and component.product_url %}
         <div class="v-hero__pick">
-          <span><small>{{ trans('hero.editor_pick') }}</small><strong>{{ component.product_name ?: trans('hero.product_name') }}</strong></span>
-          <a href="{{ component.product_url ?: link('products') }}" class="v-btn v-btn--dark v-pill">{{ trans('common.discover') }}</a>
+          <span><small>{{ trans('hero.editor_pick') }}</small><strong>{{ component.product_name }}</strong></span>
+          <a href="{{ component.product_url }}" class="v-btn v-btn--dark v-pill">{{ trans('common.discover') }}</a>
         </div>
+        {% endif %}
       </div>
       <span class="v-hero__leaf v-petal" aria-hidden="true"></span>
       <span class="v-hero__stem" aria-hidden="true"><i></i><b></b><em></em></span>
       <span class="v-hero__petal v-hero__petal--1" aria-hidden="true"></span>
       <span class="v-hero__petal v-hero__petal--2" aria-hidden="true"></span>
       <span class="v-hero__petal v-hero__petal--3" aria-hidden="true"></span>
-      {% set default_notes = [
-        {'tag':'TOP','label':trans('hero.note_top')},
-        {'tag':'HEART','label':trans('hero.note_heart')},
-        {'tag':'BASE','label':trans('hero.note_base')}
-      ] %}
-      {% set hero_notes = component.notes|length ? component.notes : default_notes %}
-      {% for note in hero_notes|slice(0, 3) %}
+      {% for note in component.notes|default([])|slice(0, 3) %}
         <span class="v-pill v-hero__note v-hero__note--{{ loop.index }}"><b>{{ note.tag }}</b> {{ note.label }}</span>
       {% endfor %}
     </div>
   </div>
 </section>
+
+
+
+
+
+
+
+

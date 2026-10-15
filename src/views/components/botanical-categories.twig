@@ -1,4 +1,5 @@
-{# Approved prototype section: botanical category stems. #}
+{# Merchant-selected categories only; never invent category names or product counts. #}
+{% if component.categories|length %}
 <section class="v-section v-botanical" data-component="botanical-categories">
   <div class="v-wrap">
     <div class="v-botanical__kicker"><span>{{ component.kicker ?: trans('categories.kicker') }}</span><i></i></div>
@@ -6,22 +7,15 @@
     <div class="v-botanical__grid">
       {% for category in component.categories|slice(0, 4) %}
         {% set picked = category.category ?: category %}
-        <a href="{{ picked.url }}" class="v-botanical__card v-botanical__card--{{ loop.index }}" style="--v-category-color:{{ category.color ?: ['#C9B8FF','#BACBB5','#EBD8FF','#FFCBD2'][loop.index0] }}">
-          {% if category.image %}<img src="{{ category.image }}" alt="" loading="lazy">{% endif %}
-          <i aria-hidden="true"></i><b aria-hidden="true"></b>
-          <span><strong>{{ category.title ?: picked.name }}</strong><small>{{ category.count_label ?: trans('categories.count', { n: picked.products_count }) }}</small></span>
-        </a>
-      {% else %}
-        {% set source_categories = categories|length ? categories|slice(0, 4) : [
-          {'name': trans('categories.fallback_fragrance'), 'url':link('products'), 'products_count':24},
-          {'name': trans('categories.fallback_skincare'), 'url':link('products'), 'products_count':18},
-          {'name': trans('categories.fallback_haircare'), 'url':link('products'), 'products_count':12},
-          {'name': trans('categories.fallback_gifts'), 'url':link('products'), 'products_count':9}
-        ] %}
-        {% for category in source_categories %}
-          <a href="{{ category.url }}" class="v-botanical__card v-botanical__card--{{ loop.index }}" style="--v-category-color:{{ ['#C9B8FF','#BACBB5','#EBD8FF','#FFCBD2'][loop.index0] }}"><i aria-hidden="true"></i><b aria-hidden="true"></b><span><strong>{{ category.name }}</strong><small>{{ trans('categories.count', { n: category.products_count }) }}</small></span></a>
-        {% endfor %}
+        {% if picked.url %}
+          <a href="{{ picked.url }}" class="v-botanical__card v-botanical__card--{{ loop.index }}" style="--v-category-color:{{ category.color ?: ['#C9B8FF','#BACBB5','#EBD8FF','#FFCBD2'][loop.index0] }}">
+            {% if category.image %}<img src="{{ category.image }}" alt="" loading="lazy">{% elseif picked.image %}<img src="{{ picked.image }}" alt="" loading="lazy">{% endif %}
+            <i aria-hidden="true"></i><b aria-hidden="true"></b>
+            <span><strong>{{ category.title ?: picked.name }}</strong>{% if category.count_label %}<small>{{ category.count_label }}</small>{% elseif picked.products_count is defined %}<small>{{ trans('categories.count', { n: picked.products_count }) }}</small>{% endif %}</span>
+          </a>
+        {% endif %}
       {% endfor %}
     </div>
   </div>
 </section>
+{% endif %}

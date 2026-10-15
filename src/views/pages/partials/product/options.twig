@@ -1,9 +1,10 @@
 {% if product.options|length %}
-  <salla-product-options data-testid="store-product-options" options="{{ product.options }}" product-id="{{ product.id }}"></salla-product-options>
+  <salla-product-options data-testid="store-product-options" options="{{ product.options }}" product-id="{{ product.id }}" product-available="{{ product.is_available ? 'true' : 'false' }}"></salla-product-options>
 {% elseif product.has_options %}
-  <salla-product-options data-testid="store-product-options" product-id="{{ product.id }}"></salla-product-options>
+  <salla-product-options data-testid="store-product-options" product-id="{{ product.id }}" product-available="{{ product.is_available ? 'true' : 'false' }}"></salla-product-options>
 {% endif %}
 
 {% if product.has_bundle_products %}
   <salla-multiple-bundle-product bundle-sections='{{ product|json_encode }}'></salla-multiple-bundle-product>
 {% endif %}
+

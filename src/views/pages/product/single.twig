@@ -11,19 +11,38 @@
       <div class="v-gallery" data-gallery>
         <div class="v-gallery__main v-arch">
           {% for image in product.images %}
-            <a href="{{ image.video_url|default(image.url) }}" data-gallery-slide="{{ loop.index0 }}" {{ loop.first ? '' : 'hidden' }} aria-label="{{ image.alt|default(product.name) }}">
-              <img src="{{ image.url }}" alt="{{ image.alt|default(product.name) }}" {{ loop.first ? 'fetchpriority="high"' : 'loading="lazy"' }}>
-            </a>
+            <div class="v-gallery__slide" data-gallery-slide="{{ loop.index0 }}" {{ loop.first ? '' : 'hidden' }}>
+              {% if image.three_d_image_url %}
+                <model-viewer class="v-gallery__model" loading="lazy" camera-controls touch-action="pan-y" auto-rotate poster="{{ image.url }}" src="{{ image.three_d_image_url }}" shadow-intensity="1" alt="{{ image.alt|default(product.name) }}"></model-viewer>
+              {% elseif image.video_url and image.video_type == 'video' %}
+                <video class="v-gallery__video" controls playsinline preload="metadata" poster="{{ image.url }}">
+                  <source src="{{ image.video_url }}">
+                  {{ trans('product.media_unavailable') }}
+                </video>
+              {% elseif image.video_url %}
+                {% if 'youtu.be/' in image.video_url %}
+                  {% set youtube_id = image.video_url|split('youtu.be/')|last|split('?')|first %}
+                {% elseif 'watch?v=' in image.video_url %}
+                  {% set youtube_id = image.video_url|split('watch?v=')|last|split('&')|first %}
+                {% else %}
+                  {% set youtube_id = image.video_url|split('/embed/')|last|split('?')|first %}
+                {% endif %}
+                <iframe class="v-gallery__video" src="https://www.youtube-nocookie.com/embed/{{ youtube_id }}" title="{{ image.alt|default(product.name) }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+              {% else %}
+                <img src="{{ image.url }}" alt="{{ image.alt|default(product.name) }}" {{ loop.first ? 'fetchpriority="high"' : 'loading="lazy"' }}>
+              {% endif %}
+            </div>
           {% else %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" fetchpriority="high">
+            <div class="v-gallery__slide"><img src="{{ product.image.url }}" alt="{{ product.image.alt|default(product.name) }}" fetchpriority="high"></div>
           {% endfor %}
           <salla-button shape="icon" fill="outline" color="light" class="v-gallery__wish" onclick="salla.wishlist.toggle('{{ product.id }}')" aria-label="{{ trans('common.wishlist') }}">♥</salla-button>
         </div>
         {% if product.images|length > 1 %}
-          <div class="v-gallery__thumbs" role="tablist" aria-label="{{ product.name }}">
+          <div class="v-gallery__thumbs" role="group" aria-label="{{ product.name }}">
             {% for image in product.images %}
-              <button type="button" data-gallery-thumb="{{ loop.index0 }}" aria-selected="{{ loop.first ? 'true' : 'false' }}">
-                <img src="{{ image.url }}" alt="{{ image.alt|default(product.name) }}" loading="lazy">
+              <button type="button" data-gallery-thumb="{{ loop.index0 }}" aria-selected="{{ loop.first ? 'true' : 'false' }}" aria-label="{{ image.alt|default(product.name) }}">
+                <img src="{{ image.url }}" alt="" loading="lazy">
+                {% if image.three_d_image_url %}<span class="v-gallery__media-badge" aria-hidden="true">3D</span>{% elseif image.video_url %}<span class="v-gallery__media-badge" aria-hidden="true">▶</span>{% endif %}
               </button>
             {% endfor %}
           </div>
@@ -37,15 +56,14 @@
         {% if product.subtitle %}<p class="v-muted">{{ product.subtitle }}</p>{% endif %}
         {% if product.rating %}<salla-rating-stars value="{{ product.rating.stars }}" reviews="{{ product.rating.count }}"></salla-rating-stars>{% endif %}
 
+        {% if product.is_taxable %}<small class="v-tax-note">{{ trans('product.tax_included') }}</small>{% endif %}
         <div class="v-price" data-product-price>
-          {% if product.is_on_sale %}
-            <strong>{{ product.sale_price|money }}</strong>
-            <del>{{ product.regular_price|money }}</del>
-            {% if product.discount_percentage %}<span class="v-badge v-badge--off">{{ product.discount_percentage }}</span>{% endif %}
-          {% else %}
-            <strong>{{ product.starting_price ? product.starting_price|money : product.price|money }}</strong>
-          {% endif %}
+          {% if product.starting_price %}<small data-starting-price>{{ trans('product.starting_price') }}</small>{% else %}<small data-starting-price hidden>{{ trans('product.starting_price') }}</small>{% endif %}
+          <strong data-current-price>{{ product.is_on_sale ? product.sale_price|money : (product.starting_price ? product.starting_price|money : product.price|money) }}</strong>
+          <del data-regular-price {{ product.is_on_sale ? '' : 'hidden' }}>{{ product.regular_price|money }}</del>
+          <span class="v-badge v-badge--off" data-discount-badge {{ product.is_on_sale and product.discount_percentage ? '' : 'hidden' }}>{{ product.discount_percentage }}</span>
         </div>
+        <p class="v-product-unavailable" data-product-unavailable role="status" hidden>{{ trans('product.unavailable') }}</p>
 
         {% if product.description %}
           <details class="v-accordion" open>
@@ -70,7 +88,7 @@
             <input type="hidden" name="quantity" value="1">
           {% endif %}
 
-          <salla-add-product-button product-id="{{ product.id }}" product-status="{{ product.status }}" product-type="{{ product.type }}" amount="{{ product.base_currency_price }}" type="submit" width="wide" loader-position="end" {% if product.notify_availability %}channels="{{ product.notify_availability.channels|join(',') }}"{% endif %}>
+          <salla-add-product-button product-id="{{ product.id }}" product-status="{{ product.status }}" product-type="{{ product.type }}" amount="{{ product.base_currency_price }}" {{ product.can_quick_buy ? 'quick-buy' : '' }} {{ product.is_require_shipping ? 'required-shipping' : '' }} {{ product.has_preorder_campaign ? 'has-pre-order' : '' }} {{ product.notify_availability.options ? 'notify-options-availability' : '' }} type="submit" width="wide" loader-position="end" {% if product.notify_availability %}channels="{{ product.notify_availability.channels|join(',') }}" subscribed-options="{{ product.notify_availability.subscribed_options|json_encode }}" {{ product.notify_availability.subscribed ? 'is-subscribed' : '' }}{% endif %}>
             {{ product.add_to_cart_label|default(trans('product.add_to_cart')) }}
           </salla-add-product-button>
           {% if product.is_giftable %}
@@ -80,12 +98,6 @@
 
         <salla-quick-order data-testid="store-product-quick-order"></salla-quick-order>
 
-        <div class="v-trust-grid">
-          <span>✓ {{ trans('product.authentic') }}</span>
-          <span>↗ {{ trans('product.delivery') }}</span>
-          <span>↩ {{ trans('product.returns') }}</span>
-          <span>✦ {{ trans('product.sample') }}</span>
-        </div>
         <salla-installment price="{{ product.price }}"></salla-installment>
         {% if product.has_metadata %}<salla-metadata></salla-metadata>{% endif %}
         <salla-social-share aria-label="{{ product.name }}"></salla-social-share>
@@ -98,6 +110,7 @@
     <salla-offer data-testid="store-product-offer"></salla-offer>
   </div>
 
+  {% if product.metadata.fragrance_top_notes or product.metadata.fragrance_top_description or product.metadata.fragrance_heart_notes or product.metadata.fragrance_heart_description or product.metadata.fragrance_base_notes or product.metadata.fragrance_base_description %}
   {% set bloom_component = {
     'top_notes': product.metadata.fragrance_top_notes,
     'top_text': product.metadata.fragrance_top_description,
@@ -107,41 +120,25 @@
     'base_text': product.metadata.fragrance_base_description
   } %}
   {% include 'components.note-bloom' with { component: bloom_component } %}
+  {% endif %}
 
-  <section class="v-section v-ingredients">
-    <div class="v-wrap v-ingredients__grid">
-      <div>
+  {% if product.metadata.ingredients %}
+    <section class="v-section v-ingredients">
+      <div class="v-wrap v-ingredients__grid"><div>
         <span class="v-kicker">{{ trans('product.ingredients_kicker') }}</span>
         <h2>{{ trans('product.ingredients_title') }}</h2>
         <div class="v-ingredients__list">
-          {% if product.metadata.ingredients %}
-            {% for ingredient in product.metadata.ingredients %}
-              <article><span class="v-petal" aria-hidden="true"></span><div><h3>{{ ingredient.name }}</h3><p>{{ ingredient.description }}</p></div></article>
-            {% endfor %}
-          {% else %}
-            {% set default_ingredients = [
-              {'name':trans('product.ingredient_lavender'),'body':trans('product.ingredient_lavender_body')},
-              {'name':trans('product.ingredient_violet'),'body':trans('product.ingredient_violet_body')},
-              {'name':trans('product.ingredient_musk'),'body':trans('product.ingredient_musk_body')}
-            ] %}
-            {% for ingredient in default_ingredients %}
-              <article><span class="v-petal" aria-hidden="true"></span><div><h3>{{ ingredient.name }}</h3><p>{{ ingredient.body }}</p></div></article>
-            {% endfor %}
-          {% endif %}
+          {% for ingredient in product.metadata.ingredients %}<article><span class="v-petal" aria-hidden="true"></span><div><h3>{{ ingredient.name }}</h3><p>{{ ingredient.description }}</p></div></article>{% endfor %}
         </div>
-      </div>
-      <div class="v-sensory-grid" aria-label="{{ trans('product.sensory') }}">
-        <span>{{ trans('product.sensory_soft') }}</span><span>{{ trans('product.sensory_clean') }}</span><span>{{ trans('product.sensory_warm') }}</span><span>{{ trans('product.sensory_long') }}</span>
-      </div>
-    </div>
-  </section>
-
+      </div></div>
+    </section>
+  {% endif %}
   <div class="s-blocks-wrapper s-before-reviews">{% hook 'product.single.before_customer_reviews' %}</div>
   {% if store.settings.rating.show_on_product %}
     <section class="v-section v-reviews"><div class="v-wrap"><div class="v-section-heading"><h2>{{ trans('product.reviews_title') }}</h2>{% if product.rating %}<span class="v-pill v-reviews__score"><b>{{ product.rating.stars }}</b> {{ trans('product.reviews', { n: product.rating.count }) }}</span>{% endif %}</div><salla-comments item-id="{{ product.id }}" type="product"></salla-comments></div></section>
   {% endif %}
   <div class="s-blocks-wrapper s-before-related">{% hook 'product.single.before_product_recommendations' %}</div>
-  <section class="v-section v-related"><div class="v-wrap"><salla-products-slider source="related" source-value="{{ product.id }}" block-title="{{ trans('product.related') }}" display-all-url></salla-products-slider></div></section>
+  <section class="v-section v-related"><div class="v-wrap"><salla-products-slider product-card-component="custom-salla-product-card" source="related" source-value="{{ product.id }}" block-title="{{ trans('product.related') }}" display-all-url></salla-products-slider></div></section>
   <div class="s-blocks-wrapper s-after-related">{% hook 'product.single.after_product_recommendations' %}</div>
 
   {% if theme.settings.get('sticky_add_to_cart', true) %}
@@ -151,3 +148,14 @@
     </div>
   {% endif %}
 {% endblock %}
+
+{% block scripts %}
+  {% if product.has_3d_image %}<script type="module" defer src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>{% endif %}
+{% endblock %}
+
+
+
+
+
+
+

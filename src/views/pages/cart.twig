@@ -19,6 +19,7 @@
                 <div class="v-cart-item__body">
                   <a href="{{ item.url }}"><h2>{{ item.product_name }}</h2></a>
                   {% for option in item.options %}<small>{{ option.name }}: {{ option.value }}</small>{% endfor %}
+                  <small class="v-cart-item__unit">{{ trans('cart.unit_price') }}: {{ item.product_price|money }}</small>
                   <strong>{{ item.total|money }}</strong>
                   <salla-cart-item-offers
                     quantity="{{ item.quantity }}"
@@ -41,6 +42,8 @@
 
           <aside class="v-cart-summary">{% hook 'cart:summary.start' %}
             <h2>{{ trans('cart.summary') }}</h2>
+            {% if cart.taxes_included %}<p class="v-tax-note">{{ trans('cart.taxes_included') }}</p>{% endif %}
+            <p class="v-cart-total"><span>{{ trans('cart.total') }}</span><strong>{{ cart.total_price|money }}</strong></p>
             {% if cart.free_shipping_bar %}<div class="v-shipping-progress"><p>{{ cart.free_shipping_bar.has_free_shipping ? trans('cart.free_shipping_unlocked') : trans('cart.free_shipping_remaining', {amount:cart.free_shipping_bar.remaining|money}) }}</p><span><i style="width:{{ cart.free_shipping_bar.percent }}%"></i></span></div>{% endif %}
             {% if loyalty %}
               <salla-loyalty-panel data-testid="store-cart-loyalty" prize-points="{{ loyalty.prize.points }}" prize-title="{{ loyalty.prize.title }}"></salla-loyalty-panel>
@@ -59,3 +62,6 @@
     </div>
   </section>
 {% endblock %}
+
+
+
