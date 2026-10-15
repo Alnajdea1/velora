@@ -14,7 +14,8 @@
     "preview": "salla theme preview --with-editor",
     "check": "pnpm run production && node scripts/validate-theme.mjs",
     "publish": "salla theme publish",
-    "watch": "node scripts/watch-theme.mjs"
+    "watch": "node scripts/watch-theme.mjs",
+    "prod": "node scripts/build-theme.mjs"
   },
   "dependencies": {
     "@salla.sa/twilight": "^2.14.543",
