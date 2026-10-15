@@ -9,7 +9,7 @@
     <div class="v-showcase__grid">
       {% for product in products|slice(0, 3) %}
         <div class="v-showcase__item v-showcase__item--{{ loop.index }}">
-          <div class="v-showcase__index"><span>{{ loop.index|localize_number }}</span><i></i></div>
+          <div class="v-showcase__index"><span>{{ loop.index|replace({'0': '٠', '1': '١', '2': '٢', '3': '٣', '4': '٤', '5': '٥', '6': '٦', '7': '٧', '8': '٨', '9': '٩'}) }}</span><i></i></div>
           {% include 'components.product-card' with { product: product } %}
         </div>
       {% else %}<p class="v-empty">{{ trans('common.configure_products') }}</p>{% endfor %}

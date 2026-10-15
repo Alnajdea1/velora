@@ -31,7 +31,7 @@
 <body class="v-body" data-card-quick-add="{{ trans('product.quick_add')|e('html_attr') }}" data-card-notify="{{ trans('product.notify')|e('html_attr') }}" data-card-sale="{{ trans('product.sale')|e('html_attr') }}" data-card-new="{{ trans('product.new')|e('html_attr') }}" data-card-sold-out="{{ trans('product.sold_out')|e('html_attr') }}" data-card-notes="{{ trans('product.notes')|e('html_attr') }}" data-card-wishlist="{{ trans('common.wishlist')|e('html_attr') }}">
   {% hook 'body:start' %}
   {% include 'components.announcement' %}
-  {% include 'header' %}
+  {% include 'components.header' %}
 
   <main id="main">{% block content %}{% endblock %}</main>
 
