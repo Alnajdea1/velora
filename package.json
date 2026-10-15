@@ -13,7 +13,8 @@
     "dev": "salla theme preview --with-editor",
     "preview": "salla theme preview --with-editor",
     "check": "pnpm run production && node scripts/validate-theme.mjs",
-    "publish": "salla theme publish"
+    "publish": "salla theme publish",
+    "watch": "node scripts/watch-theme.mjs"
   },
   "dependencies": {
     "@salla.sa/twilight": "^2.14.543",
