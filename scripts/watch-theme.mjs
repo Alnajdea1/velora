@@ -1,31 +1,47 @@
-import path from 'node:path';
+﻿import path from 'node:path';
 import { createRequire } from 'node:module';
 import webpack from 'webpack';
 import CopyPlugin from 'copy-webpack-plugin';
 
 const require = createRequire(import.meta.url);
-// Official Twilight dev watcher: syncs changed .twig/.json files to the
-// Salla draft and drives live reload over the ws port the CLI wrote to
-// node_modules/.salla-cli before spawning this script.
 const WatcherPlugin = require('@salla.sa/twilight/watcher.js');
 
-// WatcherPlugin.addToQ() runs `salla theme sync` inside a setTimeout with no
-// try/catch, so a failed sync (rejected path, network error, expired draft,
-// etc.) throws as an uncaught exception and would otherwise kill this whole
-// watch process. Log it and keep watching instead of dying.
+// Keep the watcher alive on ANY async failure. A failed draft sync or a
+// dropped live-reload socket (AggregateError) arrives as an unhandled promise
+// rejection, which Node turns into a hard exit. That exit is what the CLI
+// reports as "Command failed: pnpm run watch".
 process.on('uncaughtException', (err) => {
-  console.error(`[watch] a Salla draft sync failed, still watching: ${err.message}`);
+  console.error(`[watch] error ignored, still watching: ${err && err.message ? err.message : err}`);
+});
+process.on('unhandledRejection', (reason) => {
+  const msg = reason && reason.message ? reason.message : String(reason);
+  console.error(`[watch] async error ignored, still watching: ${msg}`);
 });
 
 const root = process.cwd();
 const assetsSource = path.join(root, 'src', 'assets');
 const assetsOutput = path.join(root, 'public');
 
-// WatcherPlugin shells out to a bare `salla` command (no path). If some
-// other @salla.sa/cli install earlier on PATH is broken (seen here: a
-// global install whose shim resolves to a nonexistent module path), every
-// sync fails. Force resolution to this project's pinned, known-good copy.
 process.env.PATH = `${path.join(root, 'node_modules', '.bin')}${path.delimiter}${process.env.PATH}`;
+
+// Salla's sync expects a theme-root-relative POSIX path on every OS.
+// On Windows the watcher passes backslash paths, so the draft never updates.
+class PosixWatcherPlugin extends WatcherPlugin {
+  addToQ(file, ...rest) {
+    try {
+      if (typeof file === 'string') {
+        const abs = path.isAbsolute(file) ? file : path.resolve(root, file);
+        const rel = path.relative(root, abs);
+        if (rel && !rel.startsWith('..') && !path.isAbsolute(rel)) {
+          file = rel.split(path.sep).join('/');
+        }
+      }
+    } catch (e) {
+      console.error(`[watch] could not normalise path ${file}: ${e.message}`);
+    }
+    return super.addToQ(file, ...rest);
+  }
+}
 
 const assets = [
   ['styles/app.css', 'app.css'],
@@ -35,8 +51,6 @@ const assets = [
   ['js/add-product-toast.js', 'add-product-toast.js']
 ];
 
-// Same copy build the production/check scripts run, so `public/` is fresh
-// the moment the watcher attaches.
 await import('./build-theme.mjs');
 
 const compiler = webpack(
@@ -49,24 +63,14 @@ const compiler = webpack(
     stats: 'errors-warnings',
     plugins: [
       new CopyPlugin({
-        patterns: assets.map(([from, to]) => ({
-          from: path.join(assetsSource, from),
-          to
-        }))
+        patterns: assets.map(([from, to]) => ({ from: path.join(assetsSource, from), to }))
       }),
-      new WatcherPlugin()
+      new PosixWatcherPlugin()
     ]
   },
   (err, stats) => {
-    if (err) {
-      console.error(err.stack || err);
-      process.exitCode = 1;
-      return;
-    }
-    if (stats?.hasErrors()) {
-      console.error(stats.toString({ colors: true, errorsOnly: true }));
-      return;
-    }
+    if (err) { console.error(err.stack || err); return; }
+    if (stats?.hasErrors()) { console.error(stats.toString({ colors: true, errorsOnly: true })); return; }
     console.log(`[watch] src/assets -> public/ synced (${new Date().toLocaleTimeString()})`);
   }
 );
