@@ -16,7 +16,7 @@ importers:
         version: 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.111.1(esbuild@0.28.2))
     devDependencies:
       '@salla.sa/cli':
-        specifier: ^3.2.52
+        specifier: ^3.2.62
         version: 3.2.62(supports-color@8.1.1)
       copy-webpack-plugin:
         specifier: 13.0.1
