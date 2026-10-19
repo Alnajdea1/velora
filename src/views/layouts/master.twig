@@ -31,12 +31,12 @@
 <body class="v-body" data-card-quick-add="{{ trans('product.quick_add')|e('html_attr') }}" data-card-notify="{{ trans('product.notify')|e('html_attr') }}" data-card-sale="{{ trans('product.sale')|e('html_attr') }}" data-card-new="{{ trans('product.new')|e('html_attr') }}" data-card-sold-out="{{ trans('product.sold_out')|e('html_attr') }}" data-card-notes="{{ trans('product.notes')|e('html_attr') }}" data-card-wishlist="{{ trans('common.wishlist')|e('html_attr') }}">
   {% hook 'body:start' %}
   {% include 'components.announcement' %}
-  {% include 'components.header' %}
+  {% include 'components.header.header' %}
 
   <main id="main">{% block content %}{% endblock %}</main>
 
   {% if theme.settings.get('newsletter_enabled', true) %}{% include 'components.closing' with { component: {} } %}{% endif %}
-  {% include 'components.footer' %}
+  {% include 'components.footer.footer' %}
   {% include 'components.search-overlay' %}
   {% include 'components.mobile-nav' %}
   {% if theme.settings.get('reviewer_panel', false) %}{% include 'components.reviewer-panel' %}{% endif %}
