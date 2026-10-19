@@ -10,20 +10,20 @@ importers:
     dependencies:
       '@salla.sa/twilight':
         specifier: ^2.14.543
-        version: 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.111.1(esbuild@0.28.2))
+        version: 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.112.0(esbuild@0.28.2))
       '@salla.sa/twilight-components':
         specifier: ^2.14.543
-        version: 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.111.1(esbuild@0.28.2))
+        version: 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.112.0(esbuild@0.28.2))
     devDependencies:
       '@salla.sa/cli':
         specifier: ^3.2.52
         version: 3.2.62(supports-color@8.1.1)
       copy-webpack-plugin:
         specifier: 13.0.1
-        version: 13.0.1(webpack@5.111.1(esbuild@0.28.2))
+        version: 13.0.1(webpack@5.112.0(esbuild@0.28.2))
       webpack:
-        specifier: 5.111.1
-        version: 5.111.1(esbuild@0.28.2)
+        specifier: 5.112.0
+        version: 5.112.0(esbuild@0.28.2)
 
 packages:
 
@@ -1317,8 +1317,8 @@ packages:
     resolution: {integrity: sha512-EIMmPVvNI0CYXyRPp34F2Qk7W37/BZVZIofS6LAUnrNjCVahS+hO4mxwFJDjQjODTGZDtVzLYoN2+1dYkhk9qA==}
     engines: {node: '>=10.13.0'}
 
-  webpack@5.111.1:
-    resolution: {integrity: sha512-cNypaz0RP+S4cvQVi1M/3bRUkvNP0xZpL0TjFx+c6jg64VbxD+2weWDgY9UnjRI6dhZgtaj8DU76GGFcJ79xPQ==}
+  webpack@5.112.0:
+    resolution: {integrity: sha512-NIBpsRuCll036haDDt/CfcTDfsWNR9Z782nMRMI9D377BsGcYzZDTNU5TyzhCJzPIcihAxMBaMAhq2WSaDrH8Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -1607,11 +1607,11 @@ snapshots:
       - kerberos
       - supports-color
 
-  '@salla.sa/twilight-components@2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.111.1(esbuild@0.28.2))':
+  '@salla.sa/twilight-components@2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(lit@3.3.3)(supports-color@8.1.1)(webpack@5.112.0(esbuild@0.28.2))':
     dependencies:
       '@googlemaps/markerclusterer': 2.6.2
       '@salla.sa/applepay': 2.14.601(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
-      '@salla.sa/twilight': 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.111.1(esbuild@0.28.2))
+      '@salla.sa/twilight': 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.112.0(esbuild@0.28.2))
       '@salla.sa/twilight-tailwind-theme': 2.14.601
       '@salla.sa/ui-address-autocomplete-widget': 1.2.1
       '@salla.sa/ui-google-map-render': 1.2.1(@googlemaps/markerclusterer@2.6.2)(@salla.sa/ui-address-autocomplete-widget@1.2.1)(lit@3.3.3)
@@ -1642,7 +1642,7 @@ snapshots:
 
   '@salla.sa/twilight-tailwind-theme@2.14.601': {}
 
-  '@salla.sa/twilight@2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.111.1(esbuild@0.28.2))':
+  '@salla.sa/twilight@2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(webpack@5.112.0(esbuild@0.28.2))':
     dependencies:
       '@jitsu/js': 1.11.0(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
       '@salla.sa/analytics': 2.14.601(@jitsu/protocols@1.11.0)(@types/dlv@1.1.5)
@@ -1651,7 +1651,7 @@ snapshots:
       infinite-scroll: 4.0.1
       jwt-decode: 4.0.0
       lang.js: 1.1.14
-      webpack: 5.111.1(esbuild@0.28.2)
+      webpack: 5.112.0(esbuild@0.28.2)
       websocket: 1.0.35(supports-color@8.1.1)
     transitivePeerDependencies:
       - '@jitsu/protocols'
@@ -1947,14 +1947,14 @@ snapshots:
 
   content-type@2.1.0: {}
 
-  copy-webpack-plugin@13.0.1(webpack@5.111.1(esbuild@0.28.2)):
+  copy-webpack-plugin@13.0.1(webpack@5.112.0(esbuild@0.28.2)):
     dependencies:
       glob-parent: 6.0.2
       normalize-path: 3.0.0
       schema-utils: 4.5.0
       serialize-javascript: 6.0.2
       tinyglobby: 0.2.17
-      webpack: 5.111.1(esbuild@0.28.2)
+      webpack: 5.112.0(esbuild@0.28.2)
 
   d@1.0.2:
     dependencies:
@@ -2355,13 +2355,13 @@ snapshots:
     dependencies:
       brace-expansion: 5.0.12
 
-  minimizer-webpack-plugin@5.13.0(esbuild@0.28.2)(webpack@5.111.1(esbuild@0.28.2)):
+  minimizer-webpack-plugin@5.13.0(esbuild@0.28.2)(webpack@5.112.0(esbuild@0.28.2)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.31
       jest-worker: 27.5.1
       schema-utils: 4.5.0
       terser: 5.51.2
-      webpack: 5.111.1(esbuild@0.28.2)
+      webpack: 5.112.0(esbuild@0.28.2)
     optionalDependencies:
       esbuild: 0.28.2
 
@@ -2691,7 +2691,7 @@ snapshots:
 
   webpack-sources@3.6.0: {}
 
-  webpack@5.111.1(esbuild@0.28.2):
+  webpack@5.112.0(esbuild@0.28.2):
     dependencies:
       '@types/estree': 1.0.9
       '@types/json-schema': 7.0.15
@@ -2705,7 +2705,7 @@ snapshots:
       events: 3.3.0
       graceful-fs: 4.2.11
       mime-db: 1.54.0
-      minimizer-webpack-plugin: 5.13.0(esbuild@0.28.2)(webpack@5.111.1(esbuild@0.28.2))
+      minimizer-webpack-plugin: 5.13.0(esbuild@0.28.2)(webpack@5.112.0(esbuild@0.28.2))
       schema-utils: 4.5.0
       tapable: 2.3.3
       watchpack: 2.6.1
