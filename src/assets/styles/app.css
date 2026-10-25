@@ -481,3 +481,6 @@ salla-products-list.v-products-auto{display:block;grid-column:1/-1;min-width:0}
 .v-slider .v-slider__track .s-products-list-wrapper>*{min-width:0;scroll-snap-align:start}
 @media (max-width:959px){.v-slider .v-slider__track .s-products-list-wrapper{grid-auto-columns:calc((100% - 22px) / 2.3)}}
 @media (max-width:640px){.v-slider .v-slider__track .s-products-list-wrapper{grid-auto-columns:72%;gap:14px}}
+/* salla-add-product-button cannot take an inline style string in Twilight 3, so its layout lives here */
+.v-product__quickadd salla-add-product-button{display:block;width:100%}
+.v-path__add{margin-top:10px}
