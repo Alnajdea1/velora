@@ -1,4 +1,5 @@
-﻿import path from 'node:path';
+﻿import fs from 'node:fs';
+import path from 'node:path';
 import { createRequire } from 'node:module';
 import webpack from 'webpack';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -27,6 +28,16 @@ process.env.PATH = `${path.join(root, 'node_modules', '.bin')}${path.delimiter}$
 // Salla's sync expects a theme-root-relative POSIX path on every OS.
 // On Windows the watcher passes backslash paths, so the draft never updates.
 class PosixWatcherPlugin extends WatcherPlugin {
+  constructor(...args) {
+    super(...args);
+    // The watcher runs `"salla" theme sync`. When cmd.exe finds a quoted name
+    // through PATH, the pnpm shim's %~dp0 points at the theme root instead of
+    // node_modules/.bin, so it looks for C:\...\@salla.sa\cli and every sync
+    // fails. Calling the shim by its absolute path avoids that lookup.
+    const shim = path.join(root, 'node_modules', '.bin', 'salla.CMD');
+    if (process.platform === 'win32' && fs.existsSync(shim)) this.sallaCli = shim;
+  }
+
   addToQ(file, ...rest) {
     try {
       if (typeof file === 'string') {
