@@ -43,4 +43,8 @@ for (const [from, to] of assets) {
   fs.writeFileSync(path.join(output, to), outputContents);
 }
 
+// Bundled section artwork, served through the asset helper as 'images/...'|asset.
+const images = path.join(source, 'images');
+if (fs.existsSync(images)) fs.cpSync(images, path.join(output, 'images'), { recursive: true });
+
 console.log(`Built ${assets.length} Twilight assets in public/`);

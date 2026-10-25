@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="box" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FCFBFF" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#F1ECFF" stop-opacity=".75"/>
+    </linearGradient>
+    <linearGradient id="lid" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F1ECFF"/>
+      <stop offset=".5" stop-color="#FCFBFF"/>
+      <stop offset="1" stop-color="#F1ECFF"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="350" rx="128" ry="14" fill="#261838" opacity=".18"/>
+  <rect x="88" y="168" width="224" height="178" rx="24" fill="url(#box)"/>
+  <rect x="72" y="134" width="256" height="52" rx="18" fill="url(#lid)"/>
+  <rect x="186" y="134" width="28" height="212" fill="#FF7C8B"/>
+  <path d="M200 134 C164 74 110 84 118 116 C124 138 168 140 200 134Z" fill="#FF7C8B"/>
+  <path d="M200 134 C236 74 290 84 282 116 C276 138 232 140 200 134Z" fill="#FF7C8B"/>
+  <path d="M200 134 C180 104 146 102 146 116 C146 128 174 132 200 134Z" fill="#FFCBD2" opacity=".65"/>
+  <circle cx="200" cy="134" r="12" fill="#E8667A"/>
+  <rect x="104" y="196" width="10" height="132" rx="5" fill="#C9B8FF" opacity=".5"/>
+  <path d="M258 236 l26 0 l0 40 l-26 0z" fill="#C9B8FF" opacity=".35"/>
+</svg>

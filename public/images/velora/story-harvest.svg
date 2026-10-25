@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 560" preserveAspectRatio="xMidYMid slice" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9B8FF"/>
+      <stop offset=".55" stop-color="#F1ECFF"/>
+      <stop offset="1" stop-color="#FFE3E6"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FCFBFF"/>
+      <stop offset=".6" stop-color="#FFD9DE" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#FFD9DE" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hill1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#BACBB5"/>
+      <stop offset="1" stop-color="#71836C"/>
+    </linearGradient>
+    <linearGradient id="hill2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8E79E6"/>
+      <stop offset="1" stop-color="#4A3570"/>
+    </linearGradient>
+    <linearGradient id="hill3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7657E8"/>
+      <stop offset="1" stop-color="#261838"/>
+    </linearGradient>
+    <pattern id="rows" width="22" height="18" patternUnits="userSpaceOnUse">
+      <ellipse cx="11" cy="9" rx="4" ry="7" fill="#C9B8FF" opacity=".55"/>
+    </pattern>
+  </defs>
+  <rect width="720" height="560" fill="url(#sky)"/>
+  <circle cx="470" cy="250" r="130" fill="url(#sun)"/>
+  <circle cx="470" cy="250" r="48" fill="#FCFBFF" opacity=".9"/>
+  <path d="M0 300 C140 262 260 290 380 276 C500 262 610 240 720 258 L720 560 L0 560Z" fill="url(#hill1)" opacity=".8"/>
+  <path d="M0 352 C150 318 300 350 440 330 C560 314 640 300 720 312 L720 560 L0 560Z" fill="url(#hill2)"/>
+  <path d="M0 352 C150 318 300 350 440 330 C560 314 640 300 720 312 L720 560 L0 560Z" fill="url(#rows)"/>
+  <path d="M0 430 C160 396 330 430 480 410 C590 396 660 392 720 400 L720 560 L0 560Z" fill="url(#hill3)"/>
+  <g stroke="#BACBB5" stroke-width="3" stroke-linecap="round" fill="none" opacity=".8">
+    <path d="M80 560 L96 470"/><path d="M130 560 L140 462"/><path d="M190 560 L196 476"/>
+    <path d="M560 560 L552 468"/><path d="M610 560 L604 458"/><path d="M660 560 L660 474"/>
+  </g>
+  <g fill="#C9B8FF">
+    <ellipse cx="96" cy="466" rx="6" ry="12"/><ellipse cx="140" cy="458" rx="6" ry="12"/><ellipse cx="196" cy="472" rx="6" ry="12"/>
+    <ellipse cx="552" cy="464" rx="6" ry="12"/><ellipse cx="604" cy="454" rx="6" ry="12"/><ellipse cx="660" cy="470" rx="6" ry="12"/>
+  </g>
+  <g fill="#7657E8" opacity=".65">
+    <path d="M250 150 q12 -6 16 6 q-12 4 -16 -6z"/><path d="M296 178 q10 -5 13 5 q-10 3 -13 -5z"/>
+  </g>
+</svg>
