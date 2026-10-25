@@ -18,8 +18,9 @@
       </div>
       <a href="{{ all_url }}" class="v-slider__all">{{ trans('slider.all') }}</a>
     </div>
-    <salla-products-slider class="v-slider__track" product-card-component="custom-salla-product-card"
-                           source="{{ slider_source }}"{% if slider_value|length %} source-value="{{ slider_value|json_encode }}"{% endif %}
-                           limit="{{ limit|default(8) }}" block-title=" " slider-id="velora-products-slider-{{ position|default(0) }}"></salla-products-slider>
+    {# A swipeable products list: Velora's custom card collapses inside salla-products-slider. #}
+    <salla-products-list class="v-products-auto v-slider__track" product-card-component="custom-salla-product-card"
+                         source="{{ slider_source }}"{% if slider_value|length %} source-value="{{ slider_value|json_encode }}"{% endif %}
+                         limit="{{ limit|default(8) }}"></salla-products-list>
   </div>
 </section>
