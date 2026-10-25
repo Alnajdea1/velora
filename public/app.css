@@ -477,10 +477,6 @@ salla-products-list.v-products-auto{display:block;grid-column:1/-1;min-width:0}
   .v-aura__products .v-products-auto .v-product{flex:0 0 72%;scroll-snap-align:start}
   .v-features__item{padding:16px}
 }
-.v-slider .v-slider__track .s-products-list-wrapper{grid-auto-flow:column;grid-template-columns:none;grid-auto-columns:calc((100% - 66px) / 4);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;padding-bottom:14px}
-.v-slider .v-slider__track .s-products-list-wrapper>*{min-width:0;scroll-snap-align:start}
-@media (max-width:959px){.v-slider .v-slider__track .s-products-list-wrapper{grid-auto-columns:calc((100% - 22px) / 2.3)}}
-@media (max-width:640px){.v-slider .v-slider__track .s-products-list-wrapper{grid-auto-columns:72%;gap:14px}}
 /* salla-add-product-button cannot take an inline style string in Twilight 3, so its layout lives here */
 .v-product__quickadd salla-add-product-button{display:block;width:100%}
 .v-path__add{margin-top:10px}
