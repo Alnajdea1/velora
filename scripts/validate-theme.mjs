@@ -4,7 +4,7 @@ import path from 'node:path';
 const root = process.cwd();
 const requiredPages = [
   'src/views/layouts/master.twig',
-  'src/views/header.twig',
+  'src/views/components/header/header.twig',
   'src/views/pages/index.twig',
   'src/views/pages/404.twig',
   'src/views/pages/product/index.twig',
@@ -126,8 +126,8 @@ for (const [file, tokens] of Object.entries(complianceTokens)) {
   for (const token of tokens) if (!source.includes(token)) errors.push(`Missing Salla review requirement (${file}): ${token}`);
 }
 const fixedCopyChecks = {
-  'src/views/components/footer.twig': ['>LAVENDER, REIMAGINED<'],
-  'src/views/header.twig': [">{{ is_ar ? 'EN' : 'AR' }}<", "? 'الجديد' : 'New'"],
+  'src/views/components/footer/footer.twig': ['>LAVENDER, REIMAGINED<'],
+  'src/views/components/header/header.twig': [">{{ is_ar ? 'EN' : 'AR' }}<", "? 'الجديد' : 'New'"],
   'src/views/components/botanical-categories.twig': ["? 'العطور' : 'Fragrance'"]
 };
 for (const [file, literals] of Object.entries(fixedCopyChecks)) {
@@ -145,11 +145,11 @@ if (fs.existsSync(informationPage)) {
   }
 }
 
-const headerEntrypoint = path.join(root, 'src/views/header.twig');
+const headerEntrypoint = path.join(root, 'src/views/components/header/header.twig');
 if (fs.existsSync(headerEntrypoint)) {
   const source = fs.readFileSync(headerEntrypoint, 'utf8');
   if (!source.includes('<header') || !source.includes('<nav') || !source.includes('<salla-cart-summary')) {
-    errors.push('src/views/header.twig must contain the navigation header implementation, not only exist');
+    errors.push('src/views/components/header/header.twig must contain the navigation header implementation, not only exist');
   }
 }
 
