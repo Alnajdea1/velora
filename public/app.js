@@ -273,6 +273,16 @@
       }
     });
 
+    $$('[data-gallery]').forEach((root) => {
+      $$('[data-gallery-thumb]', root).forEach((thumb) => thumb.addEventListener('click', () => {
+        $$('[data-gallery-thumb]', root).forEach((item) => item.setAttribute('aria-selected', 'false'));
+        $$('[data-gallery-slide]', root).forEach((slide) => {
+          slide.hidden = slide.dataset.gallerySlide !== thumb.dataset.galleryThumb;
+          if (slide.hidden) $('video', slide)?.pause();
+        });
+        thumb.setAttribute('aria-selected', 'true');
+      }));
+    });
 
     const viewRoot = $('[data-products]');
     $$('[data-view]').forEach((button) => button.addEventListener('click', () => {
