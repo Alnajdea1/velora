@@ -1,24 +1,32 @@
 {% extends 'layouts.master' %}
 {% block content %}
+  {% set home_components = '' %}
   {% if theme.settings.get('velora_home_editor', false) %}
-    {% component home %}{# merchant-ordered Velora components declared in twilight.json #}
+    {% set home_components %}{% component home %}{% endset %}{# merchant-ordered components declared in twilight.json #}
+  {% endif %}
+
+  {% if home_components|trim %}
+    {{ home_components }}
     {# Keep the approved signature composer visible even in legacy saved editor layouts. JS removes this fallback when an editor-managed composer already exists. #}
     {% include 'components.gift-composer' with { component: {'guaranteed_fallback': true} } %}
   {% else %}
     {#
-      Guaranteed approved composition. This prevents a previously saved Salla home-page
-      configuration from hiding Velora after a theme source update. Merchants can opt into
-      editor ordering from the theme setting once their Velora components are configured.
+      Default composition: shown until the merchant enables editor ordering and adds components.
+      Every section falls back to theme copy, bundled artwork and the store's own products, so the
+      homepage is complete in a brand-new store.
     #}
     {% include 'components.hero' with { component: {} } %}
-    {% include 'components.offer-landing' with { component: {} } %}
+    {% include 'components.home.store-features' with { items: [] } %}
     {% include 'components.aura-explorer' with { component: {} } %}
     {% include 'components.season-showcase' with { component: {} } %}
     {% include 'components.botanical-categories' with { component: {} } %}
+    {% include 'components.offer-landing' with { component: {} } %}
     {% include 'components.editorial-story' with { component: {} } %}
     {% include 'components.routine-path' with { component: {} } %}
     {% include 'components.mood-shopping' with { component: {} } %}
+    {% include 'components.home.products-slider' with { products: {'source': 'latest'}, limit: 8, position: 0 } %}
     {% include 'components.gift-composer' with { component: {} } %}
+    {% include 'components.home.testimonials' with { limit: 6, type: 'store' } %}
     {% include 'components.journal' with { component: {} } %}
   {% endif %}
 {% endblock %}

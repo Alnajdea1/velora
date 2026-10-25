@@ -71,14 +71,18 @@ In Salla's theme editor, add the following components in this exact order to rep
 8. `gift-composer` → `src/views/components/gift-composer.twig`
 9. `journal-grid` → `src/views/components/journal.twig`
 
-`fragrance-note-bloom` is also reusable from the editor and is rendered directly on the
-single-product template. The closing newsletter is global, matching the prototype, and is
-rendered from `layouts/master.twig` before `footer.twig`.
+The note bloom (`components/note-bloom.twig`) is a product-page section only: the single-product
+template renders it from the product's fragrance metadata, so it is not offered as a home component.
+The closing newsletter is global, matching the prototype, and is rendered from `layouts/master.twig`
+before `footer.twig`.
 
-Velora renders its approved homepage sequence by default and supports merchant-ordered homepage
-components through the Salla theme editor. Product, category, article, offer, price, availability,
-and checkout data come from the live store or merchant configuration. The prototype's CSS perfume
-bottle is used only as fallback artwork when a product image is unavailable.
+Velora renders its full homepage sequence by default — hero, store features, aura explorer, season
+showcase, botanical categories, offer, editorial story, routine path, mood shopping, products slider,
+gift composer, testimonials, journal — and switches to merchant-ordered components once
+`velora_home_editor` is enabled and the editor layout contains components. Every section has default
+copy in `twilight.json` and the locales, bundled artwork in `src/assets/images/velora/` (copied to
+`public/images/` by the build), and falls back to the store's latest products or first categories, so
+the homepage is complete in an empty store. Testimonials show only the store's real reviews.
 
 ## Page mapping
 
