@@ -204,7 +204,8 @@
           "type": "string",
           "label": "النص العلوي",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "عطور وعناية"
         },
         {
           "id": "line_1",
@@ -212,7 +213,8 @@
           "label": "العنوان — السطر الأول",
           "multilanguage": true,
           "required": false,
-          "format": "text"
+          "format": "text",
+          "value": "اللافندر"
         },
         {
           "id": "line_2",
@@ -220,47 +222,54 @@
           "label": "العنوان — السطر الثاني",
           "multilanguage": true,
           "required": false,
-          "format": "text"
+          "format": "text",
+          "value": "في حركة"
         },
         {
           "id": "line_3",
           "type": "string",
           "label": "العنوان — السطر الثالث",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "دائمة"
         },
         {
           "id": "body",
           "type": "string",
           "format": "textarea",
           "label": "الوصف",
-          "multilanguage": true
+          "multilanguage": true,
+          "value": "عطور وعناية مستوحاة من حقول اللافندر عند الغروب: بتلات باهتة، سيقان نحيلة، وأوراق خضراء هادئة تتنفس مع الضوء."
         },
         {
           "id": "primary_label",
           "type": "string",
           "label": "نص الزر الأساسي",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "استكشفي المجموعة"
         },
         {
           "id": "primary_url",
           "type": "string",
           "format": "url",
-          "label": "رابط الزر الأساسي"
+          "label": "رابط الزر الأساسي",
+          "value": "/products"
         },
         {
           "id": "secondary_label",
           "type": "string",
           "label": "نص الرابط الثانوي",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "اعرفي عائلتك العطرية"
         },
         {
           "id": "secondary_url",
           "type": "string",
           "format": "url",
-          "label": "الرابط الثانوي"
+          "label": "الرابط الثانوي",
+          "value": "#aura"
         },
         {
           "id": "image",
@@ -292,69 +301,92 @@
             }
           ],
           "item_label": "ملصقات النوتات العطرية",
-          "required": false
+          "required": false,
+          "value": [
+            {
+              "notes.tag": "المقدمة",
+              "notes.label": "برغموت مشرق"
+            },
+            {
+              "notes.tag": "القلب",
+              "notes.label": "لافندر مقطوف يدوياً"
+            },
+            {
+              "notes.tag": "القاعدة",
+              "notes.label": "مسك مخملي"
+            }
+          ]
         },
         {
           "id": "image_alt",
           "type": "string",
           "label": "النص البديل للصورة",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "زجاجة عطر شفافة وسط طبقات من اللافندر"
         },
         {
           "id": "product_name",
           "type": "string",
           "label": "اسم اختيار المحررة",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "مختارات الموسم"
         },
         {
           "id": "product_url",
           "type": "string",
           "format": "url",
-          "label": "رابط اختيار المحررة"
+          "label": "رابط اختيار المحررة",
+          "value": "/products"
         },
         {
           "id": "stat_1_value",
           "type": "string",
           "label": "قيمة الإحصائية الأولى",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "٦"
         },
         {
           "id": "stat_1_label",
           "type": "string",
           "label": "وصف الإحصائية الأولى",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "عائلات عطرية"
         },
         {
           "id": "stat_2_value",
           "type": "string",
           "label": "قيمة الإحصائية الثانية",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "٤"
         },
         {
           "id": "stat_2_label",
           "type": "string",
           "label": "وصف الإحصائية الثانية",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "خطوات للروتين"
         },
         {
           "id": "stat_3_value",
           "type": "string",
           "label": "قيمة الإحصائية الثالثة",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "٣"
         },
         {
           "id": "stat_3_label",
           "type": "string",
           "label": "وصف الإحصائية الثالثة",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "طبقات للعطر"
         }
       ],
       "key": "996f56c4-6f8a-4a42-a43a-3b6ec635befe",
@@ -374,14 +406,16 @@
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "ستّ عائلات عطرية، هالة واحدة تشبهك"
         },
         {
           "id": "subtitle",
           "type": "string",
           "format": "textarea",
           "label": "الوصف",
-          "multilanguage": true
+          "multilanguage": true,
+          "value": "لمسة على كل بتلة تكشف عائلة عطرية كاملة: وصفها الحسي، منتجاتها، وطبقاتها."
         },
         {
           "id": "families",
@@ -432,7 +466,45 @@
               "multichoice": false
             }
           ],
-          "item_label": "العائلات العطرية"
+          "item_label": "العائلات العطرية",
+          "value": [
+            {
+              "families.name": "زهري",
+              "families.description": "بتلات مقطوفة فجراً، ندى خفيف، ودفء أنثوي هادئ.",
+              "families.color_from": "#F1ECFF",
+              "families.color_to": "#C9B8FF"
+            },
+            {
+              "families.name": "خشبي",
+              "families.description": "سيقان جافة وخشب أبيض وأرض دافئة بعد الغروب.",
+              "families.color_from": "#DCE6D8",
+              "families.color_to": "#71836C"
+            },
+            {
+              "families.name": "شرقي",
+              "families.description": "راتنجات وتوابل ناعمة ودفء يزداد قرباً مع الوقت.",
+              "families.color_from": "#C9B8FF",
+              "families.color_to": "#261838"
+            },
+            {
+              "families.name": "منعش",
+              "families.description": "أوراق خضراء وهواء بارد وماء شفاف.",
+              "families.color_from": "#EAF3FF",
+              "families.color_to": "#BACBB5"
+            },
+            {
+              "families.name": "مسكي",
+              "families.description": "أثر مخملي نظيف يلتصق بالبشرة بهدوء.",
+              "families.color_from": "#F6EFEA",
+              "families.color_to": "#C9B8FF"
+            },
+            {
+              "families.name": "حمضي",
+              "families.description": "قشور مشرقة ومرارة رقيقة تفتح الحواس.",
+              "families.color_from": "#FFF4EC",
+              "families.color_to": "#FF7C8B"
+            }
+          ]
         },
         {
           "id": "products_shown",
@@ -467,14 +539,16 @@
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "قطع منحوتة من حصاد هذا الموسم"
         },
         {
           "id": "subtitle",
           "type": "string",
           "format": "textarea",
           "label": "الوصف",
-          "multilanguage": true
+          "multilanguage": true,
+          "value": "اختاري من منتجات المتجر"
         },
         {
           "id": "products",
@@ -508,41 +582,47 @@
           "type": "string",
           "label": "شارة العرض",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "عرض الموسم"
         },
         {
           "id": "title_line_1",
           "type": "string",
           "label": "العنوان — السطر الأول",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "أسعار خاصة"
         },
         {
           "id": "title_line_2",
           "type": "string",
           "label": "العنوان — السطر الثاني",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "على حصاد اللافندر"
         },
         {
           "id": "body",
           "type": "string",
           "format": "textarea",
           "label": "وصف العرض",
-          "multilanguage": true
+          "multilanguage": true,
+          "value": "تشكيلة مختارة من العطور ومجموعات العناية الليلية. تظهر تفاصيل العرض في صفحة كل منتج."
         },
         {
           "id": "cta_label",
           "type": "string",
           "label": "نص زر العرض",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "تصفّحي العرض"
         },
         {
           "id": "cta_url",
           "type": "string",
           "format": "url",
-          "label": "رابط زر العرض"
+          "label": "رابط زر العرض",
+          "value": "/products"
         },
         {
           "id": "tiles",
@@ -567,11 +647,29 @@
               "label": "رابط الفئة"
             }
           ],
-          "item_label": "فئة العرض"
+          "item_label": "فئة العرض",
+          "value": [
+            {
+              "tiles.label": "٥٠ مل",
+              "tiles.url": "/products"
+            },
+            {
+              "tiles.label": "٧٥ مل",
+              "tiles.url": "/products"
+            },
+            {
+              "tiles.label": "عناية ليلية",
+              "tiles.url": "/products"
+            },
+            {
+              "tiles.label": "هدايا",
+              "tiles.url": "/products"
+            }
+          ]
         }
       ],
       "key": "3d7f4f6a-fc14-4cb3-8b12-7fe56cf6ef3f",
-      "is_default": false
+      "is_default": true
     },
     {
       "name": "botanical-categories",
@@ -587,14 +685,16 @@
           "type": "string",
           "label": "النص العلوي",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "سيقان وأوراق"
         },
         {
           "id": "title",
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "تنقّلي بين الأقسام كما تتنقّل اليد بين السيقان"
         },
         {
           "id": "categories",
@@ -644,7 +744,29 @@
               "label": "لون الخلفية"
             }
           ],
-          "item_label": "الأقسام"
+          "item_label": "الأقسام",
+          "value": [
+            {
+              "categories.title": "العطور",
+              "categories.count_label": "تسوّقي الآن",
+              "categories.color": "#C9B8FF"
+            },
+            {
+              "categories.title": "العناية بالبشرة",
+              "categories.count_label": "تسوّقي الآن",
+              "categories.color": "#BACBB5"
+            },
+            {
+              "categories.title": "العناية بالشعر",
+              "categories.count_label": "تسوّقي الآن",
+              "categories.color": "#EBD8FF"
+            },
+            {
+              "categories.title": "الهدايا",
+              "categories.count_label": "تسوّقي الآن",
+              "categories.color": "#FFCBD2"
+            }
+          ]
         }
       ],
       "key": "1d801151-05da-4010-988b-a6be758e8542",
@@ -664,21 +786,24 @@
           "type": "string",
           "label": "النص العلوي",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "من الحقل إلى الزجاجة"
         },
         {
           "id": "title",
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "حصاد الفجر في حقول اللافندر"
         },
         {
           "id": "body",
           "type": "string",
           "format": "textarea",
           "label": "القصة",
-          "multilanguage": true
+          "multilanguage": true,
+          "value": "نقطف البتلات قبل شروق الشمس حين يكون الزيت في أعلى تركيزه، ثم نقطّرها في نفس اليوم على حرارة منخفضة للحفاظ على الطبقات الخضراء الهادئة."
         },
         {
           "id": "image",
@@ -691,20 +816,23 @@
           "type": "string",
           "label": "نص الزر",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "اقرأي الحكاية كاملة"
         },
         {
           "id": "button_url",
           "type": "string",
           "format": "url",
-          "label": "رابط الزر"
+          "label": "رابط الزر",
+          "value": "/blog"
         },
         {
           "id": "image_alt",
           "type": "string",
           "label": "النص البديل للصورة",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "حقل لافندر عند الفجر"
         },
         {
           "id": "tags",
@@ -753,7 +881,8 @@
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "روتين متدفّق، لا صفوف من البطاقات"
         },
         {
           "id": "steps",
@@ -816,13 +945,15 @@
           "type": "string",
           "label": "نص الزر",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "ابني روتينك الآن"
         },
         {
           "id": "cta_url",
           "type": "string",
           "format": "url",
-          "label": "رابط الزر"
+          "label": "رابط الزر",
+          "value": "/products"
         }
       ],
       "key": "05761ec5-cee8-42fa-a5cb-4bb6582b0fdd",
@@ -842,14 +973,16 @@
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "ما الذي تريدين أن تشعري به؟"
         },
         {
           "id": "subtitle",
           "type": "string",
           "format": "textarea",
           "label": "الوصف",
-          "multilanguage": true
+          "multilanguage": true,
+          "value": "اختاري إحساساً بدلاً من فئة، وسنعرض التركيبات التي تحمله."
         },
         {
           "id": "moods",
@@ -932,14 +1065,23 @@
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "اختاري منتجات هدية"
         },
         {
           "id": "body",
           "type": "string",
           "format": "textarea",
           "label": "الوصف",
-          "multilanguage": true
+          "multilanguage": true,
+          "value": "اختاري المنتجات التي ترغبين بإضافتها إلى السلة، واستعرضيها قبل إتمام الطلب."
+        },
+        {
+          "id": "image",
+          "type": "string",
+          "format": "image",
+          "label": "صورة العلبة",
+          "required": false
         },
         {
           "id": "products",
@@ -984,7 +1126,8 @@
           "type": "string",
           "label": "العنوان",
           "multilanguage": true,
-          "format": "text"
+          "format": "text",
+          "value": "من المجلة"
         },
         {
           "id": "articles",
@@ -1030,66 +1173,31 @@
             }
           ],
           "item_label": "المقالات",
-          "required": false
+          "required": false,
+          "value": [
+            {
+              "articles.title": "كيف تُبنى قاعدة العطر؟",
+              "articles.category": "تركيب",
+              "articles.url": "/blog",
+              "articles.reading_time": 6
+            },
+            {
+              "articles.title": "روتين المساء في خمس خطوات",
+              "articles.category": "عناية",
+              "articles.url": "/blog",
+              "articles.reading_time": 4
+            },
+            {
+              "articles.title": "الميرمية: الأخضر الهادئ",
+              "articles.category": "نبات",
+              "articles.url": "/blog",
+              "articles.reading_time": 7
+            }
+          ]
         }
       ],
       "key": "9e2ea983-406b-47c4-b653-f7ae60534fd5",
       "is_default": true
-    },
-    {
-      "name": "fragrance-note-bloom",
-      "title": {
-        "ar": "تفتّح النوتات العطرية",
-        "en": "Fragrance Note Bloom"
-      },
-      "icon": "sicon-flower",
-      "path": "note-bloom",
-      "fields": [
-        {
-          "id": "top_notes",
-          "type": "string",
-          "label": "نوتات المقدمة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "top_text",
-          "type": "string",
-          "format": "textarea",
-          "label": "وصف المقدمة",
-          "multilanguage": true
-        },
-        {
-          "id": "heart_notes",
-          "type": "string",
-          "label": "نوتات القلب",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "heart_text",
-          "type": "string",
-          "format": "textarea",
-          "label": "وصف القلب",
-          "multilanguage": true
-        },
-        {
-          "id": "base_notes",
-          "type": "string",
-          "label": "نوتات القاعدة",
-          "multilanguage": true,
-          "format": "text"
-        },
-        {
-          "id": "base_text",
-          "type": "string",
-          "format": "textarea",
-          "label": "وصف القاعدة",
-          "multilanguage": true
-        }
-      ],
-      "key": "9e5caeb0-09bd-4dd9-8471-8096c90f904f",
-      "is_default": false
     }
   ],
   "description": {

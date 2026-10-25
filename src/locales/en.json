@@ -40,7 +40,20 @@
     "cta": "Explore the collection",
     "cta_secondary": "Find your scent family",
     "editor_pick": "Editor's pick",
-    "art_alt": "A translucent perfume bottle layered with lavender forms"
+    "art_alt": "A translucent perfume bottle layered with lavender forms",
+    "stat_1_value": "6",
+    "stat_1_label": "Scent families",
+    "stat_2_value": "4",
+    "stat_2_label": "Routine steps",
+    "stat_3_value": "3",
+    "stat_3_label": "Fragrance layers",
+    "pick_name": "The season's edit",
+    "note_1_tag": "TOP",
+    "note_1_label": "Bright bergamot",
+    "note_2_tag": "HEART",
+    "note_2_label": "Hand-cut lavender",
+    "note_3_tag": "BASE",
+    "note_3_label": "Velvet musk"
   },
   "showcase": {
     "title": "Sculpted pieces from this season's harvest",
@@ -53,7 +66,8 @@
     "fallback_fragrance": "Fragrance",
     "fallback_skincare": "Skincare",
     "fallback_haircare": "Haircare",
-    "fallback_gifts": "Gifts"
+    "fallback_gifts": "Gifts",
+    "shop": "Shop now"
   },
   "aura": {
     "kicker": "Fragrance aura",
@@ -75,7 +89,8 @@
       "fresh": "Green leaves, cool air, and translucent water.",
       "musky": "A clean velvet trail that rests softly on skin.",
       "citrus": "Bright peel and delicate bitterness opening the senses."
-    }
+    },
+    "subtitle": "Touch a petal to open a whole family: its sensory description, its products, its layers."
   },
   "bloom": {
     "kicker": "Note bloom",
@@ -132,7 +147,8 @@
     "tag_1": "Hand-picked",
     "tag_2": "Cold distilled",
     "tag_3": "No harsh alcohol",
-    "cta": "Read the full story"
+    "cta": "Read the full story",
+    "image_alt": "A lavender field at dawn"
   },
   "product": {
     "details": "Product details",
@@ -235,7 +251,13 @@
     "title": "From the journal",
     "all": "All articles",
     "empty": "No articles yet",
-    "read_time": "{n} min read"
+    "read_time": "{n} min read",
+    "article_1_tag": "Composition",
+    "article_1_title": "How a base note is built",
+    "article_2_tag": "Care",
+    "article_2_title": "An evening routine in five steps",
+    "article_3_tag": "Botany",
+    "article_3_title": "Sage: the quiet green"
   },
   "loyalty": {
     "kicker": "Lavender points",
@@ -282,12 +304,39 @@
   "offer": {
     "countdown_label": "Time remaining on the offer",
     "cta": "Shop the offer",
-    "categories_label": "Offer categories"
+    "categories_label": "Offer categories",
+    "badge": "Seasonal offer",
+    "title_line_1": "Special prices",
+    "title_line_2": "on the lavender harvest",
+    "body": "A curated edit of parfums and night care sets. Offer details appear on each product page.",
+    "tile_1": "50ml",
+    "tile_2": "75ml",
+    "tile_3": "Night care",
+    "tile_4": "Gift sets"
   },
   "reviewer": {
     "label": "Screen review panel",
     "pages": "Screens",
     "brands": "Brands",
     "loyalty": "Loyalty"
+  },
+  "features": {
+    "delivery_title": "Delivered to your door",
+    "delivery_text": "Your order is prepared with care and delivered to you.",
+    "payment_title": "Secure payment",
+    "payment_text": "Trusted, protected payment methods at checkout.",
+    "support_title": "Care that stays close",
+    "support_text": "Our team answers your questions before and after you order."
+  },
+  "slider": {
+    "kicker": "Just arrived",
+    "title": "The latest additions to the store",
+    "all": "View all"
+  },
+  "testimonials": {
+    "kicker": "In their words",
+    "title": "From our customers",
+    "empty_title": "Tell us how the scent reached you",
+    "empty_body": "Customer reviews appear here after each order."
   }
 }
