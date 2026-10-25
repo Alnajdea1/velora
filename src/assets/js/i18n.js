@@ -2,6 +2,7 @@
   'use strict';
 
   const PAIRS = __LOCALE_PAIRS__;
+  const ATTRIBUTES = ['placeholder', 'aria-label', 'title'];
   const SKIP_TAGS = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'IFRAME', 'CODE', 'PRE']);
   const ARABIC_DIGITS = '٠١٢٣٤٥٦٧٨٩';
   const LATIN_DIGITS = '0123456789';
