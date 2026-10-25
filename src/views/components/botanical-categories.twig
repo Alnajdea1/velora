@@ -1,21 +1,31 @@
-{# Merchant-selected categories only; never invent category names or product counts. #}
-{% if component.categories|length %}
+{#
+  Merchant-selected categories first. Slots without a selected category show theme tiles with bundled
+  artwork; app.js swaps untouched tiles for the store's own categories. No product counts are invented.
+#}
+{% set default_tiles = [
+  {'title': trans('categories.fallback_fragrance'), 'color': '#C9B8FF', 'image': 'images/velora/category-fragrance.svg'|asset},
+  {'title': trans('categories.fallback_skincare'), 'color': '#BACBB5', 'image': 'images/velora/category-skincare.svg'|asset},
+  {'title': trans('categories.fallback_haircare'), 'color': '#EBD8FF', 'image': 'images/velora/category-haircare.svg'|asset},
+  {'title': trans('categories.fallback_gifts'), 'color': '#FFCBD2', 'image': 'images/velora/category-gifts.svg'|asset}
+] %}
+{% set items = component.categories|default([]) %}
 <section class="v-section v-botanical" data-component="botanical-categories">
   <div class="v-wrap">
     <div class="v-botanical__kicker"><span>{{ component.kicker ?: trans('categories.kicker') }}</span><i></i></div>
     <h2>{{ component.title ?: trans('categories.title') }}</h2>
     <div class="v-botanical__grid">
-      {% for category in component.categories|slice(0, 4) %}
-        {% set picked = category.category ?: category %}
-        {% if picked.url %}
-          <a href="{{ picked.url }}" class="v-botanical__card v-botanical__card--{{ loop.index }}" style="--v-category-color:{{ category.color ?: ['#C9B8FF','#BACBB5','#EBD8FF','#FFCBD2'][loop.index0] }}">
-            {% if category.image %}<img src="{{ category.image }}" alt="" loading="lazy">{% elseif picked.image %}<img src="{{ picked.image }}" alt="" loading="lazy">{% endif %}
-            <i aria-hidden="true"></i><b aria-hidden="true"></b>
-            <span><strong>{{ category.title ?: picked.name }}</strong>{% if category.count_label %}<small>{{ category.count_label }}</small>{% elseif picked.products_count is defined %}<small>{{ trans('categories.count', { n: picked.products_count }) }}</small>{% endif %}</span>
-          </a>
-        {% endif %}
+      {% for slot in 0..3 %}
+        {% set item = items[slot]|default({}) %}
+        {% set fallback = default_tiles[slot] %}
+        {% set picked = item.category ?: item %}
+        {% set title_auto = not item.title or item.title == fallback.title %}
+        <a href="{{ picked.url ?: link('products') }}" class="v-botanical__card v-botanical__card--{{ loop.index }}" style="--v-category-color:{{ item.color ?: fallback.color }}"
+           {% if not picked.url %} data-category-auto{% if title_auto %} data-title-auto{% endif %}{% if not item.image %} data-image-auto{% endif %}{% endif %}>
+          <img src="{{ item.image ?: (picked.image ?: fallback.image) }}" alt="" loading="lazy">
+          <i aria-hidden="true"></i><b aria-hidden="true"></b>
+          <span><strong>{{ item.title ?: (picked.name ?: fallback.title) }}</strong>{% if item.count_label %}<small>{{ item.count_label }}</small>{% elseif picked.url and picked.products_count is defined %}<small>{{ trans('categories.count', { n: picked.products_count }) }}</small>{% else %}<small>{{ trans('categories.shop') }}</small>{% endif %}</span>
+        </a>
       {% endfor %}
     </div>
   </div>
 </section>
-{% endif %}

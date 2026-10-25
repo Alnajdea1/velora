@@ -1,10 +1,10 @@
-{# velora.mood_shopping #}
+{# velora.mood_shopping — moods without selected products list the store's latest products. #}
 <section class="v-section" data-component="mood-shopping" style="background:linear-gradient(180deg,var(--mist),var(--porcelain))">
   <div class="v-wrap">
     <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px">
       <div>
         <span style="font-family:var(--latin);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--leaf)">{{ trans('mood.kicker') }}</span>
-        <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('mood.title')) }}</h2>
+        <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ component.title ?: trans('mood.title') }}</h2>
       </div>
       <p style="margin:0;max-width:300px;font-size:13.5px;line-height:1.8;color:var(--leaf)">{{ component.subtitle ?: trans('mood.subtitle') }}</p>
     </div>
@@ -15,20 +15,28 @@
         {'name':trans('mood.moods.fresh'),'color':'#C9B8FF'}, {'name':trans('mood.moods.bold'),'color':'#7657E8'},
         {'name':trans('mood.moods.dreamy'),'color':'#EBD8FF'}, {'name':trans('mood.moods.evening'),'color':'#261838'}
       ] %}
-      {% set moods = component.moods|length ? component.moods : default_moods %}
+      {% set moods = component.moods|default([])|length ? component.moods : default_moods %}
       {% for mood in moods %}
         <button type="button" role="tab" class="v-chip v-pill" data-mood="{{ loop.index0 }}"
                 aria-pressed="{{ loop.first ? 'true' : 'false' }}" style="padding:12px 20px">
-          <span class="v-chip__dot" style="background:{{ mood.color }}"></span>{{ mood.name }}
+          <span class="v-chip__dot" style="background:{{ mood.color ?: default_moods[loop.index0 % 6].color }}"></span>{{ mood.name ?: default_moods[loop.index0 % 6].name }}
         </button>
       {% endfor %}
     </div>
 
+    {% set sorts = ['', 'bestSell', 'topRated', 'priceFromLowToTop', 'ourSuggest', 'priceFromTopToLow'] %}
     {% for mood in moods %}
       <div class="v-grid v-grid--4" data-mood-panel="{{ loop.index0 }}" {{ loop.first ? '' : 'hidden' }} style="margin-top:34px">
-        {% for product in mood.products|slice(0, 4) %}
-          {% include 'components.product-card' with { product: product } %}
-        {% else %}<p class="v-empty">{{ trans('common.configure_products') }}</p>{% endfor %}
+        {% if mood.products|default([])|length %}
+          {% for product in mood.products|slice(0, 4) %}
+            {% include 'components.product-card' with { product: product } %}
+          {% endfor %}
+        {% else %}
+          {# Hidden panels keep their list in a template until the mood is opened. #}
+          {% set sort = sorts[loop.index0 % 6] %}
+          {% set auto_list %}<salla-products-list class="v-products-auto" source="latest" limit="4" product-card-component="custom-salla-product-card"{% if sort %} sort-by="{{ sort }}"{% endif %}></salla-products-list>{% endset %}
+          {% if loop.first %}{{ auto_list }}{% else %}<template data-velora-lazy>{{ auto_list }}</template>{% endif %}
+        {% endif %}
       </div>
     {% endfor %}
   </div>

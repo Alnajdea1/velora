@@ -1,18 +1,20 @@
-{# Seasonal products come only from the merchant's selected products or category. #}
+{# Seasonal products: the merchant's selection, otherwise the store's latest products. #}
 <section class="v-section v-showcase v-curve-top" data-component="season-showcase">
   <div class="v-wrap">
     <div class="v-section-heading">
       <h2>{{ component.title ?: trans('showcase.title') }}</h2>
       <p>{{ component.subtitle ?: trans('showcase.subtitle') }}</p>
     </div>
-    {% set products = component.products ?: component.category.products %}
+    {% set products = component.products|default([])|length ? component.products : component.category.products|default([]) %}
     <div class="v-showcase__grid">
       {% for product in products|slice(0, 3) %}
         <div class="v-showcase__item v-showcase__item--{{ loop.index }}">
           <div class="v-showcase__index"><span>{{ loop.index|replace({'0': '٠', '1': '١', '2': '٢', '3': '٣', '4': '٤', '5': '٥', '6': '٦', '7': '٧', '8': '٨', '9': '٩'}) }}</span><i></i></div>
           {% include 'components.product-card' with { product: product } %}
         </div>
-      {% else %}<p class="v-empty">{{ trans('common.configure_products') }}</p>{% endfor %}
+      {% else %}
+        <salla-products-list class="v-products-auto v-showcase__auto" source="latest" limit="3" product-card-component="custom-salla-product-card"></salla-products-list>
+      {% endfor %}
     </div>
   </div>
 </section>

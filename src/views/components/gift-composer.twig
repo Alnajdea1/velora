@@ -1,12 +1,12 @@
-{# velora.gift_composer #}
+{# velora.gift_composer — without selected products, app.js offers the store's latest products as gift pieces. #}
 <section class="v-section v-dark v-curve-top" data-component="gift-composer" {{ component.guaranteed_fallback ? 'data-gift-fallback="true"' : '' }}
          data-max-items="{{ component.max_items|default(3) }}" data-wrap-price="{{ component.wrap_price|default(0) }}"
-         data-fallback-url="{{ link('products') }}"
+         data-fallback-url="{{ link('products') }}" data-added-text="{{ trans('cart.added')|e('html_attr') }}"
          style="position:relative;overflow:hidden">
   <div class="v-wrap" style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:54px;align-items:center">
     <div>
       <span style="font-family:var(--latin);font-size:11px;font-weight:700;letter-spacing:.22em;color:var(--coral)">{{ trans('gift.kicker') }}</span>
-      <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('gift.title')) }}</h2>
+      <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ component.title ?: trans('gift.title') }}</h2>
       <p style="margin-top:16px;max-width:400px;font-size:14.5px;line-height:1.9;color:rgba(241,236,255,.65)">{{ component.body ?: trans('gift.body') }}</p>
 
       <div style="margin-top:26px">
@@ -21,17 +21,20 @@
 
       <div style="margin-top:26px">
         <div style="font-size:12px;font-weight:700;color:var(--lilac);margin-bottom:12px">{{ trans('gift.step_items') }}</div>
-        <div style="display:flex;flex-wrap:wrap;gap:9px">
-          {% for product in component.products %}
+        <div style="display:flex;flex-wrap:wrap;gap:9px" data-gift-items{% if not component.products|default([])|length %} data-gift-source="latest"{% endif %}>
+          {% for product in component.products|default([]) %}
             <button type="button" class="v-chip" data-gift-item="{{ product.id }}" data-price="{{ product.price }}" aria-pressed="false">{{ product.name }}</button>
-          {% else %}<p class="v-empty">{{ trans('common.configure_products') }}</p>{% endfor %}
+          {% else %}
+            {% for i in 1..4 %}<span class="v-chip v-gift__skeleton" aria-hidden="true"></span>{% endfor %}
+          {% endfor %}
         </div>
+        <p class="v-empty" data-gift-empty hidden>{{ trans('common.configure_products') }}</p>
       </div>
     </div>
 
     <div class="v-editorial" style="padding:30px;background:rgba(252,251,255,.07)">
-      <div class="v-gift__box" data-gift-box data-shape="petal" style="border-radius:var(--petal);background:linear-gradient(165deg,var(--lilac),var(--iris))">
-        <span aria-hidden="true" class="v-gift__ribbon"></span>
+      <div class="v-gift__box v-gift__box--art" data-gift-box data-shape="petal" style="border-radius:var(--petal);background:linear-gradient(165deg,var(--lilac),var(--iris))">
+        <img class="v-gift__art" src="{{ component.image ?: 'images/velora/gift-box.svg'|asset }}" alt="" loading="lazy">
         <div data-gift-chosen style="position:absolute;bottom:16px;inset-inline:16px;display:flex;flex-direction:column;gap:6px"></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px">
@@ -44,4 +47,3 @@
     </div>
   </div>
 </section>
-

@@ -1,21 +1,37 @@
-{# velora.journal #}
-<section class="v-section">
+{# velora.journal — merchant articles, or three theme articles that open the store blog. #}
+{% set articles = component.articles|default([])|length ? component.articles : [
+  {'title': trans('blog.article_1_title'), 'category': trans('blog.article_1_tag'), 'reading_time': 6},
+  {'title': trans('blog.article_2_title'), 'category': trans('blog.article_2_tag'), 'reading_time': 4},
+  {'title': trans('blog.article_3_title'), 'category': trans('blog.article_3_tag'), 'reading_time': 7}
+] %}
+{% set shapes = ['160px 160px 26px 26px', '26px 160px 26px 160px', '26px 26px 160px 160px'] %}
+{% set washes = [['#F1ECFF', '#C9B8FF'], ['#DCE6D8', '#BACBB5'], ['#FFF4EC', '#FFD9DE']] %}
+<section class="v-section" data-component="journal">
   <div class="v-wrap">
     <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px">
-      <h2 style="font-size:clamp(34px,3.6vw,52px)">{{ component.title|default(trans('blog.title')) }}</h2>
+      <h2 style="font-size:clamp(34px,3.6vw,52px)">{{ component.title ?: trans('blog.title') }}</h2>
       <a href="{{ link('blog') }}" style="padding-bottom:4px;border-bottom:1.5px solid var(--lilac);color:var(--aubergine);font-size:13.5px;font-weight:700">{{ trans('blog.all') }}</a>
     </div>
     <div class="v-grid v-grid--3" style="margin-top:40px">
-      {% for article in component.articles|slice(0, 3) %}
-        <a href="{{ article.url }}" class="v-journal-card">
-          <div class="v-journal-card__media" style="--journal-shape:{{ loop.index0 == 0 ? '160px 160px 26px 26px' : (loop.index0 == 1 ? '26px 160px 26px 160px' : '26px 26px 160px 160px') }}">
-            <img src="{{ article.image }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">
-            <span class="v-pill" style="position:absolute;top:14px;inset-inline-start:14px;padding:6px 12px;background:rgba(252,251,255,.92);font-size:11px;font-weight:700;color:var(--iris)">{{ article.category }}</span>
-          </div>
+      {% for article in articles|slice(0, 3) %}
+        {% set article_url = article.url ?: link('blog') %}
+        {% if article_url starts with '/' %}{% set article_url = link(article_url) %}{% endif %}
+        <a href="{{ article_url }}" class="v-journal-card">
+          {% if article.image %}
+            <div class="v-journal-card__media" style="--journal-shape:{{ shapes[loop.index0] }}">
+              <img src="{{ article.image }}" alt="" loading="lazy" style="width:100%;height:100%;object-fit:cover">
+              {% if article.category %}<span class="v-pill" style="position:absolute;top:14px;inset-inline-start:14px;padding:6px 12px;background:rgba(252,251,255,.92);font-size:11px;font-weight:700;color:var(--iris)">{{ article.category }}</span>{% endif %}
+            </div>
+          {% else %}
+            <div class="v-journal-card__media v-journal-demo" style="--journal-shape:{{ shapes[loop.index0] }};--demo-from:{{ washes[loop.index0][0] }};--demo-to:{{ washes[loop.index0][1] }}">
+              <i aria-hidden="true"></i><b aria-hidden="true"></b>
+              {% if article.category %}<span class="v-pill">{{ article.category }}</span>{% endif %}
+            </div>
+          {% endif %}
           <div style="margin-top:16px;font-family:var(--display);font-size:19px;line-height:1.5;color:var(--aubergine)">{{ article.title }}</div>
-          <div style="margin-top:8px;font-size:12.5px;color:var(--leaf)">{{ trans('blog.read_time', { n: article.reading_time }) }}</div>
+          {% if article.reading_time %}<div style="margin-top:8px;font-size:12.5px;color:var(--leaf)">{{ trans('blog.read_time', { n: article.reading_time }) }}</div>{% endif %}
         </a>
-      {% else %}<p class="v-empty">{{ trans('blog.empty') }}</p>{% endfor %}
+      {% endfor %}
     </div>
   </div>
 </section>

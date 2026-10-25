@@ -1,4 +1,29 @@
-{# Velora — Lavender in Motion hero. The CSS bottle is the approved prototype artwork fallback. #}
+{# Velora — Lavender in Motion hero. Empty fields fall back to theme copy and the bundled hero artwork. #}
+{% set primary_url = component.primary_url ?: link('products') %}
+{% if primary_url starts with '/' %}{% set primary_url = link(primary_url) %}{% endif %}
+{% set secondary_url = component.secondary_url ?: '#aura' %}
+{% if secondary_url starts with '/' %}{% set secondary_url = link(secondary_url) %}{% endif %}
+{% set pick_url = component.product_url ?: link('products') %}
+{% if pick_url starts with '/' %}{% set pick_url = link(pick_url) %}{% endif %}
+{% set image_alt = component.image_alt ?: trans('hero.art_alt') %}
+{% if component.stat_1_value or component.stat_2_value or component.stat_3_value %}
+  {% set stats = [
+    {'value': component.stat_1_value, 'label': component.stat_1_label},
+    {'value': component.stat_2_value, 'label': component.stat_2_label},
+    {'value': component.stat_3_value, 'label': component.stat_3_label}
+  ] %}
+{% else %}
+  {% set stats = [
+    {'value': trans('hero.stat_1_value'), 'label': trans('hero.stat_1_label')},
+    {'value': trans('hero.stat_2_value'), 'label': trans('hero.stat_2_label')},
+    {'value': trans('hero.stat_3_value'), 'label': trans('hero.stat_3_label')}
+  ] %}
+{% endif %}
+{% set notes = component.notes|default([])|length ? component.notes : [
+  {'tag': trans('hero.note_1_tag'), 'label': trans('hero.note_1_label')},
+  {'tag': trans('hero.note_2_tag'), 'label': trans('hero.note_2_label')},
+  {'tag': trans('hero.note_3_tag'), 'label': trans('hero.note_3_label')}
+] %}
 <section class="v-hero" data-component="lavender-hero">
   <span class="v-hero__wash v-hero__wash--iris" aria-hidden="true"></span>
   <span class="v-hero__wash v-hero__wash--sage" aria-hidden="true"></span>
@@ -15,51 +40,35 @@
       </h1>
       <p class="v-hero__body">{{ component.body ?: trans('hero.body') }}</p>
       <div class="v-hero__actions">
-        <a href="{{ component.primary_url ?: link('products') }}" class="v-btn v-btn--primary v-pill">
+        <a href="{{ primary_url }}" class="v-btn v-btn--primary v-pill">
           {{ component.primary_label ?: trans('hero.cta') }} <span class="v-flip" aria-hidden="true">←</span>
         </a>
-        <a href="{{ component.secondary_url ?: '#aura' }}" class="v-hero__secondary">{{ component.secondary_label ?: trans('hero.cta_secondary') }}</a>
+        <a href="{{ secondary_url }}" class="v-hero__secondary">{{ component.secondary_label ?: trans('hero.cta_secondary') }}</a>
       </div>
-      {% if component.stat_1_value or component.stat_2_value or component.stat_3_value %}
-        <dl class="v-hero__stats">
-          {% if component.stat_1_value and component.stat_1_label %}<div><dt>{{ component.stat_1_value }}</dt><dd>{{ component.stat_1_label }}</dd></div>{% endif %}
-          {% if component.stat_2_value and component.stat_2_label %}<div><dt>{{ component.stat_2_value }}</dt><dd>{{ component.stat_2_label }}</dd></div>{% endif %}
-          {% if component.stat_3_value and component.stat_3_label %}<div><dt>{{ component.stat_3_value }}</dt><dd>{{ component.stat_3_label }}</dd></div>{% endif %}
-        </dl>
-      {% endif %}
+      <dl class="v-hero__stats">
+        {% for stat in stats %}
+          {% if stat.value and stat.label %}<div><dt>{{ stat.value }}</dt><dd>{{ stat.label }}</dd></div>{% endif %}
+        {% endfor %}
+      </dl>
     </div>
 
-    <div class="v-hero__art" data-hero-motion aria-label="{{ component.image_alt ?: trans('hero.art_alt') }}">
+    <div class="v-hero__art" data-hero-motion aria-label="{{ image_alt }}">
       <div class="v-hero__arch">
         <span class="v-hero__glow" aria-hidden="true"></span>
-        {% if component.image %}
-          <img src="{{ component.image }}" alt="{{ component.image_alt ?: trans('hero.art_alt') }}" fetchpriority="high">
-        {% else %}
-          <span class="v-bottle v-bottle--hero" aria-hidden="true"><i></i><b></b><em></em></span>
-        {% endif %}
-        {% if component.product_name and component.product_url %}
+        <img src="{{ component.image ?: 'images/velora/hero-bottle.svg'|asset }}" alt="{{ image_alt }}" fetchpriority="high"{% if not component.image %} class="v-hero__artwork"{% endif %}>
         <div class="v-hero__pick">
-          <span><small>{{ trans('hero.editor_pick') }}</small><strong>{{ component.product_name }}</strong></span>
-          <a href="{{ component.product_url }}" class="v-btn v-btn--dark v-pill">{{ trans('common.discover') }}</a>
+          <span><small>{{ trans('hero.editor_pick') }}</small><strong>{{ component.product_name ?: trans('hero.pick_name') }}</strong></span>
+          <a href="{{ pick_url }}" class="v-btn v-btn--dark v-pill">{{ trans('common.discover') }}</a>
         </div>
-        {% endif %}
       </div>
       <span class="v-hero__leaf v-petal" aria-hidden="true"></span>
       <span class="v-hero__stem" aria-hidden="true"><i></i><b></b><em></em></span>
       <span class="v-hero__petal v-hero__petal--1" aria-hidden="true"></span>
       <span class="v-hero__petal v-hero__petal--2" aria-hidden="true"></span>
       <span class="v-hero__petal v-hero__petal--3" aria-hidden="true"></span>
-      {% for note in component.notes|default([])|slice(0, 3) %}
+      {% for note in notes|slice(0, 3) %}
         <span class="v-pill v-hero__note v-hero__note--{{ loop.index }}"><b>{{ note.tag }}</b> {{ note.label }}</span>
       {% endfor %}
     </div>
   </div>
 </section>
-
-
-
-
-
-
-
-

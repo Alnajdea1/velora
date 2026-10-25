@@ -69,6 +69,156 @@
     const editorGift = $('[data-component="gift-composer"]:not([data-gift-fallback])');
     if (guaranteedGift && editorGift) guaranteedGift.remove();
 
+    const onSallaReady = (callback) => {
+      if (!window.salla) return;
+      if (typeof salla.onReady === 'function') salla.onReady(callback);
+      else callback();
+    };
+    const productApi = () => window.salla?.api?.product || window.salla?.product?.api;
+    const amountOf = (value) => Number(Array.isArray(value) ? (value[0]?.amount ?? value[0]) : (value && typeof value === 'object' ? value.amount : value)) || 0;
+    const money = (amount) => {
+      try { if (window.salla?.money) return salla.money(amount); } catch {}
+      return new Intl.NumberFormat(document.documentElement.lang || 'ar').format(amount);
+    };
+
+    // Hidden tab panels keep their product lists in <template> until first opened.
+    const openPanel = (panel) => {
+      $$('template[data-velora-lazy]', panel).forEach((template) => template.replaceWith(template.content.cloneNode(true)));
+    };
+    const bindTabs = (root, tabAttr, panelAttr, stateAttr) => {
+      $$(`[${tabAttr}]`, root).forEach((tab) => tab.addEventListener('click', () => {
+        $$(`[${tabAttr}]`, root).forEach((item) => item.setAttribute(stateAttr, 'false'));
+        $$(`[${panelAttr}]`, root).forEach((panel) => {
+          panel.hidden = panel.getAttribute(panelAttr) !== tab.getAttribute(tabAttr);
+          if (!panel.hidden) openPanel(panel);
+        });
+        tab.setAttribute(stateAttr, 'true');
+      }));
+    };
+    $$('[data-component="aura-explorer"]').forEach((root) => bindTabs(root, 'data-aura', 'data-aura-panel', 'aria-selected'));
+    $$('[data-component="mood-shopping"]').forEach((root) => bindTabs(root, 'data-mood', 'data-mood-panel', 'aria-pressed'));
+
+    $$('[data-component="routine-path"]').forEach((root) => {
+      $$('[data-step]', root).forEach((step) => $('button', step)?.addEventListener('click', () => {
+        $$('.v-path__node', root).forEach((node) => node.setAttribute('aria-current', 'false'));
+        $('button', step).setAttribute('aria-current', 'true');
+      }));
+    });
+
+    // A picked category with no products falls back to the store's latest products.
+    document.addEventListener('productsFetched', (event) => {
+      const list = event.target;
+      if (!list?.matches?.('salla-products-list[data-velora-fallback]')) return;
+      const products = event.detail?.data;
+      if (!Array.isArray(products) || products.length) return;
+      const next = document.createElement('salla-products-list');
+      ['class', 'limit', 'product-card-component', 'sort-by'].forEach((name) => {
+        if (list.hasAttribute(name)) next.setAttribute(name, list.getAttribute(name));
+      });
+      next.setAttribute('source', list.dataset.veloraFallback);
+      list.replaceWith(next);
+    });
+
+    // Category tiles without a picked category take the store's own first categories.
+    const autoTiles = $$('[data-component="botanical-categories"] [data-category-auto]');
+    if (autoTiles.length) onSallaReady(async () => {
+      try {
+        const response = await productApi()?.categories?.();
+        const taken = new Set($$('[data-component="botanical-categories"] .v-botanical__card:not([data-category-auto])').map((tile) => tile.href));
+        const queue = (Array.isArray(response?.data) ? response.data : []).filter((category) => category?.url && category?.name && !taken.has(category.url));
+        autoTiles.forEach((tile) => {
+          if (!tile.hasAttribute('data-title-auto')) return;
+          const category = queue.shift();
+          if (!category) return;
+          tile.href = category.url;
+          const title = $('strong', tile);
+          if (title) title.textContent = category.name;
+          const image = category.image?.url || (typeof category.image === 'string' ? category.image : '');
+          const artwork = $('img', tile);
+          if (image && artwork && tile.hasAttribute('data-image-auto')) artwork.src = image;
+        });
+      } catch {}
+    });
+
+    $$('[data-component="testimonials"]').forEach((root) => {
+      const reviews = $('salla-reviews', root);
+      const empty = $('[data-reviews-empty]', root);
+      if (!reviews || !empty) return;
+      const sync = () => {
+        const loaded = Boolean(reviews.querySelector('.s-reviews-container'));
+        empty.hidden = loaded;
+        return loaded;
+      };
+      if (!sync()) new MutationObserver((records, observer) => { if (sync()) observer.disconnect(); }).observe(reviews, { childList: true, subtree: true });
+    });
+
+    $$('[data-component="gift-composer"]').forEach((root) => {
+      const chosen = new Map();
+      const max = Number(root.dataset.maxItems || 3);
+      const wrap = Number(root.dataset.wrapPrice || 0);
+      const items = $('[data-gift-items]', root);
+      const total = $('[data-gift-total]', root);
+      const list = $('[data-gift-chosen]', root);
+      const add = $('[data-gift-add]', root);
+      const render = () => {
+        list.replaceChildren(...[...chosen.values()].map((item) => {
+          const label = document.createElement('span');
+          label.textContent = item.label;
+          return label;
+        }));
+        total.textContent = chosen.size ? money([...chosen.values()].reduce((sum, item) => sum + item.price, wrap)) : '—';
+        add.disabled = !chosen.size;
+      };
+      const bindItem = (button) => button.addEventListener('click', () => {
+        const id = button.dataset.giftItem;
+        if (chosen.has(id)) chosen.delete(id);
+        else if (chosen.size < max) chosen.set(id, { label: button.textContent.trim(), price: Number(button.dataset.price || 0), url: button.dataset.url || '' });
+        button.setAttribute('aria-pressed', String(chosen.has(id)));
+        render();
+      });
+      $$('[data-gift-item]', root).forEach(bindItem);
+
+      if (items?.dataset.giftSource) onSallaReady(async () => {
+        let products = [];
+        try {
+          const response = await productApi()?.fetch?.({ source: items.dataset.giftSource, limit: 6 });
+          products = Array.isArray(response?.data) ? response.data : [];
+        } catch {}
+        items.replaceChildren(...products.filter((product) => product?.id && product?.name).map((product) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'v-chip';
+          button.dataset.giftItem = String(product.id);
+          button.dataset.price = String(amountOf(product.is_on_sale ? (product.sale_price ?? product.price) : product.price));
+          if (product.url) button.dataset.url = product.url;
+          button.setAttribute('aria-pressed', 'false');
+          button.textContent = product.name;
+          bindItem(button);
+          return button;
+        }));
+        const empty = $('[data-gift-empty]', root);
+        if (empty) empty.hidden = items.children.length > 0;
+      });
+
+      $$('[data-gift-shape]', root).forEach((button) => button.addEventListener('click', () => {
+        $$('[data-gift-shape]', root).forEach((item) => item.setAttribute('aria-pressed', 'false'));
+        button.setAttribute('aria-pressed', 'true');
+        $('[data-gift-box]', root).dataset.shape = button.dataset.giftShape;
+      }));
+
+      add?.addEventListener('click', async () => {
+        if (!window.salla?.cart?.quickAdd) { window.location.assign(root.dataset.fallbackUrl); return; }
+        add.disabled = true;
+        try {
+          for (const [id, item] of chosen) {
+            try { await salla.cart.quickAdd(Number(id), 1); }
+            catch { if (item.url) { window.location.assign(item.url); return; } }
+          }
+          if (!document.querySelector('salla-add-product-toast')) showToast(root.dataset.addedText || '');
+        } finally { add.disabled = !chosen.size; }
+      });
+    });
+
     document.addEventListener('click', async (event) => {
       const opener = event.target.closest('[data-open]');
       if (opener) setOverlay(opener.dataset.open, true);
