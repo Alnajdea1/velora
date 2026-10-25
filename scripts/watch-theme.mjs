@@ -58,9 +58,31 @@ const assets = [
   ['styles/app.css', 'app.css'],
   ['styles/add-product-toast.css', 'add-product-toast.css'],
   ['js/i18n.js', 'i18n.js'],
+  ['js/product-card.js', 'product-card.js'],
   ['js/app.js', 'app.js'],
   ['js/add-product-toast.js', 'add-product-toast.js']
 ];
+
+// i18n.js ships with a __LOCALE_PAIRS__ placeholder that build-theme.mjs fills
+// from the locale files; a raw copy would break the Arabic/English switch.
+const flattenStrings = (value, prefix = '') => Object.entries(value || {}).flatMap(([key, child]) => {
+  const full = prefix ? `${prefix}.${key}` : key;
+  return child && typeof child === 'object' && !Array.isArray(child)
+    ? flattenStrings(child, full)
+    : typeof child === 'string' ? [[full, child]] : [];
+});
+const localePairs = () => {
+  const read = (locale) => Object.fromEntries(flattenStrings(JSON.parse(fs.readFileSync(path.join(root, 'src', 'locales', `${locale}.json`), 'utf8'))));
+  const ar = read('ar');
+  const en = read('en');
+  return Object.keys(ar)
+    .filter((key) => typeof en[key] === 'string')
+    .map((key) => [ar[key], en[key]])
+    .filter(([arabic, english]) => arabic && english && arabic !== english);
+};
+const withLocales = (from) => from === 'js/i18n.js'
+  ? { transform: (content) => content.toString().replace('__LOCALE_PAIRS__', JSON.stringify(localePairs())) }
+  : {};
 
 await import('./build-theme.mjs');
 
@@ -74,7 +96,7 @@ const compiler = webpack(
     stats: 'errors-warnings',
     plugins: [
       new CopyPlugin({
-        patterns: assets.map(([from, to]) => ({ from: path.join(assetsSource, from), to }))
+        patterns: assets.map(([from, to]) => ({ from: path.join(assetsSource, from), to, ...withLocales(from) }))
       }),
       new PosixWatcherPlugin()
     ]
