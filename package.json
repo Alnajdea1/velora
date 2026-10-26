@@ -18,7 +18,7 @@
     "prod": "node scripts/build-theme.mjs"
   },
   "dependencies": {
-    "@salla.sa/twilight": "^2.14.543",
+    "@salla.sa/twilight": "^3.0.8",
     "@salla.sa/twilight-components": "^2.14.543"
   },
   "devDependencies": {
