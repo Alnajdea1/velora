@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@salla.sa/twilight": "^2.14.543",
-    "@salla.sa/twilight-components": "^2.14.543"
+    "@salla.sa/twilight-components": "^3.0.8"
   },
   "devDependencies": {
     "@salla.sa/cli": "^3.2.52",
