@@ -52,14 +52,12 @@ src/
 
 ## Approved homepage order
 
-Version 1.2.21 renders this approved sequence directly by default so an older saved Salla
-homepage configuration cannot produce a blank or legacy-looking preview. Every section is also
-registered with a stable Twilight component `key` and `is_default` metadata. After adding and
-ordering the Velora components in the editor, enable the `velora_home_editor` theme setting to
-switch from the guaranteed composition to merchant-managed ordering.
+The homepage always renders every Velora section, so an older saved Salla homepage configuration
+cannot produce a blank or legacy-looking preview. Every section is also registered with a stable
+Twilight component `key` and `is_default` metadata, and elements added in the editor render
+alongside the Velora sections.
 
-In Salla's theme editor, add the following components in this exact order to reproduce
-`Velora-Lavender-Approved-Prototype.html`:
+The Velora components, in the prototype's order (`Velora-Lavender-Approved-Prototype.html`):
 
 1. `lavender-hero` → `src/views/components/hero.twig`
 2. `fragrance-aura-explorer` → `src/views/components/aura-explorer.twig`
@@ -76,10 +74,11 @@ template renders it from the product's fragrance metadata, so it is not offered 
 The closing newsletter is global, matching the prototype, and is rendered from `layouts/master.twig`
 before `footer.twig`.
 
-Velora renders its full homepage sequence by default — hero, store features, aura explorer, season
+Velora always renders its full homepage sequence — hero, store features, aura explorer, season
 showcase, botanical categories, offer, editorial story, routine path, mood shopping, products slider,
-gift composer, testimonials, journal — and switches to merchant-ordered components once
-`velora_home_editor` is enabled and the editor layout contains components. Every section has default
+gift composer, testimonials, journal — whatever the editor layout contains. Elements from the editor
+layout render too, and a section that is already in the layout is not repeated: when the layout has
+its own hero it comes first, otherwise the Velora sections come first. Every section has default
 copy in `twilight.json` and the locales, bundled artwork in `src/assets/images/velora/` (copied to
 `public/images/` by the build), and falls back to the store's latest products or first categories, so
 the homepage is complete in an empty store. Testimonials show only the store's real reviews.

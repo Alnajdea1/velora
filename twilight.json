@@ -176,17 +176,6 @@
       "format": "switch",
       "label": "إظهار لوحة فهرس الشاشات للمراجعة",
       "selected": false
-    },
-    {
-      "id": "velora_home_editor",
-      "type": "boolean",
-      "icon": "sicon-layout-grid-rearrange",
-      "label": "استخدام أقسام الصفحة الرئيسية من محرر الثيم",
-      "description": "اتركه مغلقاً لعرض ترتيب Velora المعتمد تلقائياً. فعّله فقط بعد إضافة أقسام Velora وترتيبها في محرر الصفحة الرئيسية.",
-      "format": "switch",
-      "required": false,
-      "value": false,
-      "selected": false
     }
   ],
   "components": [

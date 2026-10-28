@@ -1,32 +1,31 @@
 {% extends 'layouts.master' %}
 {% block content %}
-  {% set home_components = '' %}
-  {% if theme.settings.get('velora_home_editor', false) %}
-    {% set home_components %}{% component home %}{% endset %}{# merchant-ordered components declared in twilight.json #}
-  {% endif %}
+  {#
+    Every Velora section always renders, whatever the editor layout contains. Elements the merchant
+    adds in the editor render as well, and a Velora section that is already in the layout is not
+    repeated. When the layout carries its own hero it leads; otherwise the Velora sections lead and
+    the editor's extra elements follow them. Each section falls back to theme copy, bundled artwork
+    and the store's own products, so the homepage is complete in a brand-new store.
+  #}
+  {% set home_layout %}{% component home %}{% endset %}{# merchant-ordered components declared in twilight.json #}
+  {% set layout_html = '' ~ home_layout %}
+  {% set layout_first = 'data-component="lavender-hero"' in layout_html %}
 
-  {% if home_components|trim %}
-    {{ home_components }}
-    {# Keep the approved signature composer visible even in legacy saved editor layouts. JS removes this fallback when an editor-managed composer already exists. #}
-    {% include 'components.gift-composer' with { component: {'guaranteed_fallback': true} } %}
-  {% else %}
-    {#
-      Default composition: shown until the merchant enables editor ordering and adds components.
-      Every section falls back to theme copy, bundled artwork and the store's own products, so the
-      homepage is complete in a brand-new store.
-    #}
-    {% include 'components.hero' with { component: {} } %}
-    {% include 'components.home.store-features' with { items: [] } %}
-    {% include 'components.aura-explorer' with { component: {} } %}
-    {% include 'components.season-showcase' with { component: {} } %}
-    {% include 'components.botanical-categories' with { component: {} } %}
-    {% include 'components.offer-landing' with { component: {} } %}
-    {% include 'components.editorial-story' with { component: {} } %}
-    {% include 'components.routine-path' with { component: {} } %}
-    {% include 'components.mood-shopping' with { component: {} } %}
-    {% include 'components.home.products-slider' with { products: {'source': 'latest'}, limit: 8, position: 0 } %}
-    {% include 'components.gift-composer' with { component: {} } %}
-    {% include 'components.home.testimonials' with { limit: 6, type: 'store' } %}
-    {% include 'components.journal' with { component: {} } %}
-  {% endif %}
+  {% if layout_first %}{{ home_layout }}{% endif %}
+
+  {% if 'data-component="lavender-hero"' not in layout_html %}{% include 'components.hero' with { component: {} } %}{% endif %}
+  {% if 'data-component="store-features"' not in layout_html %}{% include 'components.home.store-features' with { items: [] } %}{% endif %}
+  {% if 'data-component="aura-explorer"' not in layout_html %}{% include 'components.aura-explorer' with { component: {} } %}{% endif %}
+  {% if 'data-component="season-showcase"' not in layout_html %}{% include 'components.season-showcase' with { component: {} } %}{% endif %}
+  {% if 'data-component="botanical-categories"' not in layout_html %}{% include 'components.botanical-categories' with { component: {} } %}{% endif %}
+  {% if 'data-component="offer-landing"' not in layout_html %}{% include 'components.offer-landing' with { component: {} } %}{% endif %}
+  {% if 'data-component="editorial-story"' not in layout_html %}{% include 'components.editorial-story' with { component: {} } %}{% endif %}
+  {% if 'data-component="routine-path"' not in layout_html %}{% include 'components.routine-path' with { component: {} } %}{% endif %}
+  {% if 'data-component="mood-shopping"' not in layout_html %}{% include 'components.mood-shopping' with { component: {} } %}{% endif %}
+  {% if 'data-component="products-slider"' not in layout_html %}{% include 'components.home.products-slider' with { products: {'source': 'latest'}, limit: 8, position: 0 } %}{% endif %}
+  {% if 'data-component="gift-composer"' not in layout_html %}{% include 'components.gift-composer' with { component: {} } %}{% endif %}
+  {% if 'data-component="testimonials"' not in layout_html %}{% include 'components.home.testimonials' with { limit: 6, type: 'store' } %}{% endif %}
+  {% if 'data-component="journal"' not in layout_html %}{% include 'components.journal' with { component: {} } %}{% endif %}
+
+  {% if not layout_first %}{{ home_layout }}{% endif %}
 {% endblock %}
