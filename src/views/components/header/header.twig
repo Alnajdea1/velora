@@ -3,6 +3,7 @@
   <div class="v-header__bar">
     <div class="v-header__actions">
       <button type="button" class="v-header__language" data-language-switch="{{ is_ar ? 'en' : 'ar' }}" aria-label="{{ is_ar ? trans('header.switch_to_english') : trans('header.switch_to_arabic') }}">{{ is_ar ? trans('header.english_code') : trans('header.arabic_code') }}</button>
+      <salla-user-menu data-testid="store-header-user-menu" avatar-only show-header show-trigger></salla-user-menu>
       <salla-cart-summary show-cart-label class="v-header__cart v-btn v-btn--dark v-pill"></salla-cart-summary>
 
       <a href="{{ link('wishlist') }}" class="v-header__wishlist v-pill" aria-label="{{ trans('common.wishlist') }}">
