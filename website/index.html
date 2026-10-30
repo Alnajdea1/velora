@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>رمـز — اسأل شركتك على الواتساب</title>
+<meta name="description" content="رمز يربط أنظمة شركتك بالواتساب، تسأل بلغتك ويجيك الجواب مباشرة.">
+<meta name="theme-color" content="#F5F1EA">
+<meta property="og:title" content="رمـز — اسأل شركتك على الواتساب">
+<meta property="og:description" content="نربط أنظمة شركتك، فتسأل بلغتك ويجيك الجواب مباشرة.">
+<meta property="og:locale" content="ar_SA">
+<link rel="preload" href="assets/fonts/rubik-arabic-900.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/readex-arabic-300.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%237B3FA0'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='34' font-weight='700' fill='white' font-family='sans-serif'%3E%D8%B1%3C/text%3E%3C/svg%3E">
+<script>
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('ramz-theme'); } catch (e) {}
+    var dark = saved ? saved === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+  })();
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="skip">تخطَّ للمحتوى</a>
+<div class="page">
+<div class="progress" aria-hidden="true"><span class="progress__bar"></span></div>
+<nav class="rail" aria-hidden="true"></nav>
+
+<header class="nav-wrap">
+  <nav class="nav" data-i18n-aria="nav.cta" aria-label="التنقل الرئيسي">
+    <a class="nav__brand" href="#top" data-i18n="brand">رمـز</a>
+    <a class="nav__link" href="#services" data-i18n="nav.services">الخدمات</a>
+    <a class="nav__link" href="#demo" data-i18n="nav.demo">الديمو</a>
+    <a class="nav__cta" href="#contact" data-i18n="nav.cta">تواصل معنا</a>
+    <button class="lang-toggle" type="button" data-i18n-aria="langAria" aria-label="Switch to English">
+      <span data-i18n="langLabel">EN</span>
+    </button>
+    <button class="theme-toggle" type="button" data-i18n-aria="themeAria" aria-label="تبديل الوضع الليلي" aria-pressed="false">
+      <span class="theme-toggle__icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" class="icon-sun"><circle cx="12" cy="12" r="4.6"/><g stroke-linecap="round"><path d="M12 2.6v2.4M12 19v2.4M21.4 12H19M5 12H2.6M18.6 5.4 17 7M7 17l-1.6 1.6M18.6 18.6 17 17M7 7 5.4 5.4"/></g></svg>
+        <svg viewBox="0 0 24 24" class="icon-moon"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1Z"/></svg>
+      </span>
+    </button>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ═══ Hero — headline drifts and dims as the page moves under it ═══ -->
+  <section class="hero" id="top" data-scene="hero">
+    <div class="hero__film" aria-hidden="true">
+      <video class="hero__video" src="assets/media/reel-placeholder.mp4"
+             autoplay muted loop playsinline preload="auto" disablepictureinpicture
+             poster="assets/media/reel-poster.jpg" tabindex="-1"></video>
+      <div class="hero__veil"></div>
+    </div>
+    <div class="wrap hero__inner">
+      <p class="chapter__index rise rise--1" data-chapter="0"></p>
+      <a class="hero__pill rise rise--2" href="#contact">
+        <span data-i18n="hero.pill">الديمو يشتغل على بياناتك أنت</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+      <p class="eyebrow rise rise--2" data-i18n="hero.eyebrow">RAMZ — أتمتة الأعمال</p>
+      <h1 class="hero__title rise rise--3" data-i18n-html="hero.title">
+        اسأل شركتك على الواتساب،<br>
+        ورمز يعطيك <span class="grad">الزبدة</span>.
+      </h1>
+      <div class="hero__row rise rise--4">
+        <p class="hero__lede" data-i18n="hero.lede">نربط أنظمة شركتك، فتسأل بلغتك ويجيك الجواب مباشرة — بدون تقارير ولا انتظار أحد.</p>
+        <a class="btn btn--primary" href="#demo" data-i18n="hero.cta">جرّب الديمو</a>
+      </div>
+      <ul class="hero__facts rise rise--5">
+        <li><strong data-i18n="hero.f1">ثوانٍ</strong><span data-i18n="hero.f1s">بدل تقارير تاخذ أيام</span></li>
+        <li><strong data-i18n="hero.f2">على واتساب</strong><span data-i18n="hero.f2s">بدون تطبيق جديد يتعلمونه</span></li>
+        <li><strong data-i18n="hero.f3">من أنظمتك</strong><span data-i18n="hero.f3s">الجواب من بياناتك، مو تخمين</span></li>
+      </ul>
+    </div>
+    <span class="hero__cue" aria-hidden="true" data-i18n="hero.cue">مرّر</span>
+  </section>
+
+  <!-- ═══ Reel — scroll drives the clip's timeline ═══
+       Swap the footage by replacing assets/media/reel-placeholder.mp4. -->
+  <section class="reel" id="reel">
+    <div class="reel__track">
+      <div class="reel__stage">
+        <p class="chapter__index chapter__index--over" data-chapter="1"></p>
+        <div class="reel__frame">
+          <!-- src on the element, not a <source> child: a child's decode failure
+               never reaches the video's error handler, and the fallback needs it. -->
+          <video class="reel__video" src="assets/media/reel-placeholder.mp4"
+                 playsinline muted preload="auto" disablepictureinpicture
+                 poster="assets/media/reel-poster.jpg" aria-hidden="true" tabindex="-1"></video>
+          <div class="reel__scrim" aria-hidden="true"></div>
+          <div class="reel__captions"></div>
+          <div class="reel__meter" aria-hidden="true"><span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Demo — the conversation plays out under the scroll ═══ -->
+  <section class="demo" id="demo">
+    <div class="demo__track">
+      <div class="demo__stage wrap">
+        <p class="chapter__index" data-chapter="2"></p>
+        <div class="demo__grid">
+
+          <div class="phone">
+            <div class="phone__bar">
+              <span class="avatar" data-i18n="demo.agent">رمز</span>
+              <span class="phone__id">
+                <b data-i18n="demo.agent">رمز</b>
+                <em><i class="dot"></i> <span data-i18n="demo.status">متصل ببيانات الشركة</span></em>
+              </span>
+            </div>
+            <div class="phone__thread" role="log" aria-live="polite"></div>
+            <div class="phone__compose">
+              <span class="phone__input" data-i18n="demo.placeholder">اكتب سؤالك…</span>
+              <span class="send" data-i18n-aria="demo.send" aria-label="إرسال">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.6 11.3 15.8-6.6c.9-.4 1.9.6 1.5 1.5l-6.6 15.8c-.4 1-1.8.9-2.1-.1l-1.8-5.7-5.7-1.8c-1-.3-1.1-1.7-.1-2.1Z"/></svg>
+              </span>
+            </div>
+            <a class="btn btn--primary btn--block" href="#contact" data-i18n="demo.cta">اطلب الخدمة وجرّب</a>
+          </div>
+
+          <div class="board">
+            <p class="board__eyebrow"><span data-i18n="demo.eyebrow">من بياناتك</span> <i class="live"></i></p>
+            <h2 class="board__title" data-i18n="demo.title">نفس الجواب، محدَّث لحظة بلحظة.</h2>
+            <div class="tiles">
+              <article class="tile" data-key="contracts">
+                <p class="tile__label"></p>
+                <p class="tile__value">0</p>
+                <p class="tile__meta"></p>
+              </article>
+              <article class="tile" data-key="value">
+                <p class="tile__label"></p>
+                <p class="tile__value">0</p>
+                <p class="tile__meta"></p>
+              </article>
+              <article class="tile" data-key="orders">
+                <p class="tile__label"></p>
+                <p class="tile__value">0</p>
+                <p class="tile__meta"></p>
+              </article>
+              <article class="tile" data-key="sales">
+                <p class="tile__label"></p>
+                <p class="tile__value">0</p>
+                <p class="tile__meta"></p>
+              </article>
+            </div>
+            <article class="bar" data-key="pending">
+              <div class="bar__head">
+                <p class="tile__label" data-i18n="demo.pending">عقود بانتظار التوقيع</p>
+                <p class="bar__pct">0%</p>
+              </div>
+              <div class="bar__track"><span class="bar__fill"></span></div>
+              <p class="tile__meta" data-i18n="demo.pendingMeta">٣ من ١٢ عقد لسه ما اكتملت</p>
+            </article>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Services — four layers dealt out one over the next ═══ -->
+  <section class="services" id="services">
+    <div class="services__track">
+      <div class="services__stage wrap">
+        <p class="chapter__index" data-chapter="3"></p>
+        <header class="services__head">
+          <h2 class="section-title" data-i18n-html="services.title">وراء السؤال، <span class="grad">شغل كثير</span>.</h2>
+          <p class="section-lede" data-i18n="services.lede">أربع طبقات تشتغل ورا الكواليس، عشان السؤال يطلع جواب.</p>
+        </header>
+        <div class="deck"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Sectors — the strip tracks the scroll instead of looping on its own ═══ -->
+  <section class="sectors">
+    <div class="sectors__track">
+      <div class="sectors__stage">
+        <div class="wrap">
+          <p class="chapter__index" data-chapter="4"></p>
+          <p class="sectors__note" data-i18n="sectors.note">بدينا من العقار. ونفس الطريقة تنفع لأي قطاع.</p>
+        </div>
+        <div class="marquee" aria-hidden="true"><div class="marquee__track"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Closing — the panel opens out as it arrives ═══ -->
+  <section class="cta" id="contact">
+    <div class="cta__track"><div class="cta__stage">
+    <div class="cta__panel">
+      <div class="wrap cta__inner">
+        <p class="chapter__index chapter__index--over" data-chapter="5"></p>
+        <h2 class="cta__title" data-i18n-html="cta.title">ورّنا شغلك،<br>ونقولك وش ينفع يتأتمت.</h2>
+        <p class="cta__lede" data-i18n="cta.lede">جلسة قصيرة، نسمع منك ونوريك الديمو على بياناتك أنت — بدون التزام.</p>
+        <div class="cta__actions">
+          <a class="btn btn--light" data-mail href="mailto:contact@ramz.net.sa" data-i18n="cta.button">احجز الديمو</a>
+          <a class="cta__mail" href="mailto:contact@ramz.net.sa">contact@ramz.net.sa</a>
+        </div>
+      </div>
+    </div>
+    </div></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__inner">
+    <span class="footer__brand" data-i18n="brand">رمـز</span>
+    <nav class="footer__links" data-i18n-aria="footer.aria" aria-label="روابط الفوتر">
+      <a href="#services" data-i18n="nav.services">الخدمات</a>
+      <a href="#demo" data-i18n="nav.demo">الديمو</a>
+      <a href="#contact" data-i18n="nav.cta">تواصل معنا</a>
+    </nav>
+    <p class="footer__copy" data-i18n="footer.copy">© ٢٠٢٦ رمز — جميع الحقوق محفوظة</p>
+  </div>
+</footer>
+</div>
+
+<script src="assets/i18n.js" defer></script>
+<script src="assets/app.js" defer></script>
+</body>
+</html>
