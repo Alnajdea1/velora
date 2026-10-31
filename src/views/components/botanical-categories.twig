@@ -23,7 +23,7 @@
            {% if not picked.url %} data-category-auto{% if title_auto %} data-title-auto{% endif %}{% if not item.image %} data-image-auto{% endif %}{% endif %}>
           <img src="{{ item.image ?: (picked.image ?: fallback.image) }}" alt="" loading="lazy">
           <i aria-hidden="true"></i><b aria-hidden="true"></b>
-          <span><strong>{{ item.title ?: (picked.name ?: fallback.title) }}</strong>{% if item.count_label %}<small>{{ item.count_label }}</small>{% elseif picked.url and picked.products_count is defined %}<small>{{ trans('categories.count', { n: picked.products_count }) }}</small>{% else %}<small>{{ trans('categories.shop') }}</small>{% endif %}</span>
+          <span><strong>{{ item.title ?: (picked.name ?: fallback.title) }}</strong>{% if item.count_label %}<small>{{ item.count_label }}</small>{% elseif picked.url and picked.products_count is defined %}<small>{{ trans('categories.count', { n: picked.products_count }) }}</small>{% endif %}</span>
         </a>
       {% endfor %}
     </div>

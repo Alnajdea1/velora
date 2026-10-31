@@ -4,11 +4,10 @@
 {% set tiles = component.tiles|default([]) %}
 {% set default_tiles = [trans('offer.tile_1'), trans('offer.tile_2'), trans('offer.tile_3'), trans('offer.tile_4')] %}
 <section class="v-offer" data-component="offer-landing">
-  <span class="v-offer__aura" aria-hidden="true"></span>
   <div class="v-wrap v-offer__grid">
     <div class="v-offer__copy">
       <span class="v-offer__badge">{{ component.badge ?: trans('offer.badge') }}</span>
-      <h2 class="v-offer__title"><span>{{ component.title_line_1 ?: trans('offer.title_line_1') }}</span><span>{{ component.title_line_2 ?: trans('offer.title_line_2') }}</span></h2>
+      <h2 class="v-offer__title"><span>{{ component.title_line_1 ?: trans('offer.title_line_1') }}</span> <span>{{ component.title_line_2 ?: trans('offer.title_line_2') }}</span></h2>
       <p class="v-offer__body">{{ component.body ?: trans('offer.body') }}</p>
       <a href="{{ cta_url }}" class="v-btn v-btn--light v-pill v-offer__cta">{{ component.cta_label ?: trans('offer.cta') }}</a>
     </div>
@@ -17,7 +16,7 @@
         {% set tile = tiles[slot]|default({}) %}
         {% set tile_url = tile.url ?: link('products') %}
         {% if tile_url starts with '/' %}{% set tile_url = link(tile_url) %}{% endif %}
-        <a href="{{ tile_url }}" class="v-offer__tile v-offer__tile--{{ loop.index }}"><span>{{ tile.label ?: default_tiles[slot] }}</span></a>
+        <a href="{{ tile_url }}" class="v-offer__tile v-offer__tile--{{ loop.index }}"{% if not tile.label and not tile.url %} data-offer-auto{% endif %}><span>{{ tile.label ?: default_tiles[slot] }}</span></a>
       {% endfor %}
     </div>
   </div>

@@ -105,12 +105,17 @@
       }));
     });
 
-    // A picked category with no products falls back to the store's latest products.
+    // A picked category with no products falls back to the store's latest products;
+    // a section that only lists products is left out when the store has none to show.
     document.addEventListener('productsFetched', (event) => {
       const list = event.target;
-      if (!list?.matches?.('salla-products-list[data-velora-fallback]')) return;
       const products = event.detail?.data;
-      if (!Array.isArray(products) || products.length) return;
+      if (!Array.isArray(products) || products.length || !list?.matches?.('salla-products-list')) return;
+      if (!list.hasAttribute('data-velora-fallback')) {
+        const section = list.closest('[data-hide-when-empty]');
+        if (section) section.hidden = true;
+        return;
+      }
       const next = document.createElement('salla-products-list');
       ['class', 'limit', 'product-card-component', 'sort-by'].forEach((name) => {
         if (list.hasAttribute(name)) next.setAttribute(name, list.getAttribute(name));
@@ -140,16 +145,63 @@
       } catch {}
     });
 
+    if (window.salla?.event?.on) salla.event.on('salla-products-slider::products.fetched', (items) => {
+      if (Array.isArray(items) && !items.length) $$('[data-component="products-slider"]').forEach((section) => { if (!$('.v-product', section)) section.hidden = true; });
+    });
+
+    // Testimonials appear only once the store has real reviews to show.
     $$('[data-component="testimonials"]').forEach((root) => {
       const reviews = $('salla-reviews', root);
-      const empty = $('[data-reviews-empty]', root);
-      if (!reviews || !empty) return;
+      if (!reviews) return;
       const sync = () => {
         const loaded = Boolean(reviews.querySelector('.s-reviews-container'));
-        empty.hidden = loaded;
+        root.hidden = !loaded;
         return loaded;
       };
       if (!sync()) new MutationObserver((records, observer) => { if (sync()) observer.disconnect(); }).observe(reviews, { childList: true, subtree: true });
+    });
+
+    // Without merchant images, the hero and the offer tiles show the store's own newest products.
+    const heroArt = $('[data-hero-product]');
+    const offerTiles = $$('[data-offer-auto]');
+    if (heroArt || offerTiles.length) onSallaReady(async () => {
+      let products = [];
+      try {
+        const response = await productApi()?.fetch?.({ source: 'latest', limit: 8 });
+        products = (Array.isArray(response?.data) ? response.data : []).filter((product) => product?.url && (product.image?.url || product.images?.[0]?.url));
+      } catch {}
+      const imageOf = (product) => product.image?.url || product.images?.[0]?.url;
+      if (heroArt && products[0]) {
+        const product = products[0];
+        const image = $('.v-hero__arch > img', heroArt);
+        if (image) {
+          image.src = imageOf(product);
+          image.alt = product.image?.alt || product.name || image.alt;
+          image.classList.replace('v-hero__artwork', 'v-hero__product');
+        }
+        const pick = $('[data-pick-auto]', heroArt);
+        if (pick) {
+          const name = $('strong', pick);
+          if (name) name.textContent = product.name || name.textContent;
+          const link = $('a', pick);
+          if (link) link.href = product.url;
+        }
+      }
+      // Offer tiles prefer products the hero is not already showing.
+      const pool = products.length > offerTiles.length ? products.slice(1) : products;
+      offerTiles.forEach((tile, index) => {
+        const product = pool[index];
+        if (!product) return;
+        tile.href = product.url;
+        const photo = document.createElement('img');
+        photo.src = imageOf(product);
+        photo.alt = '';
+        photo.loading = 'lazy';
+        tile.prepend(photo);
+        tile.classList.add('v-offer__tile--photo');
+        const label = $('span', tile);
+        if (label && product.name) label.textContent = product.name;
+      });
     });
 
     $$('[data-component="gift-composer"]').forEach((root) => {
@@ -196,8 +248,8 @@
           bindItem(button);
           return button;
         }));
-        const empty = $('[data-gift-empty]', root);
-        if (empty) empty.hidden = items.children.length > 0;
+        // No store products to compose a gift from: leave the section out rather than show a notice.
+        if (!items.children.length) root.hidden = true;
       });
 
       $$('[data-gift-shape]', root).forEach((button) => button.addEventListener('click', () => {

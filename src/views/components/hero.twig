@@ -25,19 +25,12 @@
   {'tag': trans('hero.note_3_tag'), 'label': trans('hero.note_3_label')}
 ] %}
 <section class="v-hero" data-component="lavender-hero">
-  <span class="v-hero__wash v-hero__wash--iris" aria-hidden="true"></span>
-  <span class="v-hero__wash v-hero__wash--sage" aria-hidden="true"></span>
-
   <div class="v-wrap v-hero__grid">
     <div class="v-hero__copy">
       <span class="v-pill v-hero__kicker">
         <i aria-hidden="true"></i>{{ component.kicker ?: trans('hero.kicker') }}
       </span>
-      <h1 class="v-hero__title">
-        {{ component.line_1 ?: trans('hero.line_1') }}<br>
-        <span>{{ component.line_2 ?: trans('hero.line_2') }}</span><br>
-        <em>{{ component.line_3 ?: trans('hero.line_3') }}</em>
-      </h1>
+      <h1 class="v-hero__title">{{ component.line_1 ?: trans('hero.line_1') }} <span>{{ component.line_2 ?: trans('hero.line_2') }}</span> <em>{{ component.line_3 ?: trans('hero.line_3') }}</em></h1>
       <p class="v-hero__body">{{ component.body ?: trans('hero.body') }}</p>
       <div class="v-hero__actions">
         <a href="{{ primary_url }}" class="v-btn v-btn--primary v-pill">
@@ -52,20 +45,16 @@
       </dl>
     </div>
 
-    <div class="v-hero__art" data-hero-motion aria-label="{{ image_alt }}">
+    {# Without a merchant image, app.js shows the store's newest product here instead of the bundled artwork. #}
+    <div class="v-hero__art" data-hero-motion aria-label="{{ image_alt }}"{% if not component.image %} data-hero-product{% endif %}>
       <div class="v-hero__arch">
         <span class="v-hero__glow" aria-hidden="true"></span>
         <img src="{{ component.image ?: 'images/velora/hero-bottle.svg'|asset }}" alt="{{ image_alt }}" fetchpriority="high"{% if not component.image %} class="v-hero__artwork"{% endif %}>
-        <div class="v-hero__pick">
+        <div class="v-hero__pick"{% if not component.product_name and not component.product_url %} data-pick-auto{% endif %}>
           <span><small>{{ trans('hero.editor_pick') }}</small><strong>{{ component.product_name ?: trans('hero.pick_name') }}</strong></span>
           <a href="{{ pick_url }}" class="v-btn v-btn--dark v-pill">{{ trans('common.discover') }}</a>
         </div>
       </div>
-      <span class="v-hero__leaf v-petal" aria-hidden="true"></span>
-      <span class="v-hero__stem" aria-hidden="true"><i></i><b></b><em></em></span>
-      <span class="v-hero__petal v-hero__petal--1" aria-hidden="true"></span>
-      <span class="v-hero__petal v-hero__petal--2" aria-hidden="true"></span>
-      <span class="v-hero__petal v-hero__petal--3" aria-hidden="true"></span>
       {% for note in notes|slice(0, 3) %}
         <span class="v-pill v-hero__note v-hero__note--{{ loop.index }}"><b>{{ note.tag }}</b> {{ note.label }}</span>
       {% endfor %}

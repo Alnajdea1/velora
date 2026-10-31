@@ -1,21 +1,15 @@
 {#
-  Salla testimonials (feature: component-testimonials). Shows the store's real reviews only;
-  until the first review exists, an invitation card is shown instead of sample quotes.
+  Salla testimonials (feature: component-testimonials). Shows the store's real reviews only:
+  the section stays hidden until salla-reviews has reviews to show (app.js reveals it).
   | limit | type | sort | hide_customer_info | display_all_url |
 #}
-<section {% if componentId is defined %}component-id="{{ componentId }}" {% endif %}class="v-section v-testimonials" data-component="testimonials">
+<section {% if componentId is defined %}component-id="{{ componentId }}" {% endif %}class="v-section v-testimonials" data-component="testimonials" hidden>
   <div class="v-wrap">
     <div class="v-ar-title-block" style="text-align:center;max-width:620px;margin-inline:auto">
       <span class="v-testimonials__kicker">{{ trans('testimonials.kicker') }}</span>
-      <h2 style="margin-top:14px;font-size:clamp(34px,3.6vw,52px)">{{ trans('testimonials.title') }}</h2>
+      <h2 style="margin-top:14px;font-size:clamp(28px,2.7vw,38px)">{{ trans('testimonials.title') }}</h2>
     </div>
     <salla-reviews class="v-testimonials__reviews" limit="{{ limit|default(6) }}" type="{{ type|default('store') }}"
                    {% if sort|default('') %} sort="{{ sort }}"{% endif %}{{ hide_customer_info|default(false) ? ' hide-customer-info' : '' }}{{ display_all_url|default(false) ? ' display-all-link' : '' }}></salla-reviews>
-    <div class="v-testimonials__empty v-editorial" data-reviews-empty>
-      <span class="v-testimonials__quote v-petal" aria-hidden="true">”</span>
-      <h3>{{ trans('testimonials.empty_title') }}</h3>
-      <p>{{ trans('testimonials.empty_body') }}</p>
-      <a href="{{ link('products') }}" class="v-btn v-btn--primary v-pill">{{ trans('hero.cta') }}</a>
-    </div>
   </div>
 </section>
