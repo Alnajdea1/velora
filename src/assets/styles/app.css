@@ -107,7 +107,7 @@ a:hover{color:var(--aubergine)}
 .v-btn--coral:hover{color:#fff}
 :where(a,button,input,select,textarea,[tabindex]):focus-visible,salla-button:focus-within,salla-add-product-button:focus-within{outline:3px solid var(--iris);outline-offset:3px}
 .v-btn:focus-visible{outline:3px solid var(--iris);outline-offset:3px;box-shadow:0 0 0 3px var(--porcelain),0 0 0 6px var(--lilac)}
-.v-btn[disabled]{background:var(--mist);color:var(--lilac);cursor:not-allowed;box-shadow:none;transform:none}
+.v-btn[disabled]{background:var(--mist);color:rgba(38,24,56,.62);cursor:not-allowed;box-shadow:none;transform:none}
 .v-btn.is-loading::before{content:'';width:15px;height:15px;border-radius:999px;
   border:2px solid rgba(252,251,255,.35);border-top-color:currentColor;animation:v-spin .8s linear infinite}
 
@@ -505,3 +505,4 @@ salla-accordion+salla-accordion{margin-top:12px}
 .s-accordion-body-wrapper{padding:0 22px 20px;font-size:16px;line-height:1.85;color:rgba(38,24,56,.82)}
 @media (max-width:959px){.v-footer__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.v-footer__grid{grid-template-columns:1fr;gap:26px}.v-footer__bottom{justify-content:center;text-align:center}.v-offer__tile--photo span{font-size:13px}}
+.v-footer__links{display:grid;gap:4px;margin:0;padding:0;list-style:none}.v-footer__links a{color:var(--aubergine);font-size:15.5px;line-height:2}.v-footer__links a:hover{color:var(--iris)}

@@ -10,6 +10,13 @@
     </div>
     <div>
       <h2 class="v-footer__title">{{ trans('footer.links') }}</h2>
+      {# Core store pages always exist; pages the merchant adds to the footer menu follow them. #}
+      <ul class="v-footer__links">
+        <li><a href="{{ link('products') }}">{{ trans('collection.title') }}</a></li>
+        <li><a href="{{ link('blog') }}">{{ trans('header.journal') }}</a></li>
+        <li><a href="{{ link('wishlist') }}">{{ trans('wishlist.title') }}</a></li>
+        <li><a href="{{ link('profile') }}">{{ trans('common.account') }}</a></li>
+      </ul>
       <salla-menu class="v-footer__menu" source="footer" with-cookie-preferences></salla-menu>
     </div>
     <salla-contacts class="v-footer__contacts"></salla-contacts>
