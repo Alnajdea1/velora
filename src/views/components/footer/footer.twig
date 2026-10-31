@@ -1,24 +1,23 @@
-<footer class="v-dark" style="padding:clamp(46px,7vw,70px) 0 40px">
-  <div class="v-wrap v-grid v-grid--4">
-    <div>
-      <div style="display:flex;align-items:center;gap:10px">
-        <span class="v-petal" style="width:30px;height:30px;background:linear-gradient(150deg,var(--lilac),var(--iris))"></span>
-        <span style="font-family:var(--display);font-size:20px">{{ store.name }}</span>
-      </div>
-      <p style="margin-top:14px;font-size:13px;line-height:1.9;color:rgba(241,236,255,.6);max-width:260px">{{ store.description }}</p>
+{# Store details, the footer menu, contacts, apps and payment methods come from Salla components and the store's own data. #}
+<footer class="v-footer" data-testid="store-footer">
+  <div class="v-wrap v-footer__grid">
+    <div class="v-footer__brand">
+      <a href="{{ link('/') }}" class="v-footer__name">
+        <span class="v-petal v-footer__mark" aria-hidden="true"></span>{{ store.name }}
+      </a>
+      {% if store.description %}<p class="v-footer__about">{{ store.description|striptags }}</p>{% endif %}
+      <salla-social class="v-footer__social"></salla-social>
     </div>
-    {% for menu in menus.footer %}
-      <div>
-        <div style="font-size:12px;font-weight:800;color:var(--lilac)">{{ menu.title }}</div>
-        <div style="display:flex;flex-direction:column;gap:11px;margin-top:16px">
-          {% for item in menu.items %}<a href="{{ item.url }}" style="font-size:13px;color:rgba(241,236,255,.6)">{{ item.title }}</a>{% endfor %}
-        </div>
-      </div>
-    {% endfor %}
+    <div>
+      <h2 class="v-footer__title">{{ trans('footer.links') }}</h2>
+      <salla-menu class="v-footer__menu" source="footer" with-cookie-preferences></salla-menu>
+    </div>
+    <salla-contacts class="v-footer__contacts"></salla-contacts>
+    <salla-apps-icons class="v-footer__apps"></salla-apps-icons>
   </div>
-  <div class="v-wrap" style="margin-top:40px;padding-top:22px;border-top:1px solid rgba(252,251,255,.1);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:12px;color:rgba(241,236,255,.6)">
+  <div class="v-wrap v-footer__bottom">
     <span>© {{ "now"|date("Y") }} {{ store.name }}</span>
-    <span style="font-family:var(--latin);letter-spacing:.1em">{{ trans('footer.tagline') }}</span>
+    <salla-payments class="v-footer__payments"></salla-payments>
   </div>
 
   <div class="store-trust-badges" style="display:flex;justify-content:center;padding:16px 0">

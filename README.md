@@ -71,17 +71,21 @@ The Velora components, in the prototype's order (`Velora-Lavender-Approved-Proto
 
 The note bloom (`components/note-bloom.twig`) is a product-page section only: the single-product
 template renders it from the product's fragrance metadata, so it is not offered as a home component.
-The closing newsletter is global, matching the prototype, and is rendered from `layouts/master.twig`
-before `footer.twig`.
+The footer is built from Salla components (`salla-social`, `salla-menu`, `salla-contacts`,
+`salla-apps-icons`, `salla-payments`, `salla-trust-badges`), so it fills from the store's own data.
+Twilight has no newsletter component, so the theme does not show a subscription form.
 
 Velora always renders its full homepage sequence — hero, store features, aura explorer, season
 showcase, botanical categories, offer, editorial story, routine path, mood shopping, products slider,
 gift composer, testimonials, journal — whatever the editor layout contains. Elements from the editor
 layout render too, and a section that is already in the layout is not repeated: when the layout has
 its own hero it comes first, otherwise the Velora sections come first. Every section has default
-copy in `twilight.json` and the locales, bundled artwork in `src/assets/images/velora/` (copied to
-`public/images/` by the build), and falls back to the store's latest products or first categories, so
-the homepage is complete in an empty store. Testimonials show only the store's real reviews.
+copy in `twilight.json` and the locales, and falls back to the store's latest products or first
+categories; without merchant images the hero and offer tiles show the store's newest products, and
+the bundled artwork in `src/assets/images/velora/` (copied to `public/images/` by the build) is used
+only when the store has none. Sections that would otherwise show placeholders are left out: testimonials
+appear once the store has reviews, the journal once articles are configured, and product sections and
+the gift composer only when the store has products.
 
 ## Page mapping
 

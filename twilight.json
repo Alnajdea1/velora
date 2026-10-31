@@ -141,13 +141,6 @@
       "value": ""
     },
     {
-      "id": "newsletter_enabled",
-      "type": "boolean",
-      "format": "switch",
-      "label": "إظهار النشرة البريدية قبل التذييل",
-      "selected": true
-    },
-    {
       "id": "card_radius",
       "type": "number",
       "label": "استدارة بطاقات المنتجات",

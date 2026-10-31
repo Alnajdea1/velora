@@ -299,7 +299,8 @@
     "returns": "Returns",
     "track": "Track order",
     "faq": "FAQ",
-    "tagline": "LAVENDER, REIMAGINED"
+    "tagline": "LAVENDER, REIMAGINED",
+    "links": "Useful links"
   },
   "offer": {
     "countdown_label": "Time remaining on the offer",

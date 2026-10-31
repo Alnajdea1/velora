@@ -35,7 +35,6 @@
 
   <main id="main">{% block content %}{% endblock %}</main>
 
-  {% if theme.settings.get('newsletter_enabled', true) %}{% include 'components.closing' with { component: {} } %}{% endif %}
   {% include 'components.footer.footer' %}
   {% include 'components.search-overlay' %}
   {% include 'components.mobile-nav' %}
